@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plan Comercial Q2 2026 — Impulse + Conversia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,400;0,600;0,700;0,800;1,700;1,800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cta:    #78F05A;
+      --purple: #501450;
+      --dark:   #115540;
+      --accent: #DC3296;
+      --red:    #FF5733;
+      --cyan:   #00FF96;
+      --white:  #FFFFFF;
+      --text:   #333333;
+      --muted:  #666666;
+      --font:   'Urbanist', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: #080810; color: var(--white); overflow-x: hidden; }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: #080810; }
+    ::-webkit-scrollbar-thumb { background: #2a2a3a; border-radius: 3px; }
+
+    /* ── NAV ── */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px;
+      background: rgba(8, 8, 16, 0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      z-index: 1000;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; }
+    .nav-dot { width: 8px; height: 8px; background: var(--cta); border-radius: 50%; }
+    .nav-logo span { font-size: 15px; font-weight: 800; color: #fff; }
+    .nav-logo span em { color: var(--cta); font-style: normal; }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .nav-pill {
+      background: rgba(120,240,90,0.1); color: var(--cta);
+      border: 1px solid rgba(120,240,90,0.25);
+      font-size: 11px; font-weight: 700; padding: 5px 14px;
+      border-radius: 20px; letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    .nav-links { display: flex; gap: 20px; }
+    .nav-links a { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--cta); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh; padding: 110px 40px 80px;
+      background: linear-gradient(135deg, #0e0520 0%, #1a0828 40%, #0a1f15 100%);
+      display: flex; align-items: center;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: radial-gradient(ellipse at 20% 50%, rgba(80,20,80,0.3) 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 20%, rgba(17,85,64,0.25) 0%, transparent 50%);
+    }
+    .hero-inner { max-width: 1200px; margin: 0 auto; width: 100%; position: relative; z-index: 1; }
+    .hero-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(120,240,90,0.08); border: 1px solid rgba(120,240,90,0.25);
+      color: var(--cta); font-size: 11px; font-weight: 700;
+      padding: 7px 16px; border-radius: 24px;
+      letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 28px;
+    }
+    .hero-label::before { content: '●'; font-size: 7px; }
+    .hero h1 {
+      font-size: clamp(40px, 5.5vw, 72px);
+      font-weight: 800; line-height: 1.0; letter-spacing: -0.03em;
+      color: #fff; margin-bottom: 20px;
+    }
+    .hero h1 em { font-style: italic; color: var(--cta); }
+    .hero-sub { font-size: 17px; color: rgba(255,255,255,0.6); max-width: 580px; line-height: 1.65; margin-bottom: 48px; }
+
+    /* KPI Row */
+    .kpi-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: rgba(255,255,255,0.07); border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.07); }
+    .kpi-box { background: rgba(255,255,255,0.03); padding: 24px 20px; text-align: center; transition: background 0.2s; }
+    .kpi-box:hover { background: rgba(120,240,90,0.06); }
+    .kpi-num { font-size: clamp(24px, 3vw, 36px); font-weight: 800; line-height: 1; margin-bottom: 6px; }
+    .kpi-lbl { font-size: 12px; color: rgba(255,255,255,0.5); font-weight: 600; line-height: 1.3; }
+    .green  { color: var(--cta); }
+    .cyan   { color: var(--cyan); }
+    .red    { color: var(--red); }
+    .magenta { color: var(--accent); }
+    .white  { color: #fff; }
+
+    /* ── LAYOUT ── */
+    .section { padding: 80px 40px; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    .s-dark    { background: #0c0c18; }
+    .s-purple  { background: linear-gradient(180deg, #110820 0%, #0c0c18 100%); }
+    .s-green   { background: linear-gradient(180deg, #071510 0%, #0c0c18 100%); }
+    .s-alt     { background: #0f0f1c; }
+
+    /* ── SECTION HEADER ── */
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
+    .section-h2 { font-size: clamp(26px, 3.5vw, 40px); font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 14px; }
+    .section-h2 em { font-style: italic; color: var(--cta); }
+    .section-intro { font-size: 16px; color: rgba(255,255,255,0.55); max-width: 640px; line-height: 1.65; margin-bottom: 44px; }
+    .accent-bar { width: 44px; height: 3px; border-radius: 2px; background: var(--cta); margin-bottom: 20px; }
+    .accent-bar.red { background: var(--red); }
+    .accent-bar.cyan { background: var(--cyan); }
+    .accent-bar.magenta { background: var(--accent); }
+
+    /* ── CALLOUT ── */
+    .callout {
+      border-left: 4px solid var(--cta);
+      background: rgba(120,240,90,0.05); border-radius: 0 12px 12px 0;
+      padding: 22px 28px; margin: 32px 0;
+    }
+    .callout.red { border-left-color: var(--red); background: rgba(255,87,51,0.05); }
+    .callout.cyan { border-left-color: var(--cyan); background: rgba(0,255,150,0.05); }
+    .callout p { font-size: 16px; font-weight: 600; color: rgba(255,255,255,0.85); line-height: 1.55; }
+    .callout p strong { color: var(--cta); }
+    .callout.red p strong { color: var(--red); }
+    .callout.cyan p strong { color: var(--cyan); }
+
+    /* ── HIGIENE CARDS ── */
+    .checklist { display: flex; flex-direction: column; gap: 12px; }
+    .check-item {
+      display: flex; gap: 14px; align-items: flex-start;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px; padding: 18px 20px;
+      transition: all 0.2s;
+    }
+    .check-item:hover { border-color: rgba(120,240,90,0.2); background: rgba(120,240,90,0.04); }
+    .check-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+    .check-title { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .check-desc { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.5; }
+    .check-owner {
+      margin-left: auto; flex-shrink: 0;
+      font-size: 11px; font-weight: 700; padding: 4px 10px;
+      border-radius: 12px; text-transform: uppercase; letter-spacing: 0.06em;
+      white-space: nowrap; align-self: center;
+    }
+    .owner-edu { background: rgba(120,240,90,0.12); color: var(--cta); }
+    .owner-gabo { background: rgba(0,255,150,0.1); color: var(--cyan); }
+    .owner-both { background: rgba(220,50,150,0.12); color: var(--accent); }
+
+    /* ── MOTOR HEADER ── */
+    .motor-header-card {
+      background: linear-gradient(135deg, rgba(120,240,90,0.08) 0%, rgba(17,85,64,0.12) 100%);
+      border: 1px solid rgba(120,240,90,0.2);
+      border-radius: 20px; padding: 32px;
+      display: flex; align-items: center; gap: 24px;
+      margin-bottom: 36px;
+    }
+    .motor-header-card.magenta {
+      background: linear-gradient(135deg, rgba(220,50,150,0.08) 0%, rgba(80,20,80,0.12) 100%);
+      border-color: rgba(220,50,150,0.2);
+    }
+    .motor-header-card.cyan {
+      background: linear-gradient(135deg, rgba(0,255,150,0.07) 0%, rgba(17,85,64,0.12) 100%);
+      border-color: rgba(0,255,150,0.2);
+    }
+    .motor-header-card.red {
+      background: linear-gradient(135deg, rgba(255,87,51,0.08) 0%, rgba(80,20,80,0.12) 100%);
+      border-color: rgba(255,87,51,0.2);
+    }
+    .motor-icon-big { font-size: 48px; flex-shrink: 0; }
+    .motor-meta { flex: 1; }
+    .motor-num { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; opacity: 0.7; }
+    .motor-name { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 6px; line-height: 1.2; }
+    .motor-tagline { font-size: 14px; color: rgba(255,255,255,0.55); }
+    .motor-target {
+      text-align: right; flex-shrink: 0;
+    }
+    .motor-target-num { font-size: 32px; font-weight: 800; line-height: 1; }
+    .motor-target-lbl { font-size: 11px; color: rgba(255,255,255,0.5); font-weight: 600; }
+
+    /* ── TEMPERATURA TABLE ── */
+    .temp-table { width: 100%; border-collapse: separate; border-spacing: 0 6px; margin-bottom: 32px; }
+    .temp-table th {
+      padding: 10px 16px; text-align: left;
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: rgba(255,255,255,0.35);
+    }
+    .temp-table td {
+      padding: 14px 16px; font-size: 14px; color: rgba(255,255,255,0.75);
+      background: rgba(255,255,255,0.03);
+      border-top: 1px solid rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .temp-table td:first-child { border-radius: 10px 0 0 10px; border-left: 1px solid rgba(255,255,255,0.04); }
+    .temp-table td:last-child { border-radius: 0 10px 10px 0; border-right: 1px solid rgba(255,255,255,0.04); }
+    .temp-row-caliente td { background: rgba(255,87,51,0.06); border-color: rgba(255,87,51,0.1); }
+    .temp-row-muycaliente td { background: rgba(220,50,150,0.08); border-color: rgba(220,50,150,0.15); }
+    .temp-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; font-weight: 700; white-space: nowrap;
+    }
+
+    /* ── CONTENT GRID ── */
+    .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 28px; }
+    .content-card {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px; padding: 24px;
+      transition: all 0.25s;
+    }
+    .content-card:hover { border-color: rgba(120,240,90,0.2); background: rgba(120,240,90,0.04); }
+    .content-card-title { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+    .content-card ul { list-style: none; }
+    .content-card ul li {
+      font-size: 13px; color: rgba(255,255,255,0.6); padding: 5px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04); display: flex; gap: 8px;
+    }
+    .content-card ul li:last-child { border-bottom: none; }
+    .content-card ul li::before { content: '→'; color: var(--cta); flex-shrink: 0; }
+
+    /* ── FASES ── */
+    .fases { display: flex; flex-direction: column; gap: 20px; }
+    .fase-card {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px; padding: 24px 28px;
+      display: flex; gap: 20px; align-items: flex-start;
+      transition: all 0.25s;
+    }
+    .fase-card:hover { border-color: rgba(120,240,90,0.2); }
+    .fase-num {
+      width: 40px; height: 40px; border-radius: 12px;
+      background: rgba(120,240,90,0.1); color: var(--cta);
+      font-size: 18px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .fase-num.m { background: rgba(220,50,150,0.1); color: var(--accent); }
+    .fase-num.c { background: rgba(0,255,150,0.1); color: var(--cyan); }
+    .fase-content { flex: 1; }
+    .fase-title { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+    .fase-body { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.6; }
+    .fase-tag {
+      font-size: 10px; font-weight: 700; padding: 3px 9px;
+      border-radius: 10px; text-transform: uppercase; letter-spacing: 0.07em;
+      background: rgba(120,240,90,0.1); color: var(--cta);
+      align-self: flex-start; margin-top: 2px; white-space: nowrap;
+    }
+    .fase-tag.red { background: rgba(255,87,51,0.12); color: var(--red); }
+    .fase-tag.cyan { background: rgba(0,255,150,0.1); color: var(--cyan); }
+    .fase-tag.m { background: rgba(220,50,150,0.1); color: var(--accent); }
+
+    /* ── MOTOR 4 REDESIGN ── */
+    .reunion-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 32px; }
+    .reunion-card {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px; padding: 22px;
+    }
+    .reunion-card.red { border-color: rgba(255,87,51,0.2); background: rgba(255,87,51,0.04); }
+    .reunion-card.green { border-color: rgba(120,240,90,0.2); background: rgba(120,240,90,0.04); }
+    .reunion-card-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; opacity: 0.7; }
+    .reunion-card-title { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 10px; }
+    .reunion-card ul { list-style: none; }
+    .reunion-card ul li {
+      font-size: 13px; color: rgba(255,255,255,0.6); padding: 5px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04); display: flex; gap: 8px;
+    }
+    .reunion-card ul li:last-child { border-bottom: none; }
+    .reunion-card ul li::before { content: '✗'; color: var(--red); flex-shrink: 0; }
+    .reunion-card.green ul li::before { content: '✓'; color: var(--cta); }
+
+    /* ── TRANSVERSAL ── */
+    .transversal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .trans-table { width: 100%; border-collapse: collapse; }
+    .trans-table th {
+      padding: 11px 16px; font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.4); text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .trans-table td {
+      padding: 12px 16px; font-size: 13px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .trans-table tr:last-child td { border-bottom: none; }
+    .trans-table .td-before { color: rgba(255,87,51,0.8); }
+    .trans-table .td-after { color: rgba(120,240,90,0.9); }
+    .trans-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── SCORECARD ── */
+    .scorecard-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 40px; }
+    .score-card {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px; padding: 28px;
+      transition: all 0.25s;
+    }
+    .score-card:hover { transform: translateY(-3px); }
+    .score-card.m1:hover { border-color: rgba(120,240,90,0.3); }
+    .score-card.m2:hover { border-color: rgba(0,255,150,0.3); }
+    .score-card.m3:hover { border-color: rgba(220,50,150,0.3); }
+    .score-card.m4:hover { border-color: rgba(255,87,51,0.3); }
+    .score-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .score-icon { font-size: 32px; }
+    .score-pct {
+      font-size: 38px; font-weight: 800; line-height: 1;
+    }
+    .score-title { font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+    .score-sub { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 18px; line-height: 1.5; }
+    .score-kpi {
+      background: rgba(255,255,255,0.04); border-radius: 10px;
+      padding: 12px 14px; margin-bottom: 10px;
+    }
+    .score-kpi-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 3px; opacity: 0.5; }
+    .score-kpi-val { font-size: 14px; font-weight: 700; color: #fff; }
+    .score-owner {
+      display: flex; align-items: center; gap: 8px; font-size: 12px;
+      color: rgba(255,255,255,0.5); margin-top: 14px;
+    }
+    .score-owner::before { content: '👤'; font-size: 14px; }
+
+    /* ── EVENTOS ── */
+    .eventos-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .evento-motor-card {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px; padding: 20px; text-align: center;
+      transition: all 0.25s;
+    }
+    .evento-motor-card:hover { border-color: rgba(120,240,90,0.2); }
+    .evento-motor-icon { font-size: 28px; margin-bottom: 10px; }
+    .evento-motor-title { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .evento-motor-desc { font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.5; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark); padding: 32px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+    footer p { font-size: 12px; color: rgba(255,255,255,0.45); }
+    footer strong { color: rgba(255,255,255,0.8); }
+
+    /* ── FINAL BANNER ── */
+    .final-banner {
+      background: linear-gradient(135deg, #110820 0%, #071510 100%);
+      padding: 72px 40px; text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .final-banner h2 {
+      font-size: clamp(28px, 4vw, 48px); font-weight: 800;
+      color: #fff; letter-spacing: -0.02em; margin-bottom: 14px;
+    }
+    .final-banner h2 em { color: var(--cta); font-style: italic; }
+    .final-banner p { font-size: 16px; color: rgba(255,255,255,0.55); margin-bottom: 36px; }
+
+    /* ── META BANNER ── */
+    .meta-bar {
+      display: flex; align-items: center; justify-content: center;
+      gap: 40px; padding: 20px 40px;
+      background: rgba(120,240,90,0.05);
+      border-top: 1px solid rgba(120,240,90,0.12);
+      border-bottom: 1px solid rgba(120,240,90,0.12);
+      flex-wrap: wrap;
+    }
+    .meta-item { text-align: center; }
+    .meta-num { font-size: 28px; font-weight: 800; color: var(--cta); line-height: 1; }
+    .meta-lbl { font-size: 11px; color: rgba(255,255,255,0.45); font-weight: 600; margin-top: 3px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .kpi-row { grid-template-columns: repeat(3, 1fr); }
+      .content-grid, .reunion-grid, .transversal-grid, .scorecard-grid { grid-template-columns: 1fr; }
+      .eventos-grid { grid-template-columns: repeat(2, 1fr); }
+      .motor-header-card { flex-direction: column; }
+      .motor-target { text-align: left; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 600px) {
+      .kpi-row { grid-template-columns: repeat(2, 1fr); }
+      .hero, .section { padding-left: 20px; padding-right: 20px; }
+      .navbar { padding: 0 20px; }
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .fade-up { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar">
+  <div class="nav-logo">
+    <div class="nav-dot"></div>
+    <span><em>impulse</em> · Plan Comercial</span>
+  </div>
+  <div class="nav-links">
+    <a href="#fundamento">CRM</a>
+    <a href="#motor1">ABM</a>
+    <a href="#motor2">Pipeline</a>
+    <a href="#motor3">Expansión</a>
+    <a href="#motor4">Co-sell</a>
+    <a href="#scorecard">Scorecard</a>
+  </div>
+  <span class="nav-pill">Q2 2026</span>
+</nav>
+
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Plan Comercial Impulse + Conversia</div>
+    <h1>Q2 2026:<br><em>4 Motores.</em> Una Meta.</h1>
+    <p class="hero-sub">El plan que transforma el equipo GTM de productores de contenido en un sistema predecible de generación de revenue. Fundamento + 4 Motores × 25% cada uno.</p>
+
+    <div class="kpi-row">
+      <div class="kpi-box">
+        <div class="kpi-num green">$479,790</div>
+        <div class="kpi-lbl">Meta Total Q2</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-num white">$335,221</div>
+        <div class="kpi-lbl">Impulse (servicios)</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-num cyan">$144,570</div>
+        <div class="kpi-lbl">Conversia (licencias)</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-num magenta">$217,744</div>
+        <div class="kpi-lbl">Real Q1 acumulado</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-num red">70%</div>
+        <div class="kpi-lbl">Logo Q1 (meta 100%)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- META BAR -->
+<div class="meta-bar">
+  <div class="meta-item"><div class="meta-num">~$120K</div><div class="meta-lbl">Motor 1 — ABM</div></div>
+  <div class="meta-item"><div class="meta-num" style="color:var(--cyan)">~$120K</div><div class="meta-lbl">Motor 2 — Pipeline</div></div>
+  <div class="meta-item"><div class="meta-num" style="color:var(--accent)">~$120K</div><div class="meta-lbl">Motor 3 — Expansión</div></div>
+  <div class="meta-item"><div class="meta-num" style="color:var(--red)">~$120K</div><div class="meta-lbl">Motor 4 — Co-sell</div></div>
+  <div class="meta-item"><div class="meta-num" style="color:#fff">100 × 2</div><div class="meta-lbl">Cuentas/semana (Edu + Gabo)</div></div>
+</div>
+
+
+<!-- ═══ FUNDAMENTO: HIGIENE CRM ═══ -->
+<section class="section s-dark" id="fundamento">
+  <div class="container">
+    <div class="accent-bar red"></div>
+    <p class="eyebrow red">Fundamento Previo · Semana 1</p>
+    <h2 class="section-h2">Higiene Profunda del <em>CRM</em></h2>
+    <p class="section-intro">Ningún motor arranca hasta que el CRM esté limpio. Una semana, sin excepción. Datos sucios = motores ineficientes.</p>
+
+    <div class="checklist">
+
+      <div class="check-item fade-up">
+        <div class="check-icon">🗂️</div>
+        <div style="flex:1">
+          <p class="check-title">Reasignación por industria</p>
+          <p class="check-desc">Todos los contactos, empresas y deals se asignan por vertical. <strong style="color:#fff">Eduardo → Educación Superior + Salud.</strong> <strong style="color:var(--cyan)">Gabriel → todos los demás verticales.</strong></p>
+        </div>
+        <span class="check-owner owner-both">Edu + Gabo</span>
+      </div>
+
+      <div class="check-item fade-up">
+        <div class="check-icon">📧</div>
+        <div style="flex:1">
+          <p class="check-title">Corregir contactos sin email</p>
+          <p class="check-desc">Identificar y completar o eliminar contactos sin email válido. Sin email no hay secuencia posible.</p>
+        </div>
+        <span class="check-owner owner-gabo">Gabriel</span>
+      </div>
+
+      <div class="check-item fade-up">
+        <div class="check-icon">👻</div>
+        <div style="flex:1">
+          <p class="check-title">Trabajar leads huérfanos</p>
+          <p class="check-desc">Leads creados en el CRM que nunca fueron asignados ni trabajados. Asignar o eliminar según el ICP.</p>
+        </div>
+        <span class="check-owner owner-gabo">Gabriel</span>
+      </div>
+
+      <div class="check-item fade-up">
+        <div class="check-icon">🏷️</div>
+        <div style="flex:1">
+          <p class="check-title">Clasificar empresas por ICP</p>
+          <p class="check-desc">Todas las empresas deben tener vertical, tamaño y país correctamente asignados. Esta clasificación activa el Motor 1.</p>
+        </div>
+        <span class="check-owner owner-gabo">Gabriel</span>
+      </div>
+
+      <div class="check-item fade-up">
+        <div class="check-icon">📋</div>
+        <div style="flex:1">
+          <p class="check-title">Completar propiedades clave del pipeline</p>
+          <p class="check-desc">Cada deal activo debe tener: monto estimado, close date realista, siguiente paso concreto, notas de última conversación.</p>
+        </div>
+        <span class="check-owner owner-both">Edu + Gabo</span>
+      </div>
+
+      <div class="check-item fade-up">
+        <div class="check-icon">🗑️</div>
+        <div style="flex:1">
+          <p class="check-title">Archivar deals en Standby sin viabilidad Q2</p>
+          <p class="check-desc">Mover a "Perdido" o archivar todos los deals en estado Standby del Impulse Sales Pipeline que no tienen oportunidad real de cerrarse en Q2. Quedarnos solo con deals trabajables este trimestre.</p>
+        </div>
+        <span class="check-owner owner-both">Edu revisa</span>
+      </div>
+
+    </div>
+
+    <div class="callout red" style="margin-top:32px">
+      <p>⏱️ <strong>1 semana</strong> para completar la higiene completa. Gabriel lidera la ejecución. Eduardo revisa y aprueba el pipeline final resultante. Sin esta base, los 4 motores trabajan sobre arena.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ MOTOR 1: ABM ═══ -->
+<section class="section s-purple" id="motor1">
+  <div class="container">
+    <div class="motor-header-card">
+      <div class="motor-icon-big">🎯</div>
+      <div class="motor-meta">
+        <p class="motor-num green">Motor 1 · 25% de la meta Q2</p>
+        <p class="motor-name">ABM de Nutrición y Activación</p>
+        <p class="motor-tagline">No pedimos reuniones. Educamos, nutrimos y clasificamos por temperatura. Edu y Gabo solo actúan cuando la cuenta llega a caliente.</p>
+      </div>
+      <div class="motor-target">
+        <div class="motor-target-num green">~$120K</div>
+        <div class="motor-target-lbl">Meta Q2</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p>⚙️ Operación semanal: <strong>50 cuentas nuevas para Eduardo + 50 para Gabriel</strong> se enrollan en las campañas activas cada lunes. El scoring de temperatura se aplica automáticamente según cómo interactúan. Los calientes y muy calientes llegan como alerta semanal a Edu y Gabo para que ellos consigan la reunión personalmente.</p>
+    </div>
+
+    <p style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.7);margin-bottom:16px;">Sistema de temperatura por scoring de interacción</p>
+    <table class="temp-table">
+      <thead>
+        <tr>
+          <th>Temperatura</th>
+          <th>Criterio de asignación</th>
+          <th>Acción del sistema</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="temp-badge">❄️ <span style="color:rgba(255,255,255,0.5)">Frío</span></span></td>
+          <td style="color:rgba(255,255,255,0.55)">Sin respuesta, sin interacción registrada</td>
+          <td style="color:rgba(255,255,255,0.55)">Continúa en secuencia automática email + LinkedIn</td>
+        </tr>
+        <tr>
+          <td><span class="temp-badge">🌡️ <span style="color:rgba(255,200,50,0.9)">Tibio</span></span></td>
+          <td>Abrió emails, visitó web, interactuó en LinkedIn</td>
+          <td>Invitar al <strong style="color:var(--cta)">evento mensual</strong> (online o presencial)</td>
+        </tr>
+        <tr class="temp-row-caliente">
+          <td><span class="temp-badge">🔥 <span style="color:var(--red)">Caliente</span></span></td>
+          <td>Respondió un mensaje, descargó contenido, asistió a un evento</td>
+          <td><strong style="color:var(--red)">Alerta semanal</strong> a Edu/Gabo → contacto manual esta semana</td>
+        </tr>
+        <tr class="temp-row-muycaliente">
+          <td><span class="temp-badge">🚨 <span style="color:var(--accent)">Muy caliente</span></span></td>
+          <td>Completó autodiagnóstico Revenue Systems, interactuó con demo, preguntó precio</td>
+          <td><strong style="color:var(--accent)">Notificación inmediata</strong> a Edu/Gabo → reunión esa semana</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.7);margin-bottom:16px;">Contenido que produce el equipo GTM para activar el motor</p>
+    <div class="content-grid">
+      <div class="content-card">
+        <p class="content-card-title">🎯 Activa "Muy caliente"</p>
+        <ul>
+          <li>Autodiagnóstico interactivo de Revenue Systems (web)</li>
+          <li>Demo interactiva de Conversia segmentada por industria</li>
+          <li>Calculadora de ROI o simulador de resultados</li>
+        </ul>
+      </div>
+      <div class="content-card">
+        <p class="content-card-title">🔥 Activa "Caliente"</p>
+        <ul>
+          <li>Caso de éxito por vertical (1 por industria, video + PDF)</li>
+          <li>Asistencia a evento mensual (registro = señal de calor)</li>
+          <li>Respuesta a cualquier mensaje de la secuencia</li>
+        </ul>
+      </div>
+      <div class="content-card">
+        <p class="content-card-title">🌡️ Activa "Tibio"</p>
+        <ul>
+          <li>Apertura de 2+ emails en 48h</li>
+          <li>Click en link de email o LinkedIn</li>
+          <li>Visita al sitio web desde empresa en lista ABM</li>
+        </ul>
+      </div>
+      <div class="content-card">
+        <p class="content-card-title">📡 Canales de distribución</p>
+        <ul>
+          <li>Email (secuencias HubSpot) — pain del vertical + casos de éxito</li>
+          <li>LinkedIn orgánico — DMs personalizados vía Surfe</li>
+          <li>LinkedIn patrocinado — retargeting a cuentas calientes</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ MOTOR 2: PIPELINE ═══ -->
+<section class="section s-dark" id="motor2">
+  <div class="container">
+    <div class="motor-header-card cyan">
+      <div class="motor-icon-big">🔄</div>
+      <div class="motor-meta">
+        <p class="motor-num cyan">Motor 2 · 25% de la meta Q2</p>
+        <p class="motor-name">Pipeline Vigente + Deals Perdidos</p>
+        <p class="motor-tagline">Tenemos $1.12M en pipeline. El problema no es cantidad — es calidad y movimiento. Tres campañas en paralelo.</p>
+      </div>
+      <div class="motor-target">
+        <div class="motor-target-num cyan">~$120K</div>
+        <div class="motor-target-lbl">Meta Q2</div>
+      </div>
+    </div>
+
+    <div class="fases">
+      <div class="fase-card fade-up">
+        <div class="fase-num">A</div>
+        <div class="fase-content">
+          <p class="fase-title">Campaña A — Cerrar el pipeline activo Q2</p>
+          <p class="fase-body">De los 58 deals activos, identificar los 15–20 con probabilidad real de cierre este Q2. Criterios: decision maker activo, monto definido, interacción reciente, necesidad confirmada. Asignar a Eduardo o Gabriel según la industria definida en la higiene. Ejecutar con AI-Assisted Selling: pre-meeting brief, call-intel post-reunión, propuesta en &lt;48h.</p>
+        </div>
+        <span class="fase-tag">Pipeline activo</span>
+      </div>
+
+      <div class="fase-card fade-up">
+        <div class="fase-num c">B</div>
+        <div class="fase-content">
+          <p class="fase-title">Campaña B — Recuperar deals en Standby</p>
+          <p class="fase-body">Los deals archivados en la higiene que tienen potencial pero no para Q2 → secuencia de reactivación de 3 pasos. No outbound frío — son contactos que ya nos conocen. Ángulo: caso de éxito reciente en su industria + invitación al evento del mes. Objetivo: moverlos al pipeline activo para Q3.</p>
+        </div>
+        <span class="fase-tag cyan">Standby → Q3</span>
+      </div>
+
+      <div class="fase-card fade-up">
+        <div class="fase-num m">C</div>
+        <div class="fase-content">
+          <p class="fase-title">Campaña C — Recuperar deals perdidos 2024 y 2025</p>
+          <p class="fase-body">Identificar top 20–30 deals perdidos con mayor potencial de recuperación. Criterios: nuevo decision maker, competidor falló, empresa creció, pain sin resolver. Campaña de reconexión 1:1 — LinkedIn DM personal de Edu o Gabo + email personalizado (no secuencia masiva). Ángulo: "Mucho ha cambiado desde nuestra última conversación."</p>
+        </div>
+        <span class="fase-tag m">Deals perdidos</span>
+      </div>
+    </div>
+
+    <div class="callout cyan" style="margin-top:28px">
+      <p>🔑 Todos los deals de este motor se ejecutan con <strong>AI-Assisted Selling</strong>: pre-meeting brief automático antes de cada llamada, HubSpot actualizado en 10 min post-reunión, propuesta lista en &lt;2 horas. El objetivo es pasar de 153 días de ciclo promedio a menos de 60.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ MOTOR 3: EXPANSIÓN ═══ -->
+<section class="section s-alt" id="motor3">
+  <div class="container">
+    <div class="motor-header-card magenta">
+      <div class="motor-icon-big">📈</div>
+      <div class="motor-meta">
+        <p class="motor-num magenta">Motor 3 · 25% de la meta Q2</p>
+        <p class="motor-name">Expansión + Reconversión de Ex-Clientes</p>
+        <p class="motor-tagline">El cliente más barato de vender es el que ya confía en ti. Dos listas, dos campañas distintas.</p>
+      </div>
+      <div class="motor-target">
+        <div class="motor-target-num magenta">~$120K</div>
+        <div class="motor-target-lbl">Meta Q2</div>
+      </div>
+    </div>
+
+    <div class="content-grid">
+      <div class="content-card" style="border-color:rgba(220,50,150,0.2);background:rgba(220,50,150,0.04)">
+        <p class="content-card-title" style="color:var(--accent)">📋 Lista A — Clientes Actuales (Upsell)</p>
+        <ul>
+          <li>Mapear todos los clientes activos: servicio actual, fecha, monto, resultados</li>
+          <li>Identificar la siguiente oportunidad por cuenta: nuevo módulo, nuevo equipo, nuevo proceso</li>
+          <li>Clientes en semana 10–12 de proyecto → proponer retainer antes de que terminen</li>
+          <li>QBR proactivo: no esperar que pregunten, iniciar la conversación estratégica</li>
+          <li>Clientes con HubSpot sin Conversia → propuesta de Conversia como capa de IA</li>
+          <li>Clientes Conversia tier básico → propuesta de upgrade</li>
+        </ul>
+      </div>
+      <div class="content-card" style="border-color:rgba(0,255,150,0.15);background:rgba(0,255,150,0.03)">
+        <p class="content-card-title" style="color:var(--cyan)">🔁 Lista B — Ex-Clientes 2024–2025 (Reconversión)</p>
+        <ul>
+          <li>Mapear todos los proyectos cerrados 2024 y 2025 que hoy no son clientes activos</li>
+          <li>Clasificar por: razón de salida, potencial actual, contacto disponible</li>
+          <li>Campaña personalizada: qué mejoró Impulse + resultados de peers en su industria</li>
+          <li>Canal: LinkedIn DM personal de Edu o Gabo + email 1:1 (nunca secuencia masiva)</li>
+          <li>Eduardo → ex-clientes de Educación y Salud</li>
+          <li>Gabriel → ex-clientes del resto de verticales</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ MOTOR 4: CO-SELL ═══ -->
+<section class="section s-purple" id="motor4">
+  <div class="container">
+    <div class="motor-header-card red">
+      <div class="motor-icon-big">🤝</div>
+      <div class="motor-meta">
+        <p class="motor-num red">Motor 4 · 25% de la meta Q2</p>
+        <p class="motor-name">Co-sell HubSpot Predecible</p>
+        <p class="motor-tagline">La reunión semanal ya existe. El problema es que no está anclada a accountability de ventas. De "reunión de actualización" a motor de generación de negocios.</p>
+      </div>
+      <div class="motor-target">
+        <div class="motor-target-num red">~$120K</div>
+        <div class="motor-target-lbl">Meta Q2</div>
+      </div>
+    </div>
+
+    <div class="reunion-grid">
+      <div class="reunion-card red">
+        <p class="reunion-card-label red">❌ Cómo es hoy</p>
+        <p class="reunion-card-title">Reunión semanal sin estructura de ventas</p>
+        <ul>
+          <li>Sin meta compartida de deals co-sell</li>
+          <li>Sin visibility del pipeline de HubSpot</li>
+          <li>Sin proceso claro de traspaso de leads</li>
+          <li>Sin accountability de números</li>
+          <li>Generación de deals al azar, no predecible</li>
+        </ul>
+      </div>
+      <div class="reunion-card green">
+        <p class="reunion-card-label" style="color:var(--cta)">✅ Cómo debe ser desde Q2</p>
+        <p class="reunion-card-title">Reunión de co-sell rediseñada</p>
+        <ul>
+          <li>Meta compartida Q2 acordada con el PDM desde semana 1</li>
+          <li>¿Qué cuentas nuevas de HubSpot entran en nuestro ICP esta semana?</li>
+          <li>¿Qué deals co-sell avanzaron? ¿Cuáles están bloqueados?</li>
+          <li>¿Qué demos o propuestas preparamos juntos esta semana?</li>
+          <li>Revisión mensual de avance vs. meta compartida</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="fases">
+      <div class="fase-card fade-up">
+        <div class="fase-num" style="background:rgba(255,87,51,0.1);color:var(--red)">1</div>
+        <div class="fase-content">
+          <p class="fase-title">Semana 1 — Kickoff con el PDM</p>
+          <p class="fase-body">Reunión de kickoff para presentar el rediseño. Acordar la meta compartida de deals co-sell para Q2. Definir el ICP de cuentas que nos pasa HubSpot. Establecer el SLA de respuesta (&lt;24h cuando HubSpot pasa un lead).</p>
+        </div>
+        <span class="fase-tag red">Semana 1</span>
+      </div>
+      <div class="fase-card fade-up">
+        <div class="fase-num" style="background:rgba(255,87,51,0.1);color:var(--red)">2</div>
+        <div class="fase-content">
+          <p class="fase-title">Semana 2 — Pipeline compartido activo</p>
+          <p class="fase-body">Acordar el pipeline compartido y el proceso formal de traspaso de leads. Todos los deals co-sell en "Pipeline de Ventas Compartidas de HubSpot" — sin excepción. Primer listado de cuentas activas de HubSpot que entran en nuestro ICP.</p>
+        </div>
+        <span class="fase-tag red">Semana 2</span>
+      </div>
+      <div class="fase-card fade-up">
+        <div class="fase-num" style="background:rgba(255,87,51,0.1);color:var(--red)">3</div>
+        <div class="fase-content">
+          <p class="fase-title">Semana 3 en adelante — Ritmo semanal</p>
+          <p class="fase-body">Reunión semanal rediseñada con agenda fija. Revisión mensual de meta compartida. HubSpot co-organiza eventos con Impulse para visibilidad con sus cuentas. Meta: hacer el co-sell el canal más eficiente de Q2 (menor costo de adquisición, mayor velocidad de cierre).</p>
+        </div>
+        <span class="fase-tag red">Semanal</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ PROCESO TRANSVERSAL: AI-ASSISTED SELLING ═══ -->
+<section class="section s-dark">
+  <div class="container">
+    <div class="accent-bar cyan"></div>
+    <p class="eyebrow cyan">Proceso Transversal 1</p>
+    <h2 class="section-h2">AI-Assisted Selling: de <em>153 → &lt;60 días</em></h2>
+    <p class="section-intro">No es un motor de generación. Es cómo operamos los 4 motores para comprimir el ciclo de ventas a menos de 60 días.</p>
+
+    <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden;margin-bottom:32px;">
+      <table class="trans-table" style="width:100%">
+        <thead>
+          <tr>
+            <th>Momento</th>
+            <th style="color:rgba(255,87,51,0.7)">❌ Proceso hoy</th>
+            <th style="color:var(--cta)">✅ Con AI-Assisted Selling</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:600;color:#fff">Antes de cada reunión</td>
+            <td class="td-before">Discovery sin contexto previo</td>
+            <td class="td-after">Pre-meeting brief automático <em style="color:rgba(255,255,255,0.4)">(call-prep)</em></td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;color:#fff">Después de cada reunión</td>
+            <td class="td-before">Sin notas o apuntes manuales que se pierden</td>
+            <td class="td-after">Fireflies → HubSpot actualizado en 10 min <em style="color:rgba(255,255,255,0.4)">(call-intel)</em></td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;color:#fff">Propuesta</td>
+            <td class="td-before">5–7 días desde el discovery</td>
+            <td class="td-after">Primer borrador en &lt;2 horas <em style="color:rgba(255,255,255,0.4)">(deal-strategist)</em></td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;color:#fff">Follow-up</td>
+            <td class="td-before">Por memoria — deals mueren en silencio</td>
+            <td class="td-after">Trigger automático por comportamiento del prospecto</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;color:#fff">Deal sin movimiento</td>
+            <td class="td-before">Nadie lo nota hasta que ya murió</td>
+            <td class="td-after">Alerta automática a los 14 días sin actividad</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;color:#fff">Demo</td>
+            <td class="td-before">Demo genérica, sin contexto del cliente</td>
+            <td class="td-after">Demo personalizada por vertical, lista en 30 min <em style="color:rgba(255,255,255,0.4)">(demo-builder)</em></td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;color:#fff">Cierre</td>
+            <td class="td-before">Contrato manual + handoff lento a operaciones</td>
+            <td class="td-after">Contrato + handoff automático a operaciones <em style="color:rgba(255,255,255,0.4)">(contract-handoff)</em></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ PROCESO TRANSVERSAL: EVENTOS ═══ -->
+<section class="section s-green">
+  <div class="container">
+    <div class="accent-bar"></div>
+    <p class="eyebrow">Proceso Transversal 2</p>
+    <h2 class="section-h2">Eventos Mensuales: el <em>madurador de temperatura</em></h2>
+    <p class="section-intro">Un evento bien ejecutado mueve un lead de tibio a caliente en un solo día. Son el acelerador de todos los motores, no un canal independiente.</p>
+
+    <div class="content-grid" style="margin-bottom:28px">
+      <div class="content-card">
+        <p class="content-card-title">📅 Cadencia mínima Q2</p>
+        <ul>
+          <li>1 evento online al mes (webinar, masterclass, panel)</li>
+          <li>1 evento presencial por trimestre</li>
+          <li>HubSpot co-organiza al menos 1 evento del Q2</li>
+        </ul>
+      </div>
+      <div class="content-card">
+        <p class="content-card-title">🎯 Temáticas del ICP</p>
+        <ul>
+          <li>Revenue Systems — cómo construir ingresos predecibles</li>
+          <li>AI en Ventas — automatización sin perder el toque humano</li>
+          <li>HubSpot Best Practices — casos reales de implementación</li>
+        </ul>
+      </div>
+    </div>
+
+    <p style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.7);margin-bottom:16px;">Cómo alimenta cada motor</p>
+    <div class="eventos-grid">
+      <div class="evento-motor-card">
+        <div class="evento-motor-icon">🎯</div>
+        <p class="evento-motor-title" style="color:var(--cta)">Motor 1 — ABM</p>
+        <p class="evento-motor-desc">Los tibios reciben invitación → asisten → suben a calientes automáticamente</p>
+      </div>
+      <div class="evento-motor-card">
+        <div class="evento-motor-icon">🔄</div>
+        <p class="evento-motor-title" style="color:var(--cyan)">Motor 2 — Pipeline</p>
+        <p class="evento-motor-desc">Deals en standby reciben invitación → reactivación natural sin contacto directo</p>
+      </div>
+      <div class="evento-motor-card">
+        <div class="evento-motor-icon">📈</div>
+        <p class="evento-motor-title" style="color:var(--accent)">Motor 3 — Expansión</p>
+        <p class="evento-motor-desc">Clientes actuales son speakers o casos de éxito → fortalece relación + genera referidos</p>
+      </div>
+      <div class="evento-motor-card">
+        <div class="evento-motor-icon">🤝</div>
+        <p class="evento-motor-title" style="color:var(--red)">Motor 4 — Co-sell</p>
+        <p class="evento-motor-desc">HubSpot co-organiza → visibilidad con sus cuentas + credibilidad con el PDM</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ SCORECARD ═══ -->
+<section class="section s-dark" id="scorecard">
+  <div class="container">
+    <div class="accent-bar"></div>
+    <p class="eyebrow">Scorecard Q2 2026</p>
+    <h2 class="section-h2">Los números que <em>gobiernan el trimestre</em></h2>
+    <p class="section-intro">Meta total Q2: $479,790 — Impulse $335,221 + Conversia $144,570</p>
+
+    <div class="scorecard-grid">
+      <div class="score-card m1">
+        <div class="score-header">
+          <span class="score-icon">🎯</span>
+          <span class="score-pct green">~$120K</span>
+        </div>
+        <p class="score-title">Motor 1 — ABM</p>
+        <p class="score-sub">50 cuentas nuevas/semana por closer. Temperatura activa desde el primer contacto. Calientes y muy calientes → Edu/Gabo en persona.</p>
+        <div class="score-kpi"><p class="score-kpi-label">KPI Semanal</p><p class="score-kpi-val">100 cuentas enrolladas · alertas de calientes enviadas</p></div>
+        <p class="score-owner">Equipo GTM ejecuta · Edu/Gabo actúan en calientes</p>
+      </div>
+
+      <div class="score-card m2">
+        <div class="score-header">
+          <span class="score-icon">🔄</span>
+          <span class="score-pct cyan">~$120K</span>
+        </div>
+        <p class="score-title">Motor 2 — Pipeline</p>
+        <p class="score-sub">Campaña A (activos), B (standby) y C (perdidos 24/25) en paralelo. Solo 15–20 deals con viabilidad real Q2.</p>
+        <div class="score-kpi"><p class="score-kpi-label">KPI Semanal</p><p class="score-kpi-val">0 deals sin actividad +14 días</p></div>
+        <p class="score-owner">Gabriel lidera higiene · Edu/Gabo cierran</p>
+      </div>
+
+      <div class="score-card m3">
+        <div class="score-header">
+          <span class="score-icon">📈</span>
+          <span class="score-pct magenta">~$120K</span>
+        </div>
+        <p class="score-title">Motor 3 — Expansión</p>
+        <p class="score-sub">Clientes actuales (upsell/retainer) + ex-clientes 2024–2025 (reconversión). El canal de menor costo de adquisición.</p>
+        <div class="score-kpi"><p class="score-kpi-label">KPI Semanal</p><p class="score-kpi-val">1 plan de expansión generado por cliente activo</p></div>
+        <p class="score-owner">Edu → Educación/Salud · Gabo → resto de verticales</p>
+      </div>
+
+      <div class="score-card m4">
+        <div class="score-header">
+          <span class="score-icon">🤝</span>
+          <span class="score-pct red">~$120K</span>
+        </div>
+        <p class="score-title">Motor 4 — Co-sell HubSpot</p>
+        <p class="score-sub">Meta compartida con PDM desde semana 1. Reunión rediseñada a generación de negocios. Pipeline co-sell activo y visible.</p>
+        <div class="score-kpi"><p class="score-kpi-label">KPI Semanal</p><p class="score-kpi-val">Pipeline co-sell actualizado antes de cada reunión</p></div>
+        <p class="score-owner">Gabriel gestiona PDM · Edu cierra los deals</p>
+      </div>
+    </div>
+
+    <!-- Tabla de metas anuales -->
+    <p style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.7);margin-bottom:16px;">Contexto anual — Metas 2026</p>
+    <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:14px;overflow:hidden;">
+      <table style="width:100%;border-collapse:collapse;">
+        <thead>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.08)">
+            <th style="padding:12px 18px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:rgba(255,255,255,0.4);text-align:left">Unidad</th>
+            <th style="padding:12px 18px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:rgba(255,255,255,0.4)">Q1 Real</th>
+            <th style="padding:12px 18px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--cta)">Q2 Meta</th>
+            <th style="padding:12px 18px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:rgba(255,255,255,0.4)">Q3 Meta</th>
+            <th style="padding:12px 18px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:rgba(255,255,255,0.4)">Q4 Meta</th>
+            <th style="padding:12px 18px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:rgba(255,255,255,0.4)">Total 2026</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.05)">
+            <td style="padding:12px 18px;font-weight:700;color:#fff">Impulse (servicios)</td>
+            <td style="padding:12px 18px;font-size:14px;color:rgba(255,87,51,0.9)">$121,979 <span style="font-size:11px;opacity:0.6">(56%)</span></td>
+            <td style="padding:12px 18px;font-size:14px;font-weight:700;color:var(--cta)">$335,221</td>
+            <td style="padding:12px 18px;font-size:14px;color:rgba(255,255,255,0.6)">$290,524</td>
+            <td style="padding:12px 18px;font-size:14px;color:rgba(255,255,255,0.6)">$290,524</td>
+            <td style="padding:12px 18px;font-size:14px;font-weight:700;color:rgba(255,255,255,0.85)">$1,132,300</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.05)">
+            <td style="padding:12px 18px;font-weight:700;color:#fff">Conversia (licencias)</td>
+            <td style="padding:12px 18px;font-size:14px;color:var(--cta)">$95,765 <span style="font-size:11px;opacity:0.6">(99%)</span></td>
+            <td style="padding:12px 18px;font-size:14px;font-weight:700;color:var(--cta)">$144,570</td>
+            <td style="padding:12px 18px;font-size:14px;color:rgba(255,255,255,0.6)">$144,570</td>
+            <td style="padding:12px 18px;font-size:14px;color:rgba(255,255,255,0.6)">$144,570</td>
+            <td style="padding:12px 18px;font-size:14px;font-weight:700;color:rgba(255,255,255,0.85)">$530,090</td>
+          </tr>
+          <tr>
+            <td style="padding:12px 18px;font-weight:800;color:#fff">Total</td>
+            <td style="padding:12px 18px;font-size:14px;font-weight:700;color:rgba(255,255,255,0.7)">$217,744</td>
+            <td style="padding:12px 18px;font-size:16px;font-weight:800;color:var(--cta)">$479,790</td>
+            <td style="padding:12px 18px;font-size:14px;color:rgba(255,255,255,0.6)">$435,094</td>
+            <td style="padding:12px 18px;font-size:14px;color:rgba(255,255,255,0.6)">$435,094</td>
+            <td style="padding:12px 18px;font-size:14px;font-weight:800;color:#fff">$1,662,390</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+<!-- FINAL BANNER -->
+<section class="final-banner">
+  <h2>Q2 es el trimestre que construye<br><em>la máquina</em>.</h2>
+  <p>Fundamento limpio. 4 motores activos. 2 procesos transversales.<br>El crecimiento deja de depender de la memoria de dos personas.</p>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>Impulse + Conversia</strong> · Plan Comercial Q2 2026 · Uso interno equipo GTM</p>
+  <p>Basado en HubSpot CRM · Pipeline real · Metas Plan Estratégico 2026</p>
+  <p style="color:rgba(255,255,255,0.25)">Confidencial</p>
+</footer>
+
+<script>
+  // Fade-up on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-up, .check-item, .fase-card, .score-card, .content-card, .evento-motor-card').forEach(el => {
+    el.classList.add('fade-up');
+    observer.observe(el);
+  });
+
+  // Active nav link
+  const sections = document.querySelectorAll('section[id]');
+  const links = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let cur = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 80) cur = s.id; });
+    links.forEach(l => { l.style.color = l.getAttribute('href') === `#${cur}` ? '#78F05A' : 'rgba(255,255,255,0.5)'; });
+  });
+</script>
+
+</body>
+</html>
