@@ -1,0 +1,3960 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informe QA — Agente Aura | Auna Salud</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --primary-color: #0D9488;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        .primary-text { color: var(--primary-color); }
+        .primary-bg { background-color: var(--primary-color); }
+
+        .circular-gauge-container {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            margin: 0 auto;
+        }
+
+        .circular-gauge {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(#10b981 0deg 324deg, #e5e7eb 324deg 360deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 0 0 16px white;
+        }
+
+        .gauge-value {
+            font-size: 48px;
+            font-weight: bold;
+            color: #0D9488;
+        }
+
+        .gauge-text {
+            font-size: 12px;
+            color: #6B7280;
+        }
+
+        .severity-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .severity-critica {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        .severity-alta {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .severity-media {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+
+        .severity-info {
+            background-color: #e0f2fe;
+            color: #0c4a6e;
+        }
+
+        .dimension-bar {
+            height: 12px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dimension-bar.color-green { background: linear-gradient(90deg, #10b981 0%, #34d399 100%); }
+        .dimension-bar.color-yellow { background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%); }
+        .dimension-bar.color-orange { background: linear-gradient(90deg, #f97316 0%, #fb923c 100%); }
+        .dimension-bar.color-red { background: linear-gradient(90deg, #ef4444 0%, #f87171 100%); }
+
+        .conversation-row {
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .conversation-row:hover {
+            background-color: #f0f9f8;
+            border-left-color: var(--primary-color);
+        }
+
+        .finding-item {
+            padding: 12px;
+            border-left: 4px solid #d1d5db;
+            background: #f9fafb;
+            margin-bottom: 8px;
+            border-radius: 4px;
+        }
+
+        .finding-positive {
+            border-left-color: #10b981;
+            background-color: #f0fdf4;
+        }
+
+        .finding-warning {
+            border-left-color: #f59e0b;
+            background-color: #fffbeb;
+        }
+
+        .finding-error {
+            border-left-color: #ef4444;
+            background-color: #fef2f2;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        @media (max-width: 768px) {
+            .grid-kpi {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="min-h-screen">
+        <!-- HEADER -->
+        <header class="primary-bg text-white py-8 px-4 md:px-8">
+            <div class="max-w-7xl mx-auto">
+                <h1 class="text-3xl md:text-4xl font-bold mb-2">Informe QA — Agente Aura</h1>
+                <p class="text-lg md:text-xl mb-6">Auna Salud</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+                    <div>
+                        <p class="text-teal-100 text-xs uppercase tracking-wide">Período</p>
+                        <p class="text-lg font-semibold">01–09 Abril 2026</p>
+                    </div>
+                    <div>
+                        <p class="text-teal-100 text-xs uppercase tracking-wide">Versión QA</p>
+                        <p class="text-lg font-semibold">QA Conversia v1.0</p>
+                    </div>
+                    <div>
+                        <p class="text-teal-100 text-xs uppercase tracking-wide">Fecha Evaluación</p>
+                        <p class="text-lg font-semibold">09 Abril 2026</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN CONTENT -->
+        <main class="max-w-7xl mx-auto px-4 md:px-8 py-10">
+
+            <!-- KPI CARDS -->
+            <section class="mb-12">
+                <h2 class="text-2xl font-bold mb-6 primary-text">Métricas Principales</h2>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 grid-kpi">
+                    <!-- Score Promedio Card -->
+                    <div class="bg-white rounded-lg shadow p-8 text-center">
+                        <p class="text-gray-600 text-sm uppercase tracking-wide mb-4">Score Promedio</p>
+                        <div class="circular-gauge-container">
+                            <div class="circular-gauge">
+                                <div class="text-center">
+                                    <div class="gauge-value">90.0</div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-lg font-semibold text-gray-900 mt-4">Excelente</p>
+                    </div>
+
+                    <!-- Total Conversaciones Card -->
+                    <div class="bg-white rounded-lg shadow p-8">
+                        <p class="text-gray-600 text-sm uppercase tracking-wide mb-4">Total Conversaciones</p>
+                        <p class="text-5xl font-bold primary-text mb-2">29</p>
+                        <p class="text-gray-600 text-sm">Evaluadas en el período</p>
+                    </div>
+
+                    <!-- Excelentes Card -->
+                    <div class="bg-white rounded-lg shadow p-8">
+                        <p class="text-gray-600 text-sm uppercase tracking-wide mb-4">Excelentes</p>
+                        <div class="flex items-end gap-3">
+                            <p class="text-5xl font-bold text-green-600">18</p>
+                            <p class="text-2xl font-semibold text-gray-600 mb-1">62%</p>
+                        </div>
+                        <div class="bg-gray-200 h-2 rounded-full mt-4">
+                            <div class="bg-green-600 h-full rounded-full" style="width: 62%;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Buenos Card -->
+                    <div class="bg-white rounded-lg shadow p-8">
+                        <p class="text-gray-600 text-sm uppercase tracking-wide mb-4">Buenos</p>
+                        <div class="flex items-end gap-3">
+                            <p class="text-5xl font-bold text-amber-600">11</p>
+                            <p class="text-2xl font-semibold text-gray-600 mb-1">38%</p>
+                        </div>
+                        <div class="bg-gray-200 h-2 rounded-full mt-4">
+                            <div class="bg-amber-600 h-full rounded-full" style="width: 38%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DIMENSION BARS -->
+            <section class="mb-12">
+                <h2 class="text-2xl font-bold mb-6 primary-text">Scores por Dimensión</h2>
+                <div class="bg-white rounded-lg shadow p-8">
+                    <div id="dimensionBarsContainer" class="space-y-6">
+                        <!-- Generated by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- TOP ERRORES -->
+            <section class="mb-12">
+                <h2 class="text-2xl font-bold mb-6 primary-text">Top 10 Errores Más Frecuentes</h2>
+                <div class="bg-white rounded-lg shadow p-8 table-container">
+                    <table id="erroresTable" class="w-full">
+                        <thead>
+                            <tr>
+                                <th class="text-left py-3 px-4 border-b">Error</th>
+                                <th class="text-center py-3 px-4 border-b">Frecuencia</th>
+                                <th class="text-center py-3 px-4 border-b">Severidad</th>
+                                <th class="text-center py-3 px-4 border-b">Dimensión</th>
+                            </tr>
+                        </thead>
+                        <tbody id="erroresTableBody">
+                            <!-- Generated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- CONVERSATIONS TABLE -->
+            <section class="mb-12">
+                <h2 class="text-2xl font-bold mb-6 primary-text">Evaluación de Conversaciones</h2>
+                <div class="bg-white rounded-lg shadow overflow-hidden table-container">
+                    <table id="conversationsTable" class="w-full">
+                        <thead>
+                            <tr class="bg-gray-100 border-b">
+                                <th class="px-6 py-4 text-left font-semibold text-sm">Contacto</th>
+                                <th class="px-6 py-4 text-left font-semibold text-sm">Canal</th>
+                                <th class="px-6 py-4 text-left font-semibold text-sm">Estado</th>
+                                <th class="px-6 py-4 text-center font-semibold text-sm">Score</th>
+                                <th class="px-6 py-4 text-left font-semibold text-sm">Clasificación</th>
+                                <th class="px-6 py-4 text-center font-semibold text-sm">Mensajes</th>
+                                <th class="px-6 py-4 text-center font-semibold text-sm">Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="conversationsTableBody">
+                            <!-- Generated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- EXPANDED CONVERSATION DETAIL -->
+            <div id="expansionContainer" class="hidden mb-12"></div>
+
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="bg-gray-900 text-gray-400 py-8 px-4 md:px-8 text-center text-sm mt-12">
+            <p>Informe automático generado por QA Conversia v1.0 — Auna Salud © 2026</p>
+        </footer>
+    </div>
+
+    <!-- EMBEDDED DATA AS JS VARIABLE -->
+    <script id="qa-data-script">
+        const qaData = {
+  "metadata": {
+    "agente": "Aura — Auna Salud",
+    "periodo": "01-09 Abril 2026",
+    "fecha_evaluacion": "2026-04-09T12:28:14.504835",
+    "modelo_version": "QA Conversia v1.0",
+    "dimensiones": {
+      "flow": {"nombre": "Cumplimiento del Flow", "peso": 0.25},
+      "protocolos": {"nombre": "Cumplimiento de Protocolos", "peso": 0.2},
+      "precision": {"nombre": "Precisión de Información", "peso": 0.15},
+      "constitucion": {"nombre": "Constitución y Tono", "peso": 0.15},
+      "formato": {"nombre": "Formato y UX Writing", "peso": 0.1},
+      "validaciones": {"nombre": "Validaciones y Guardrails", "peso": 0.1},
+      "logica_negocio": {"nombre": "Lógica de Negocio", "peso": 0.05}
+    }
+  },
+  "resumen": {
+    "total_conversaciones": 29,
+    "score_promedio": 90.0,
+    "score_min": 81.0,
+    "score_max": 96.2,
+    "distribucion_clasificacion": {"Excelente": 18, "Bueno": 11},
+    "promedios_por_dimension": {
+      "flow": {"nombre": "Cumplimiento del Flow", "promedio": 73.8, "min": 35, "max": 100},
+      "protocolos": {"nombre": "Cumplimiento de Protocolos", "promedio": 96.2, "min": 70, "max": 100},
+      "precision": {"nombre": "Precisión de Información", "promedio": 97.6, "min": 90, "max": 100},
+      "constitucion": {"nombre": "Constitución y Tono", "promedio": 93.2, "min": 82, "max": 100},
+      "formato": {"nombre": "Formato y UX Writing", "promedio": 94.1, "min": 70, "max": 100},
+      "validaciones": {"nombre": "Validaciones y Guardrails", "promedio": 97.4, "min": 75, "max": 100},
+      "logica_negocio": {"nombre": "Lógica de Negocio", "promedio": 91.0, "min": 40, "max": 100}
+    },
+    "top_errores": [
+      {"error": "Flow incompleto antes de transferencia", "count": 16, "severidad": "alta", "dimension": "flow"},
+      {"error": "Transferencia sin documento del titular", "count": 9, "severidad": "alta", "dimension": "flow"},
+      {"error": "1 mensajes excesivamente largos (>500 chars)", "count": 7, "severidad": "media", "dimension": "formato"},
+      {"error": "Falta \"desde\" en precio", "count": 5, "severidad": "media", "dimension": "protocolos"},
+      {"error": "Muletillas frecuentes (1/2 mensajes)", "count": 5, "severidad": "media", "dimension": "constitucion"},
+      {"error": "Flow parcialmente completo", "count": 4, "severidad": "media", "dimension": "flow"},
+      {"error": "Precio sospechoso: S/40.0", "count": 4, "severidad": "alta", "dimension": "precision"},
+      {"error": "Solicitud de dato sensible: \"clave\"", "count": 3, "severidad": "critica", "dimension": "validaciones"},
+      {"error": "Plan incorrecto: recomendó senior, debió ser classic", "count": 3, "severidad": "critica", "dimension": "logica_negocio"},
+      {"error": "Transferencia sin sensibilidad de precio", "count": 3, "severidad": "critica", "dimension": "flow"}
+    ]
+  },
+  "evaluaciones": [
+  {
+    "conversacion_id": "cb0e9e8f-7f2e-490f-8f24-d344211aefb9",
+    "contacto": "Luis Matias Peña",
+    "canal": "infobip",
+    "status": "active",
+    "fecha_inicio": "2026-04-09 08:31:45",
+    "total_mensajes": 19,
+    "mensajes_usuario": 9,
+    "mensajes_agente": 10,
+    "score_global": 92.0,
+    "clasificacion": "Excelente",
+    "scores_dimension": {
+      "flow": {
+        "nombre": "Cumplimiento del Flow",
+        "score": 85,
+        "peso": 0.25,
+        "ponderado": 21.2
+      },
+      "protocolos": {
+        "nombre": "Cumplimiento de Protocolos",
+        "score": 90,
+        "peso": 0.2,
+        "ponderado": 18.0
+      },
+      "precision": {
+        "nombre": "Precisión de Información",
+        "score": 90,
+        "peso": 0.15,
+        "ponderado": 13.5
+      },
+      "constitucion": {
+        "nombre": "Constitución y Tono",
+        "score": 100,
+        "peso": 0.15,
+        "ponderado": 15.0
+      },
+      "formato": {
+        "nombre": "Formato y UX Writing",
+        "score": 92,
+        "peso": 0.1,
+        "ponderado": 9.2
+      },
+      "validaciones": {
+        "nombre": "Validaciones y Guardrails",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "logica_negocio": {
+        "nombre": "Lógica de Negocio",
+        "score": 100,
+        "peso": 0.05,
+        "ponderado": 5.0
+      }
+    },
+    "hallazgos": [
+      {
+        "dimension": "flow",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Apertura correcta",
+        "detalle": "El agente se identifica como Aura de Auna Salud en el primer mensaje.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "flow",
+        "tipo": "advertencia",
+        "severidad": "alta",
+        "titulo": "Transferencia sin documento del titular",
+        "detalle": "El agente transfirió sin capturar TipoDocumento + Documento del titular.",
+        "regla_violada": "ST4 Regla Crítica #3: No transferir sin TipoDocumento + Documento.",
+        "como_resolver": "Agregar verificación de documento antes de ejecutar transferencia."
+      },
+      {
+        "dimension": "protocolos",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Precio referencial entregado",
+        "detalle": "El agente respondió con un precio referencial cuando el usuario lo solicitó.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "protocolos",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "Falta \"desde\" en precio",
+        "detalle": "El precio referencial no usó la palabra \"desde\" como prefijo.",
+        "regla_violada": "Protocolo de Precios: Siempre usar \"desde\" y resaltar el monto en negrita.",
+        "como_resolver": "Ajustar el formato de entrega de precio a \"desde S/ [Monto]\"."
+      },
+      {
+        "dimension": "protocolos",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Frase legal de precio incluida",
+        "detalle": "Se incluyó correctamente la frase referencial del precio.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "protocolos",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Campaña vigente comunicada",
+        "detalle": "Se comunicó el descuento de la campaña vigente.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "precision",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "Nomenclatura incorrecta: \"piura\"",
+        "detalle": "Se mencionó \"piura\" sin anteponer \"Clínica Auna\".",
+        "regla_violada": "Constitución: Nomenclatura de Red: Anteponer siempre \"Clínica\" o \"Clínica Auna\".",
+        "como_resolver": "Usar siempre \"Clínica Auna Piura\" en lugar de solo \"piura\"."
+      },
+      {
+        "dimension": "formato",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "1 mensajes excesivamente largos (>500 chars)",
+        "detalle": "Algunos mensajes superan la longitud recomendada.",
+        "regla_violada": "Constitución S07: Guía 220-320 caracteres, máx 450 en precios.",
+        "como_resolver": "Recortar mensajes a 2-3 líneas con una idea principal por turno."
+      },
+      {
+        "dimension": "formato",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Uso correcto de negritas en precios",
+        "detalle": "Los precios y planes están resaltados en negritas.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "logica_negocio",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Plan correcto: classic",
+        "detalle": "El plan recomendado es coherente con edad=20, ciudad=piura, distrito=.",
+        "regla_violada": "",
+        "como_resolver": ""
+      }
+    ],
+    "metadata": {
+      "lead_score": "0.81",
+      "lead_qualified": "Very Hot",
+      "city": "Piura",
+      "distrito": "",
+      "edad": "20",
+      "programas": ""
+    }
+  },
+  {
+    "conversacion_id": "94828efa-5b74-46db-85bf-ecd4dd10999a",
+    "contacto": "Bluestar Pacheco",
+    "canal": "infobip",
+    "status": "transferred",
+    "fecha_inicio": "2026-04-09 03:33:38",
+    "total_mensajes": 8,
+    "mensajes_usuario": 3,
+    "mensajes_agente": 4,
+    "score_global": 96.2,
+    "clasificacion": "Excelente",
+    "scores_dimension": {
+      "flow": {
+        "nombre": "Cumplimiento del Flow",
+        "score": 85,
+        "peso": 0.25,
+        "ponderado": 21.2
+      },
+      "protocolos": {
+        "nombre": "Cumplimiento de Protocolos",
+        "score": 100,
+        "peso": 0.2,
+        "ponderado": 20.0
+      },
+      "precision": {
+        "nombre": "Precisión de Información",
+        "score": 100,
+        "peso": 0.15,
+        "ponderado": 15.0
+      },
+      "constitucion": {
+        "nombre": "Constitución y Tono",
+        "score": 100,
+        "peso": 0.15,
+        "ponderado": 15.0
+      },
+      "formato": {
+        "nombre": "Formato y UX Writing",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "validaciones": {
+        "nombre": "Validaciones y Guardrails",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "logica_negocio": {
+        "nombre": "Lógica de Negocio",
+        "score": 100,
+        "peso": 0.05,
+        "ponderado": 5.0
+      }
+    },
+    "hallazgos": [
+      {
+        "dimension": "flow",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Apertura correcta",
+        "detalle": "El agente se identifica como Aura de Auna Salud en el primer mensaje.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "flow",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "Flow parcialmente completo",
+        "detalle": "Se completaron 3/5 pasos. Faltaron algunos pasos antes de transferir.",
+        "regla_violada": "Debe completar: Registro → Perfil → Recomendación → Calificación → Transferencia",
+        "como_resolver": "Verificar que el agente no saltó estados intermedios."
+      },
+      {
+        "dimension": "formato",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Uso correcto de negritas en precios",
+        "detalle": "Los precios y planes están resaltados en negritas.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "logica_negocio",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Plan correcto: premium",
+        "detalle": "El plan recomendado es coherente con edad=57, ciudad=lima, distrito=miraflores.",
+        "regla_violada": "",
+        "como_resolver": ""
+      }
+    ],
+    "metadata": {
+      "lead_score": "0.11",
+      "lead_qualified": "Cold",
+      "city": "Lima",
+      "distrito": "Miraflores",
+      "edad": "57",
+      "programas": ""
+    }
+  },
+  {
+    "conversacion_id": "9715f822-5129-4121-a6c4-2a762b6fb5fd",
+    "contacto": "Omar Zapata",
+    "canal": "infobip",
+    "status": "transferred",
+    "fecha_inicio": "2026-04-09 02:08:38",
+    "total_mensajes": 2,
+    "mensajes_usuario": 1,
+    "mensajes_agente": 1,
+    "score_global": 91.0,
+    "clasificacion": "Excelente",
+    "scores_dimension": {
+      "flow": {
+        "nombre": "Cumplimiento del Flow",
+        "score": 70,
+        "peso": 0.25,
+        "ponderado": 17.5
+      },
+      "protocolos": {
+        "nombre": "Cumplimiento de Protocolos",
+        "score": 100,
+        "peso": 0.2,
+        "ponderado": 20.0
+      },
+      "precision": {
+        "nombre": "Precisión de Información",
+        "score": 100,
+        "peso": 0.15,
+        "ponderado": 15.0
+      },
+      "constitucion": {
+        "nombre": "Constitución y Tono",
+        "score": 90,
+        "peso": 0.15,
+        "ponderado": 13.5
+      },
+      "formato": {
+        "nombre": "Formato y UX Writing",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "validaciones": {
+        "nombre": "Validaciones y Guardrails",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "logica_negocio": {
+        "nombre": "Lógica de Negocio",
+        "score": 100,
+        "peso": 0.05,
+        "ponderado": 5.0
+      }
+    },
+    "hallazgos": [
+      {
+        "dimension": "flow",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Apertura correcta",
+        "detalle": "El agente se identifica como Aura de Auna Salud en el primer mensaje.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "flow",
+        "tipo": "error",
+        "severidad": "alta",
+        "titulo": "Flow incompleto antes de transferencia",
+        "detalle": "Solo se completaron 0/5 pasos antes de transferir.",
+        "regla_violada": "El agente debe completar todos los estados antes de transferir.",
+        "como_resolver": "Reforzar las condiciones de transición entre estados."
+      },
+      {
+        "dimension": "constitucion",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "Uso excesivo del nombre \"Omar\" (1 veces)",
+        "detalle": "El nombre del usuario se usa con demasiada frecuencia.",
+        "regla_violada": "Constitución S02: Uso del Nombre Anti-bot: Solo al inicio, en fricción/duda y al cerrar. Evitar muletilla.",
+        "como_resolver": "Usar el nombre solo 1 vez cada 6-8 turnos."
+      }
+    ],
+    "metadata": {
+      "lead_score": "",
+      "lead_qualified": "",
+      "city": "LIMA",
+      "distrito": "SAN LUIS",
+      "edad": "41",
+      "programas": ""
+    }
+  },
+  {
+    "conversacion_id": "7ddc05ca-4ec3-47a5-ba96-0f26d9cea09d",
+    "contacto": "Jesús Scipión",
+    "canal": "infobip",
+    "status": "transferred",
+    "fecha_inicio": "2026-04-08 23:39:01",
+    "total_mensajes": 15,
+    "mensajes_usuario": 7,
+    "mensajes_agente": 8,
+    "score_global": 87.7,
+    "clasificacion": "Bueno",
+    "scores_dimension": {
+      "flow": {
+        "nombre": "Cumplimiento del Flow",
+        "score": 85,
+        "peso": 0.25,
+        "ponderado": 21.2
+      },
+      "protocolos": {
+        "nombre": "Cumplimiento de Protocolos",
+        "score": 100,
+        "peso": 0.2,
+        "ponderado": 20.0
+      },
+      "precision": {
+        "nombre": "Precisión de Información",
+        "score": 100,
+        "peso": 0.15,
+        "ponderado": 15.0
+      },
+      "constitucion": {
+        "nombre": "Constitución y Tono",
+        "score": 90,
+        "peso": 0.15,
+        "ponderado": 13.5
+      },
+      "formato": {
+        "nombre": "Formato y UX Writing",
+        "score": 84,
+        "peso": 0.1,
+        "ponderado": 8.4
+      },
+      "validaciones": {
+        "nombre": "Validaciones y Guardrails",
+        "score": 75,
+        "peso": 0.1,
+        "ponderado": 7.5
+      },
+      "logica_negocio": {
+        "nombre": "Lógica de Negocio",
+        "score": 40,
+        "peso": 0.05,
+        "ponderado": 2.0
+      }
+    },
+    "hallazgos": [
+      {
+        "dimension": "flow",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Apertura correcta",
+        "detalle": "El agente se identifica como Aura de Auna Salud en el primer mensaje.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "flow",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Flow completo hasta transferencia",
+        "detalle": "Se completaron 5/5 pasos principales del flow.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "flow",
+        "tipo": "advertencia",
+        "severidad": "alta",
+        "titulo": "Transferencia sin documento del titular",
+        "detalle": "El agente transfirió sin capturar TipoDocumento + Documento del titular.",
+        "regla_violada": "ST4 Regla Crítica #3: No transferir sin TipoDocumento + Documento.",
+        "como_resolver": "Agregar verificación de documento antes de ejecutar transferencia."
+      },
+      {
+        "dimension": "constitucion",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "Uso excesivo del nombre \"Jesús\" (5 veces)",
+        "detalle": "El nombre del usuario se usa con demasiada frecuencia.",
+        "regla_violada": "Constitución S02: Uso del Nombre Anti-bot: Solo al inicio, en fricción/duda y al cerrar. Evitar muletilla.",
+        "como_resolver": "Usar el nombre solo 1 vez cada 6-8 turnos."
+      },
+      {
+        "dimension": "formato",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "2 mensajes excesivamente largos (>500 chars)",
+        "detalle": "Algunos mensajes superan la longitud recomendada.",
+        "regla_violada": "Constitución S07: Guía 220-320 caracteres, máx 450 en precios.",
+        "como_resolver": "Recortar mensajes a 2-3 líneas con una idea principal por turno."
+      },
+      {
+        "dimension": "formato",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Uso correcto de negritas en precios",
+        "detalle": "Los precios y planes están resaltados en negritas.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "validaciones",
+        "tipo": "error",
+        "severidad": "critica",
+        "titulo": "Solicitud de dato sensible: \"clave\"",
+        "detalle": "El agente solicitó información financiera sensible.",
+        "regla_violada": "Constitución S08: Prohibición Financiera: Prohibido solicitar datos bancarios.",
+        "como_resolver": "Eliminar cualquier solicitud de datos financieros."
+      },
+      {
+        "dimension": "logica_negocio",
+        "tipo": "error",
+        "severidad": "critica",
+        "titulo": "Plan incorrecto: recomendó premium, debió ser classic",
+        "detalle": "Edad: 37, Ciudad: chiclayo, Distrito: . La lógica indica classic.",
+        "regla_violada": "ST3: Senior ≥61, Premium solo Lima+Miraflores/SanIsidro, Classic el resto.",
+        "como_resolver": "Corregir la lógica de selección de plan en el estado de Recomendación."
+      },
+      {
+        "dimension": "logica_negocio",
+        "tipo": "error",
+        "severidad": "alta",
+        "titulo": "Múltiples planes ofrecidos: classic, premium",
+        "detalle": "Se mencionaron múltiples planes para una sola persona.",
+        "regla_violada": "ST3 Regla #1: 1 plan por persona, siempre. Prohibido dar dos o más opciones.",
+        "como_resolver": "Recomendar un solo plan basado en la lógica de edad+ubicación."
+      }
+    ],
+    "metadata": {
+      "lead_score": "0.68",
+      "lead_qualified": "Hot",
+      "city": "Chiclayo",
+      "distrito": "",
+      "edad": "37",
+      "programas": ""
+    }
+  },
+  {
+    "conversacion_id": "7ed433ae-5429-4b05-84af-72fdce3ab6fb",
+    "contacto": "Ana Paula Gonzales",
+    "canal": "infobip",
+    "status": "transferred",
+    "fecha_inicio": "2026-04-08 22:23:50",
+    "total_mensajes": 3,
+    "mensajes_usuario": 1,
+    "mensajes_agente": 2,
+    "score_global": 91.0,
+    "clasificacion": "Excelente",
+    "scores_dimension": {
+      "flow": {
+        "nombre": "Cumplimiento del Flow",
+        "score": 70,
+        "peso": 0.25,
+        "ponderado": 17.5
+      },
+      "protocolos": {
+        "nombre": "Cumplimiento de Protocolos",
+        "score": 100,
+        "peso": 0.2,
+        "ponderado": 20.0
+      },
+      "precision": {
+        "nombre": "Precisión de Información",
+        "score": 100,
+        "peso": 0.15,
+        "ponderado": 15.0
+      },
+      "constitucion": {
+        "nombre": "Constitución y Tono",
+        "score": 90,
+        "peso": 0.15,
+        "ponderado": 13.5
+      },
+      "formato": {
+        "nombre": "Formato y UX Writing",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "validaciones": {
+        "nombre": "Validaciones y Guardrails",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "logica_negocio": {
+        "nombre": "Lógica de Negocio",
+        "score": 100,
+        "peso": 0.05,
+        "ponderado": 5.0
+      }
+    },
+    "hallazgos": [
+      {
+        "dimension": "flow",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Apertura correcta",
+        "detalle": "El agente se identifica como Aura de Auna Salud en el primer mensaje.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "flow",
+        "tipo": "error",
+        "severidad": "alta",
+        "titulo": "Flow incompleto antes de transferencia",
+        "detalle": "Solo se completaron 1/5 pasos antes de transferir.",
+        "regla_violada": "El agente debe completar todos los estados antes de transferir.",
+        "como_resolver": "Reforzar las condiciones de transición entre estados."
+      },
+      {
+        "dimension": "constitucion",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "Uso excesivo del nombre \"Ana\" (2 veces)",
+        "detalle": "El nombre del usuario se usa con demasiada frecuencia.",
+        "regla_violada": "Constitución S02: Uso del Nombre Anti-bot: Solo al inicio, en fricción/duda y al cerrar. Evitar muletilla.",
+        "como_resolver": "Usar el nombre solo 1 vez cada 6-8 turnos."
+      }
+    ],
+    "metadata": {
+      "lead_score": "0.25",
+      "lead_qualified": "Cold",
+      "city": "",
+      "distrito": "",
+      "edad": "29",
+      "programas": ""
+    }
+  },
+  {
+    "conversacion_id": "5ab2e5ee-a562-48d6-8c80-39c24a0abfd6",
+    "contacto": "Percy Quispe",
+    "canal": "infobip",
+    "status": "transferred",
+    "fecha_inicio": "2026-04-08 21:05:02",
+    "total_mensajes": 8,
+    "mensajes_usuario": 3,
+    "mensajes_agente": 4,
+    "score_global": 93.5,
+    "clasificacion": "Excelente",
+    "scores_dimension": {
+      "flow": {
+        "nombre": "Cumplimiento del Flow",
+        "score": 85,
+        "peso": 0.25,
+        "ponderado": 21.2
+      },
+      "protocolos": {
+        "nombre": "Cumplimiento de Protocolos",
+        "score": 90,
+        "peso": 0.2,
+        "ponderado": 18.0
+      },
+      "precision": {
+        "nombre": "Precisión de Información",
+        "score": 100,
+        "peso": 0.15,
+        "ponderado": 15.0
+      },
+      "constitucion": {
+        "nombre": "Constitución y Tono",
+        "score": 100,
+        "peso": 0.15,
+        "ponderado": 15.0
+      },
+      "formato": {
+        "nombre": "Formato y UX Writing",
+        "score": 92,
+        "peso": 0.1,
+        "ponderado": 9.2
+      },
+      "validaciones": {
+        "nombre": "Validaciones y Guardrails",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "logica_negocio": {
+        "nombre": "Lógica de Negocio",
+        "score": 100,
+        "peso": 0.05,
+        "ponderado": 5.0
+      }
+    },
+    "hallazgos": [
+      {
+        "dimension": "flow",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Apertura correcta",
+        "detalle": "El agente se identifica como Aura de Auna Salud en el primer mensaje.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "flow",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Flow completo hasta transferencia",
+        "detalle": "Se completaron 4/5 pasos principales del flow.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "flow",
+        "tipo": "advertencia",
+        "severidad": "alta",
+        "titulo": "Transferencia sin documento del titular",
+        "detalle": "El agente transfirió sin capturar TipoDocumento + Documento del titular.",
+        "regla_violada": "ST4 Regla Crítica #3: No transferir sin TipoDocumento + Documento.",
+        "como_resolver": "Agregar verificación de documento antes de ejecutar transferencia."
+      },
+      {
+        "dimension": "protocolos",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Precio referencial entregado",
+        "detalle": "El agente respondió con un precio referencial cuando el usuario lo solicitó.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "protocolos",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "Falta \"desde\" en precio",
+        "detalle": "El precio referencial no usó la palabra \"desde\" como prefijo.",
+        "regla_violada": "Protocolo de Precios: Siempre usar \"desde\" y resaltar el monto en negrita.",
+        "como_resolver": "Ajustar el formato de entrega de precio a \"desde S/ [Monto]\"."
+      },
+      {
+        "dimension": "protocolos",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Frase legal de precio incluida",
+        "detalle": "Se incluyó correctamente la frase referencial del precio.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "protocolos",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Campaña vigente comunicada",
+        "detalle": "Se comunicó el descuento de la campaña vigente.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "formato",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "1 mensajes excesivamente largos (>500 chars)",
+        "detalle": "Algunos mensajes superan la longitud recomendada.",
+        "regla_violada": "Constitución S07: Guía 220-320 caracteres, máx 450 en precios.",
+        "como_resolver": "Recortar mensajes a 2-3 líneas con una idea principal por turno."
+      },
+      {
+        "dimension": "formato",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Uso correcto de negritas en precios",
+        "detalle": "Los precios y planes están resaltados en negritas.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "logica_negocio",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Plan correcto: classic",
+        "detalle": "El plan recomendado es coherente con edad=22, ciudad=chiclayo, distrito=.",
+        "regla_violada": "",
+        "como_resolver": ""
+      }
+    ],
+    "metadata": {
+      "lead_score": "0.58",
+      "lead_qualified": "Hot",
+      "city": "Chiclayo",
+      "distrito": "",
+      "edad": "22",
+      "programas": ""
+    }
+  },
+  {
+    "conversacion_id": "417e6f37-0c6e-4bea-b149-d83ef8bf4932",
+    "contacto": "Cecilia Maria",
+    "canal": "infobip",
+    "status": "transferred",
+    "fecha_inicio": "2026-04-08 17:19:45",
+    "total_mensajes": 14,
+    "mensajes_usuario": 2,
+    "mensajes_agente": 2,
+    "score_global": 89.8,
+    "clasificacion": "Bueno",
+    "scores_dimension": {
+      "flow": {
+        "nombre": "Cumplimiento del Flow",
+        "score": 70,
+        "peso": 0.25,
+        "ponderado": 17.5
+      },
+      "protocolos": {
+        "nombre": "Cumplimiento de Protocolos",
+        "score": 100,
+        "peso": 0.2,
+        "ponderado": 20.0
+      },
+      "precision": {
+        "nombre": "Precisión de Información",
+        "score": 100,
+        "peso": 0.15,
+        "ponderado": 15.0
+      },
+      "constitucion": {
+        "nombre": "Constitución y Tono",
+        "score": 82,
+        "peso": 0.15,
+        "ponderado": 12.3
+      },
+      "formato": {
+        "nombre": "Formato y UX Writing",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "validaciones": {
+        "nombre": "Validaciones y Guardrails",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "logica_negocio": {
+        "nombre": "Lógica de Negocio",
+        "score": 100,
+        "peso": 0.05,
+        "ponderado": 5.0
+      }
+    },
+    "hallazgos": [
+      {
+        "dimension": "flow",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Apertura correcta",
+        "detalle": "El agente se identifica como Aura de Auna Salud en el primer mensaje.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "flow",
+        "tipo": "error",
+        "severidad": "alta",
+        "titulo": "Flow incompleto antes de transferencia",
+        "detalle": "Solo se completaron 1/5 pasos antes de transferir.",
+        "regla_violada": "El agente debe completar todos los estados antes de transferir.",
+        "como_resolver": "Reforzar las condiciones de transición entre estados."
+      },
+      {
+        "dimension": "constitucion",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "Muletillas frecuentes (1/2 mensajes)",
+        "detalle": "Varios mensajes empiezan con las mismas muletillas.",
+        "regla_violada": "Constitución S04: Cortesía Ligera Anti-robot.",
+        "como_resolver": "Reducir el uso de \"Gracias/Perfecto/Listo\" como apertura."
+      },
+      {
+        "dimension": "constitucion",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "Uso excesivo del nombre \"Cecilia\" (1 veces)",
+        "detalle": "El nombre del usuario se usa con demasiada frecuencia.",
+        "regla_violada": "Constitución S02: Uso del Nombre Anti-bot: Solo al inicio, en fricción/duda y al cerrar. Evitar muletilla.",
+        "como_resolver": "Usar el nombre solo 1 vez cada 6-8 turnos."
+      }
+    ],
+    "metadata": {
+      "lead_score": "",
+      "lead_qualified": "",
+      "city": "",
+      "distrito": "",
+      "edad": "60",
+      "programas": ""
+    }
+  },
+  {
+    "conversacion_id": "e8c6a81d-fdc6-4b24-bedb-8f6cd49fdded",
+    "contacto": "Prueba Clau 1",
+    "canal": "widget",
+    "status": "transferred",
+    "fecha_inicio": "2026-04-08 16:08:24",
+    "total_mensajes": 13,
+    "mensajes_usuario": 6,
+    "mensajes_agente": 7,
+    "score_global": 91.2,
+    "clasificacion": "Excelente",
+    "scores_dimension": {
+      "flow": {
+        "nombre": "Cumplimiento del Flow",
+        "score": 85,
+        "peso": 0.25,
+        "ponderado": 21.2
+      },
+      "protocolos": {
+        "nombre": "Cumplimiento de Protocolos",
+        "score": 100,
+        "peso": 0.2,
+        "ponderado": 20.0
+      },
+      "precision": {
+        "nombre": "Precisión de Información",
+        "score": 100,
+        "peso": 0.15,
+        "ponderado": 15.0
+      },
+      "constitucion": {
+        "nombre": "Constitución y Tono",
+        "score": 100,
+        "peso": 0.15,
+        "ponderado": 15.0
+      },
+      "formato": {
+        "nombre": "Formato y UX Writing",
+        "score": 70,
+        "peso": 0.1,
+        "ponderado": 7.0
+      },
+      "validaciones": {
+        "nombre": "Validaciones y Guardrails",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "logica_negocio": {
+        "nombre": "Lógica de Negocio",
+        "score": 60,
+        "peso": 0.05,
+        "ponderado": 3.0
+      }
+    },
+    "hallazgos": [
+      {
+        "dimension": "flow",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Apertura correcta",
+        "detalle": "El agente se identifica como Aura de Auna Salud en el primer mensaje.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "flow",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Flow completo hasta transferencia",
+        "detalle": "Se completaron 5/5 pasos principales del flow.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "flow",
+        "tipo": "advertencia",
+        "severidad": "alta",
+        "titulo": "Transferencia sin documento del titular",
+        "detalle": "El agente transfirió sin capturar TipoDocumento + Documento del titular.",
+        "regla_violada": "ST4 Regla Crítica #3: No transferir sin TipoDocumento + Documento.",
+        "como_resolver": "Agregar verificación de documento antes de ejecutar transferencia."
+      },
+      {
+        "dimension": "formato",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "3 mensajes excesivamente largos (>500 chars)",
+        "detalle": "Algunos mensajes superan la longitud recomendada.",
+        "regla_violada": "Constitución S07: Guía 220-320 caracteres, máx 450 en precios.",
+        "como_resolver": "Recortar mensajes a 2-3 líneas con una idea principal por turno."
+      },
+      {
+        "dimension": "formato",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "1 mensajes con más de 3 bullets",
+        "detalle": "Algunos mensajes exceden el máximo de 3 bullets.",
+        "regla_violada": "Constitución S07: Regla de 3: Máximo 3 bullets por mensaje.",
+        "como_resolver": "Seleccionar los 3 beneficios más potentes para el perfil."
+      },
+      {
+        "dimension": "formato",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Uso correcto de negritas en precios",
+        "detalle": "Los precios y planes están resaltados en negritas.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "logica_negocio",
+        "tipo": "error",
+        "severidad": "critica",
+        "titulo": "Plan incorrecto: recomendó senior, debió ser classic",
+        "detalle": "Edad: 40, Ciudad: lima, Distrito: la molina. La lógica indica classic.",
+        "regla_violada": "ST3: Senior ≥61, Premium solo Lima+Miraflores/SanIsidro, Classic el resto.",
+        "como_resolver": "Corregir la lógica de selección de plan en el estado de Recomendación."
+      }
+    ],
+    "metadata": {
+      "lead_score": "0.7",
+      "lead_qualified": "Hot",
+      "city": "Lima",
+      "distrito": "La Molina",
+      "edad": "40",
+      "programas": ""
+    }
+  },
+  {
+    "conversacion_id": "09a94ca3-d671-43be-97f3-fb54dd3b5adb",
+    "contacto": "Edben Gerardo",
+    "canal": "infobip",
+    "status": "transferred",
+    "fecha_inicio": "2026-04-08 15:09:41",
+    "total_mensajes": 3,
+    "mensajes_usuario": 1,
+    "mensajes_agente": 2,
+    "score_global": 81.0,
+    "clasificacion": "Bueno",
+    "scores_dimension": {
+      "flow": {
+        "nombre": "Cumplimiento del Flow",
+        "score": 35,
+        "peso": 0.25,
+        "ponderado": 8.8
+      },
+      "protocolos": {
+        "nombre": "Cumplimiento de Protocolos",
+        "score": 100,
+        "peso": 0.2,
+        "ponderado": 20.0
+      },
+      "precision": {
+        "nombre": "Precisión de Información",
+        "score": 100,
+        "peso": 0.15,
+        "ponderado": 15.0
+      },
+      "constitucion": {
+        "nombre": "Constitución y Tono",
+        "score": 82,
+        "peso": 0.15,
+        "ponderado": 12.3
+      },
+      "formato": {
+        "nombre": "Formato y UX Writing",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "validaciones": {
+        "nombre": "Validaciones y Guardrails",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "logica_negocio": {
+        "nombre": "Lógica de Negocio",
+        "score": 100,
+        "peso": 0.05,
+        "ponderado": 5.0
+      }
+    },
+    "hallazgos": [
+      {
+        "dimension": "flow",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Apertura correcta",
+        "detalle": "El agente se identifica como Aura de Auna Salud en el primer mensaje.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "flow",
+        "tipo": "error",
+        "severidad": "alta",
+        "titulo": "Flow incompleto antes de transferencia",
+        "detalle": "Solo se completaron 2/5 pasos antes de transferir.",
+        "regla_violada": "El agente debe completar todos los estados antes de transferir.",
+        "como_resolver": "Reforzar las condiciones de transición entre estados."
+      },
+      {
+        "dimension": "flow",
+        "tipo": "error",
+        "severidad": "critica",
+        "titulo": "Transferencia sin sensibilidad de precio",
+        "detalle": "El agente transfirió sin haber comunicado un precio referencial.",
+        "regla_violada": "ST4 Regla Crítica #4: No transferir sin sensibilidad al precio confirmada.",
+        "como_resolver": "Asegurar que el protocolo de precios se ejecute antes de transferir."
+      },
+      {
+        "dimension": "flow",
+        "tipo": "advertencia",
+        "severidad": "alta",
+        "titulo": "Transferencia sin documento del titular",
+        "detalle": "El agente transfirió sin capturar TipoDocumento + Documento del titular.",
+        "regla_violada": "ST4 Regla Crítica #3: No transferir sin TipoDocumento + Documento.",
+        "como_resolver": "Agregar verificación de documento antes de ejecutar transferencia."
+      },
+      {
+        "dimension": "constitucion",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "Muletillas frecuentes (1/2 mensajes)",
+        "detalle": "Varios mensajes empiezan con las mismas muletillas.",
+        "regla_violada": "Constitución S04: Cortesía Ligera Anti-robot.",
+        "como_resolver": "Reducir el uso de \"Gracias/Perfecto/Listo\" como apertura."
+      },
+      {
+        "dimension": "constitucion",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "Uso excesivo del nombre \"Edben\" (2 veces)",
+        "detalle": "El nombre del usuario se usa con demasiada frecuencia.",
+        "regla_violada": "Constitución S02: Uso del Nombre Anti-bot: Solo al inicio, en fricción/duda y al cerrar. Evitar muletilla.",
+        "como_resolver": "Usar el nombre solo 1 vez cada 6-8 turnos."
+      }
+    ],
+    "metadata": {
+      "lead_score": "0.28",
+      "lead_qualified": "Warm",
+      "city": "",
+      "distrito": "",
+      "edad": "59",
+      "programas": ""
+    }
+  },
+  {
+    "conversacion_id": "ac2bfcc9-d4ff-4b94-85af-4fd0d97e0965",
+    "contacto": "Elizabeth Kohatsu Higa",
+    "canal": "infobip",
+    "status": "transferred",
+    "fecha_inicio": "2026-04-08 12:33:04",
+    "total_mensajes": 16,
+    "mensajes_usuario": 3,
+    "mensajes_agente": 2,
+    "score_global": 86.0,
+    "clasificacion": "Bueno",
+    "scores_dimension": {
+      "flow": {
+        "nombre": "Cumplimiento del Flow",
+        "score": 70,
+        "peso": 0.25,
+        "ponderado": 17.5
+      },
+      "protocolos": {
+        "nombre": "Cumplimiento de Protocolos",
+        "score": 75,
+        "peso": 0.2,
+        "ponderado": 15.0
+      },
+      "precision": {
+        "nombre": "Precisión de Información",
+        "score": 100,
+        "peso": 0.15,
+        "ponderado": 15.0
+      },
+      "constitucion": {
+        "nombre": "Constitución y Tono",
+        "score": 90,
+        "peso": 0.15,
+        "ponderado": 13.5
+      },
+      "formato": {
+        "nombre": "Formato y UX Writing",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "validaciones": {
+        "nombre": "Validaciones y Guardrails",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "logica_negocio": {
+        "nombre": "Lógica de Negocio",
+        "score": 100,
+        "peso": 0.05,
+        "ponderado": 5.0
+      }
+    },
+    "hallazgos": [
+      {
+        "dimension": "flow",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Apertura correcta",
+        "detalle": "El agente se identifica como Aura de Auna Salud en el primer mensaje.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "flow",
+        "tipo": "error",
+        "severidad": "alta",
+        "titulo": "Flow incompleto antes de transferencia",
+        "detalle": "Solo se completaron 1/5 pasos antes de transferir.",
+        "regla_violada": "El agente debe completar todos los estados antes de transferir.",
+        "como_resolver": "Reforzar las condiciones de transición entre estados."
+      },
+      {
+        "dimension": "protocolos",
+        "tipo": "error",
+        "severidad": "critica",
+        "titulo": "No entregó precio solicitado",
+        "detalle": "El usuario pidió precio pero el agente no entregó un precio referencial.",
+        "regla_violada": "Protocolo de Precios: Entregar precio referencial cuando el usuario lo solicite.",
+        "como_resolver": "Verificar activación del protocolo de precios ante triggers de precio."
+      },
+      {
+        "dimension": "constitucion",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "Uso excesivo del nombre \"Elizabeth\" (1 veces)",
+        "detalle": "El nombre del usuario se usa con demasiada frecuencia.",
+        "regla_violada": "Constitución S02: Uso del Nombre Anti-bot: Solo al inicio, en fricción/duda y al cerrar. Evitar muletilla.",
+        "como_resolver": "Usar el nombre solo 1 vez cada 6-8 turnos."
+      }
+    ],
+    "metadata": {
+      "lead_score": "",
+      "lead_qualified": "",
+      "city": "",
+      "distrito": "",
+      "edad": "",
+      "programas": ""
+    }
+  },
+  {
+    "conversacion_id": "cea40cfb-5cf9-4160-af94-73f8cc606efb",
+    "contacto": "Pamela Chipayo Gonzales",
+    "canal": "infobip",
+    "status": "transferred",
+    "fecha_inicio": "2026-04-08 10:54:56",
+    "total_mensajes": 5,
+    "mensajes_usuario": 2,
+    "mensajes_agente": 3,
+    "score_global": 94.2,
+    "clasificacion": "Excelente",
+    "scores_dimension": {
+      "flow": {
+        "nombre": "Cumplimiento del Flow",
+        "score": 85,
+        "peso": 0.25,
+        "ponderado": 21.2
+      },
+      "protocolos": {
+        "nombre": "Cumplimiento de Protocolos",
+        "score": 100,
+        "peso": 0.2,
+        "ponderado": 20.0
+      },
+      "precision": {
+        "nombre": "Precisión de Información",
+        "score": 100,
+        "peso": 0.15,
+        "ponderado": 15.0
+      },
+      "constitucion": {
+        "nombre": "Constitución y Tono",
+        "score": 92,
+        "peso": 0.15,
+        "ponderado": 13.8
+      },
+      "formato": {
+        "nombre": "Formato y UX Writing",
+        "score": 92,
+        "peso": 0.1,
+        "ponderado": 9.2
+      },
+      "validaciones": {
+        "nombre": "Validaciones y Guardrails",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "logica_negocio": {
+        "nombre": "Lógica de Negocio",
+        "score": 100,
+        "peso": 0.05,
+        "ponderado": 5.0
+      }
+    },
+    "hallazgos": [
+      {
+        "dimension": "flow",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Apertura correcta",
+        "detalle": "El agente se identifica como Aura de Auna Salud en el primer mensaje.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "flow",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "Flow parcialmente completo",
+        "detalle": "Se completaron 3/5 pasos. Faltaron algunos pasos antes de transferir.",
+        "regla_violada": "Debe completar: Registro → Perfil → Recomendación → Calificación → Transferencia",
+        "como_resolver": "Verificar que el agente no saltó estados intermedios."
+      },
+      {
+        "dimension": "constitucion",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "Muletillas frecuentes (1/3 mensajes)",
+        "detalle": "Varios mensajes empiezan con las mismas muletillas.",
+        "regla_violada": "Constitución S04: Cortesía Ligera Anti-robot.",
+        "como_resolver": "Reducir el uso de \"Gracias/Perfecto/Listo\" como apertura."
+      },
+      {
+        "dimension": "formato",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "1 mensajes excesivamente largos (>500 chars)",
+        "detalle": "Algunos mensajes superan la longitud recomendada.",
+        "regla_violada": "Constitución S07: Guía 220-320 caracteres, máx 450 en precios.",
+        "como_resolver": "Recortar mensajes a 2-3 líneas con una idea principal por turno."
+      },
+      {
+        "dimension": "formato",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Uso correcto de negritas en precios",
+        "detalle": "Los precios y planes están resaltados en negritas.",
+        "regla_violada": "",
+        "como_resolver": ""
+      }
+    ],
+    "metadata": {
+      "lead_score": "0.43",
+      "lead_qualified": "Warm",
+      "city": "Lima",
+      "distrito": "San Borja",
+      "edad": "",
+      "programas": ""
+    }
+  },
+  {
+    "conversacion_id": "39ef3e07-6a1b-4f60-9067-1610abe97d5b",
+    "contacto": "Rub Crbjl Zgr",
+    "canal": "infobip",
+    "status": "transferred",
+    "fecha_inicio": "2026-04-08 09:18:30",
+    "total_mensajes": 2,
+    "mensajes_usuario": 1,
+    "mensajes_agente": 1,
+    "score_global": 91.0,
+    "clasificacion": "Excelente",
+    "scores_dimension": {
+      "flow": {
+        "nombre": "Cumplimiento del Flow",
+        "score": 70,
+        "peso": 0.25,
+        "ponderado": 17.5
+      },
+      "protocolos": {
+        "nombre": "Cumplimiento de Protocolos",
+        "score": 100,
+        "peso": 0.2,
+        "ponderado": 20.0
+      },
+      "precision": {
+        "nombre": "Precisión de Información",
+        "score": 100,
+        "peso": 0.15,
+        "ponderado": 15.0
+      },
+      "constitucion": {
+        "nombre": "Constitución y Tono",
+        "score": 90,
+        "peso": 0.15,
+        "ponderado": 13.5
+      },
+      "formato": {
+        "nombre": "Formato y UX Writing",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "validaciones": {
+        "nombre": "Validaciones y Guardrails",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "logica_negocio": {
+        "nombre": "Lógica de Negocio",
+        "score": 100,
+        "peso": 0.05,
+        "ponderado": 5.0
+      }
+    },
+    "hallazgos": [
+      {
+        "dimension": "flow",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Apertura correcta",
+        "detalle": "El agente se identifica como Aura de Auna Salud en el primer mensaje.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "flow",
+        "tipo": "error",
+        "severidad": "alta",
+        "titulo": "Flow incompleto antes de transferencia",
+        "detalle": "Solo se completaron 0/5 pasos antes de transferir.",
+        "regla_violada": "El agente debe completar todos los estados antes de transferir.",
+        "como_resolver": "Reforzar las condiciones de transición entre estados."
+      },
+      {
+        "dimension": "constitucion",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "Uso excesivo del nombre \"Rub\" (1 veces)",
+        "detalle": "El nombre del usuario se usa con demasiada frecuencia.",
+        "regla_violada": "Constitución S02: Uso del Nombre Anti-bot: Solo al inicio, en fricción/duda y al cerrar. Evitar muletilla.",
+        "como_resolver": "Usar el nombre solo 1 vez cada 6-8 turnos."
+      }
+    ],
+    "metadata": {
+      "lead_score": "",
+      "lead_qualified": "",
+      "city": "",
+      "distrito": "",
+      "edad": "",
+      "programas": ""
+    }
+  },
+  {
+    "conversacion_id": "5157957e-16e3-45dc-926e-9336b67e20db",
+    "contacto": "Judith Landaveri Monago",
+    "canal": "infobip",
+    "status": "transferred",
+    "fecha_inicio": "2026-04-08 06:17:19",
+    "total_mensajes": 4,
+    "mensajes_usuario": 2,
+    "mensajes_agente": 2,
+    "score_global": 89.8,
+    "clasificacion": "Bueno",
+    "scores_dimension": {
+      "flow": {
+        "nombre": "Cumplimiento del Flow",
+        "score": 70,
+        "peso": 0.25,
+        "ponderado": 17.5
+      },
+      "protocolos": {
+        "nombre": "Cumplimiento de Protocolos",
+        "score": 100,
+        "peso": 0.2,
+        "ponderado": 20.0
+      },
+      "precision": {
+        "nombre": "Precisión de Información",
+        "score": 100,
+        "peso": 0.15,
+        "ponderado": 15.0
+      },
+      "constitucion": {
+        "nombre": "Constitución y Tono",
+        "score": 82,
+        "peso": 0.15,
+        "ponderado": 12.3
+      },
+      "formato": {
+        "nombre": "Formato y UX Writing",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "validaciones": {
+        "nombre": "Validaciones y Guardrails",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "logica_negocio": {
+        "nombre": "Lógica de Negocio",
+        "score": 100,
+        "peso": 0.05,
+        "ponderado": 5.0
+      }
+    },
+    "hallazgos": [
+      {
+        "dimension": "flow",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Apertura correcta",
+        "detalle": "El agente se identifica como Aura de Auna Salud en el primer mensaje.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "flow",
+        "tipo": "error",
+        "severidad": "alta",
+        "titulo": "Flow incompleto antes de transferencia",
+        "detalle": "Solo se completaron 1/5 pasos antes de transferir.",
+        "regla_violada": "El agente debe completar todos los estados antes de transferir.",
+        "como_resolver": "Reforzar las condiciones de transición entre estados."
+      },
+      {
+        "dimension": "constitucion",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "Muletillas frecuentes (1/2 mensajes)",
+        "detalle": "Varios mensajes empiezan con las mismas muletillas.",
+        "regla_violada": "Constitución S04: Cortesía Ligera Anti-robot.",
+        "como_resolver": "Reducir el uso de \"Gracias/Perfecto/Listo\" como apertura."
+      },
+      {
+        "dimension": "constitucion",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "Uso excesivo del nombre \"Judith\" (2 veces)",
+        "detalle": "El nombre del usuario se usa con demasiada frecuencia.",
+        "regla_violada": "Constitución S02: Uso del Nombre Anti-bot: Solo al inicio, en fricción/duda y al cerrar. Evitar muletilla.",
+        "como_resolver": "Usar el nombre solo 1 vez cada 6-8 turnos."
+      }
+    ],
+    "metadata": {
+      "lead_score": "0",
+      "lead_qualified": "Cold",
+      "city": "",
+      "distrito": "ATE",
+      "edad": "43",
+      "programas": ""
+    }
+  },
+  {
+    "conversacion_id": "5fd5da8a-8589-4a4d-86cc-9866b9d382b0",
+    "contacto": "Percy Gregorio Falcon Travezaño",
+    "canal": "infobip",
+    "status": "transferred",
+    "fecha_inicio": "2026-04-07 22:08:56",
+    "total_mensajes": 4,
+    "mensajes_usuario": 1,
+    "mensajes_agente": 1,
+    "score_global": 91.0,
+    "clasificacion": "Excelente",
+    "scores_dimension": {
+      "flow": {
+        "nombre": "Cumplimiento del Flow",
+        "score": 70,
+        "peso": 0.25,
+        "ponderado": 17.5
+      },
+      "protocolos": {
+        "nombre": "Cumplimiento de Protocolos",
+        "score": 100,
+        "peso": 0.2,
+        "ponderado": 20.0
+      },
+      "precision": {
+        "nombre": "Precisión de Información",
+        "score": 100,
+        "peso": 0.15,
+        "ponderado": 15.0
+      },
+      "constitucion": {
+        "nombre": "Constitución y Tono",
+        "score": 90,
+        "peso": 0.15,
+        "ponderado": 13.5
+      },
+      "formato": {
+        "nombre": "Formato y UX Writing",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "validaciones": {
+        "nombre": "Validaciones y Guardrails",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "logica_negocio": {
+        "nombre": "Lógica de Negocio",
+        "score": 100,
+        "peso": 0.05,
+        "ponderado": 5.0
+      }
+    },
+    "hallazgos": [
+      {
+        "dimension": "flow",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Apertura correcta",
+        "detalle": "El agente se identifica como Aura de Auna Salud en el primer mensaje.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "flow",
+        "tipo": "error",
+        "severidad": "alta",
+        "titulo": "Flow incompleto antes de transferencia",
+        "detalle": "Solo se completaron 0/5 pasos antes de transferir.",
+        "regla_violada": "El agente debe completar todos los estados antes de transferir.",
+        "como_resolver": "Reforzar las condiciones de transición entre estados."
+      },
+      {
+        "dimension": "constitucion",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "Uso excesivo del nombre \"Percy\" (1 veces)",
+        "detalle": "El nombre del usuario se usa con demasiada frecuencia.",
+        "regla_violada": "Constitución S02: Uso del Nombre Anti-bot: Solo al inicio, en fricción/duda y al cerrar. Evitar muletilla.",
+        "como_resolver": "Usar el nombre solo 1 vez cada 6-8 turnos."
+      }
+    ],
+    "metadata": {
+      "lead_score": "",
+      "lead_qualified": "",
+      "city": "",
+      "distrito": "",
+      "edad": "",
+      "programas": ""
+    }
+  },
+  {
+    "conversacion_id": "c3b07103-32c9-414d-aadb-b1a544f0ea0f",
+    "contacto": "Sandra PPrevost",
+    "canal": "infobip",
+    "status": "transferred",
+    "fecha_inicio": "2026-04-07 21:40:22",
+    "total_mensajes": 5,
+    "mensajes_usuario": 3,
+    "mensajes_agente": 2,
+    "score_global": 91.0,
+    "clasificacion": "Excelente",
+    "scores_dimension": {
+      "flow": {
+        "nombre": "Cumplimiento del Flow",
+        "score": 70,
+        "peso": 0.25,
+        "ponderado": 17.5
+      },
+      "protocolos": {
+        "nombre": "Cumplimiento de Protocolos",
+        "score": 100,
+        "peso": 0.2,
+        "ponderado": 20.0
+      },
+      "precision": {
+        "nombre": "Precisión de Información",
+        "score": 100,
+        "peso": 0.15,
+        "ponderado": 15.0
+      },
+      "constitucion": {
+        "nombre": "Constitución y Tono",
+        "score": 90,
+        "peso": 0.15,
+        "ponderado": 13.5
+      },
+      "formato": {
+        "nombre": "Formato y UX Writing",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "validaciones": {
+        "nombre": "Validaciones y Guardrails",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "logica_negocio": {
+        "nombre": "Lógica de Negocio",
+        "score": 100,
+        "peso": 0.05,
+        "ponderado": 5.0
+      }
+    },
+    "hallazgos": [
+      {
+        "dimension": "flow",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Apertura correcta",
+        "detalle": "El agente se identifica como Aura de Auna Salud en el primer mensaje.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "flow",
+        "tipo": "error",
+        "severidad": "alta",
+        "titulo": "Flow incompleto antes de transferencia",
+        "detalle": "Solo se completaron 1/5 pasos antes de transferir.",
+        "regla_violada": "El agente debe completar todos los estados antes de transferir.",
+        "como_resolver": "Reforzar las condiciones de transición entre estados."
+      },
+      {
+        "dimension": "constitucion",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "Uso excesivo del nombre \"Sandra\" (1 veces)",
+        "detalle": "El nombre del usuario se usa con demasiada frecuencia.",
+        "regla_violada": "Constitución S02: Uso del Nombre Anti-bot: Solo al inicio, en fricción/duda y al cerrar. Evitar muletilla.",
+        "como_resolver": "Usar el nombre solo 1 vez cada 6-8 turnos."
+      }
+    ],
+    "metadata": {
+      "lead_score": "0",
+      "lead_qualified": "Cold",
+      "city": "",
+      "distrito": "",
+      "edad": "",
+      "programas": ""
+    }
+  },
+  {
+    "conversacion_id": "d372d5a7-09e3-4ede-8ebf-d7ded8daba68",
+    "contacto": "juvencio venancio celestino huanuco",
+    "canal": "infobip",
+    "status": "transferred",
+    "fecha_inicio": "2026-04-07 18:45:00",
+    "total_mensajes": 2,
+    "mensajes_usuario": 1,
+    "mensajes_agente": 1,
+    "score_global": 91.0,
+    "clasificacion": "Excelente",
+    "scores_dimension": {
+      "flow": {
+        "nombre": "Cumplimiento del Flow",
+        "score": 70,
+        "peso": 0.25,
+        "ponderado": 17.5
+      },
+      "protocolos": {
+        "nombre": "Cumplimiento de Protocolos",
+        "score": 100,
+        "peso": 0.2,
+        "ponderado": 20.0
+      },
+      "precision": {
+        "nombre": "Precisión de Información",
+        "score": 100,
+        "peso": 0.15,
+        "ponderado": 15.0
+      },
+      "constitucion": {
+        "nombre": "Constitución y Tono",
+        "score": 90,
+        "peso": 0.15,
+        "ponderado": 13.5
+      },
+      "formato": {
+        "nombre": "Formato y UX Writing",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "validaciones": {
+        "nombre": "Validaciones y Guardrails",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "logica_negocio": {
+        "nombre": "Lógica de Negocio",
+        "score": 100,
+        "peso": 0.05,
+        "ponderado": 5.0
+      }
+    },
+    "hallazgos": [
+      {
+        "dimension": "flow",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Apertura correcta",
+        "detalle": "El agente se identifica como Aura de Auna Salud en el primer mensaje.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "flow",
+        "tipo": "error",
+        "severidad": "alta",
+        "titulo": "Flow incompleto antes de transferencia",
+        "detalle": "Solo se completaron 0/5 pasos antes de transferir.",
+        "regla_violada": "El agente debe completar todos los estados antes de transferir.",
+        "como_resolver": "Reforzar las condiciones de transición entre estados."
+      },
+      {
+        "dimension": "constitucion",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "Uso excesivo del nombre \"juvencio\" (1 veces)",
+        "detalle": "El nombre del usuario se usa con demasiada frecuencia.",
+        "regla_violada": "Constitución S02: Uso del Nombre Anti-bot: Solo al inicio, en fricción/duda y al cerrar. Evitar muletilla.",
+        "como_resolver": "Usar el nombre solo 1 vez cada 6-8 turnos."
+      }
+    ],
+    "metadata": {
+      "lead_score": "",
+      "lead_qualified": "",
+      "city": "",
+      "distrito": "",
+      "edad": "",
+      "programas": ""
+    }
+  },
+  {
+    "conversacion_id": "ffb1f797-d19e-4058-bd98-85c89d7ff667",
+    "contacto": "Clau prueba 7",
+    "canal": "widget",
+    "status": "active",
+    "fecha_inicio": "2026-04-07 17:32:49",
+    "total_mensajes": 7,
+    "mensajes_usuario": 3,
+    "mensajes_agente": 4,
+    "score_global": 84.0,
+    "clasificacion": "Bueno",
+    "scores_dimension": {
+      "flow": {
+        "nombre": "Cumplimiento del Flow",
+        "score": 40,
+        "peso": 0.25,
+        "ponderado": 10.0
+      },
+      "protocolos": {
+        "nombre": "Cumplimiento de Protocolos",
+        "score": 100,
+        "peso": 0.2,
+        "ponderado": 20.0
+      },
+      "precision": {
+        "nombre": "Precisión de Información",
+        "score": 100,
+        "peso": 0.15,
+        "ponderado": 15.0
+      },
+      "constitucion": {
+        "nombre": "Constitución y Tono",
+        "score": 100,
+        "peso": 0.15,
+        "ponderado": 15.0
+      },
+      "formato": {
+        "nombre": "Formato y UX Writing",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "validaciones": {
+        "nombre": "Validaciones y Guardrails",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "logica_negocio": {
+        "nombre": "Lógica de Negocio",
+        "score": 80,
+        "peso": 0.05,
+        "ponderado": 4.0
+      }
+    },
+    "hallazgos": [
+      {
+        "dimension": "flow",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Apertura correcta",
+        "detalle": "El agente se identifica como Aura de Auna Salud en el primer mensaje.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "flow",
+        "tipo": "error",
+        "severidad": "critica",
+        "titulo": "Recomendación sin datos de perfil",
+        "detalle": "El agente hizo una recomendación de plan sin haber capturado edad y/o ubicación.",
+        "regla_violada": "ST3 Hard Stop: No recomiendes sin tener Edad + Ciudad (y Distrito si es Lima).",
+        "como_resolver": "Agregar validación obligatoria de edad+ciudad antes de permitir recomendación."
+      },
+      {
+        "dimension": "flow",
+        "tipo": "error",
+        "severidad": "critica",
+        "titulo": "Transferencia sin sensibilidad de precio",
+        "detalle": "El agente transfirió sin haber comunicado un precio referencial.",
+        "regla_violada": "ST4 Regla Crítica #4: No transferir sin sensibilidad al precio confirmada.",
+        "como_resolver": "Asegurar que el protocolo de precios se ejecute antes de transferir."
+      },
+      {
+        "dimension": "flow",
+        "tipo": "advertencia",
+        "severidad": "alta",
+        "titulo": "Transferencia sin documento del titular",
+        "detalle": "El agente transfirió sin capturar TipoDocumento + Documento del titular.",
+        "regla_violada": "ST4 Regla Crítica #3: No transferir sin TipoDocumento + Documento.",
+        "como_resolver": "Agregar verificación de documento antes de ejecutar transferencia."
+      },
+      {
+        "dimension": "logica_negocio",
+        "tipo": "error",
+        "severidad": "alta",
+        "titulo": "Múltiples planes ofrecidos: classic, premium",
+        "detalle": "Se mencionaron múltiples planes para una sola persona.",
+        "regla_violada": "ST3 Regla #1: 1 plan por persona, siempre. Prohibido dar dos o más opciones.",
+        "como_resolver": "Recomendar un solo plan basado en la lógica de edad+ubicación."
+      }
+    ],
+    "metadata": {
+      "lead_score": "0.71",
+      "lead_qualified": "Hot",
+      "city": "",
+      "distrito": "",
+      "edad": "",
+      "programas": "Auna Salud Premium"
+    }
+  },
+  {
+    "conversacion_id": "d6c91890-b148-4d69-b92b-103744f3a9d2",
+    "contacto": "Jhon Javier",
+    "canal": "infobip",
+    "status": "transferred",
+    "fecha_inicio": "2026-04-07 12:13:23",
+    "total_mensajes": 7,
+    "mensajes_usuario": 3,
+    "mensajes_agente": 4,
+    "score_global": 88.0,
+    "clasificacion": "Bueno",
+    "scores_dimension": {
+      "flow": {
+        "nombre": "Cumplimiento del Flow",
+        "score": 70,
+        "peso": 0.25,
+        "ponderado": 17.5
+      },
+      "protocolos": {
+        "nombre": "Cumplimiento de Protocolos",
+        "score": 85,
+        "peso": 0.2,
+        "ponderado": 17.0
+      },
+      "precision": {
+        "nombre": "Precisión de Información",
+        "score": 100,
+        "peso": 0.15,
+        "ponderado": 15.0
+      },
+      "constitucion": {
+        "nombre": "Constitución y Tono",
+        "score": 90,
+        "peso": 0.15,
+        "ponderado": 13.5
+      },
+      "formato": {
+        "nombre": "Formato y UX Writing",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "validaciones": {
+        "nombre": "Validaciones y Guardrails",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "logica_negocio": {
+        "nombre": "Lógica de Negocio",
+        "score": 100,
+        "peso": 0.05,
+        "ponderado": 5.0
+      }
+    },
+    "hallazgos": [
+      {
+        "dimension": "flow",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Apertura correcta",
+        "detalle": "El agente se identifica como Aura de Auna Salud en el primer mensaje.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "flow",
+        "tipo": "error",
+        "severidad": "alta",
+        "titulo": "Flow incompleto antes de transferencia",
+        "detalle": "Solo se completaron 1/5 pasos antes de transferir.",
+        "regla_violada": "El agente debe completar todos los estados antes de transferir.",
+        "como_resolver": "Reforzar las condiciones de transición entre estados."
+      },
+      {
+        "dimension": "protocolos",
+        "tipo": "error",
+        "severidad": "alta",
+        "titulo": "Ofreció canal alternativo a WhatsApp",
+        "detalle": "El agente ofreció un canal de contacto diferente a WhatsApp.",
+        "regla_violada": "ST5 Regla #1: No ofrecer canal alternativo (no preguntar correo o llamada).",
+        "como_resolver": "El único canal de cierre es WhatsApp."
+      },
+      {
+        "dimension": "constitucion",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "Uso excesivo del nombre \"Jhon\" (2 veces)",
+        "detalle": "El nombre del usuario se usa con demasiada frecuencia.",
+        "regla_violada": "Constitución S02: Uso del Nombre Anti-bot: Solo al inicio, en fricción/duda y al cerrar. Evitar muletilla.",
+        "como_resolver": "Usar el nombre solo 1 vez cada 6-8 turnos."
+      }
+    ],
+    "metadata": {
+      "lead_score": "0",
+      "lead_qualified": "Cold",
+      "city": "",
+      "distrito": "",
+      "edad": "36",
+      "programas": ""
+    }
+  },
+  {
+    "conversacion_id": "f57d104a-9e06-4ac5-813a-d47335b5aed6",
+    "contacto": "",
+    "canal": "whatsapp",
+    "status": "transferred",
+    "fecha_inicio": "2026-04-07 11:41:24",
+    "total_mensajes": 2,
+    "mensajes_usuario": 1,
+    "mensajes_agente": 1,
+    "score_global": 83.8,
+    "clasificacion": "Bueno",
+    "scores_dimension": {
+      "flow": {
+        "nombre": "Cumplimiento del Flow",
+        "score": 35,
+        "peso": 0.25,
+        "ponderado": 8.8
+      },
+      "protocolos": {
+        "nombre": "Cumplimiento de Protocolos",
+        "score": 100,
+        "peso": 0.2,
+        "ponderado": 20.0
+      },
+      "precision": {
+        "nombre": "Precisión de Información",
+        "score": 100,
+        "peso": 0.15,
+        "ponderado": 15.0
+      },
+      "constitucion": {
+        "nombre": "Constitución y Tono",
+        "score": 100,
+        "peso": 0.15,
+        "ponderado": 15.0
+      },
+      "formato": {
+        "nombre": "Formato y UX Writing",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "validaciones": {
+        "nombre": "Validaciones y Guardrails",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "logica_negocio": {
+        "nombre": "Lógica de Negocio",
+        "score": 100,
+        "peso": 0.05,
+        "ponderado": 5.0
+      }
+    },
+    "hallazgos": [
+      {
+        "dimension": "flow",
+        "tipo": "error",
+        "severidad": "alta",
+        "titulo": "Flow incompleto antes de transferencia",
+        "detalle": "Solo se completaron 1/5 pasos antes de transferir.",
+        "regla_violada": "El agente debe completar todos los estados antes de transferir.",
+        "como_resolver": "Reforzar las condiciones de transición entre estados."
+      },
+      {
+        "dimension": "flow",
+        "tipo": "error",
+        "severidad": "critica",
+        "titulo": "Transferencia sin sensibilidad de precio",
+        "detalle": "El agente transfirió sin haber comunicado un precio referencial.",
+        "regla_violada": "ST4 Regla Crítica #4: No transferir sin sensibilidad al precio confirmada.",
+        "como_resolver": "Asegurar que el protocolo de precios se ejecute antes de transferir."
+      },
+      {
+        "dimension": "flow",
+        "tipo": "advertencia",
+        "severidad": "alta",
+        "titulo": "Transferencia sin documento del titular",
+        "detalle": "El agente transfirió sin capturar TipoDocumento + Documento del titular.",
+        "regla_violada": "ST4 Regla Crítica #3: No transferir sin TipoDocumento + Documento.",
+        "como_resolver": "Agregar verificación de documento antes de ejecutar transferencia."
+      }
+    ],
+    "metadata": {
+      "lead_score": "0",
+      "lead_qualified": "Cold",
+      "city": "",
+      "distrito": "",
+      "edad": "",
+      "programas": ""
+    }
+  },
+  {
+    "conversacion_id": "80599836-1c59-4fde-a4c0-5434d238d9dc",
+    "contacto": "Juan Carlos Muñoz",
+    "canal": "infobip",
+    "status": "transferred",
+    "fecha_inicio": "2026-04-07 11:33:42",
+    "total_mensajes": 3,
+    "mensajes_usuario": 1,
+    "mensajes_agente": 2,
+    "score_global": 89.8,
+    "clasificacion": "Bueno",
+    "scores_dimension": {
+      "flow": {
+        "nombre": "Cumplimiento del Flow",
+        "score": 70,
+        "peso": 0.25,
+        "ponderado": 17.5
+      },
+      "protocolos": {
+        "nombre": "Cumplimiento de Protocolos",
+        "score": 100,
+        "peso": 0.2,
+        "ponderado": 20.0
+      },
+      "precision": {
+        "nombre": "Precisión de Información",
+        "score": 100,
+        "peso": 0.15,
+        "ponderado": 15.0
+      },
+      "constitucion": {
+        "nombre": "Constitución y Tono",
+        "score": 82,
+        "peso": 0.15,
+        "ponderado": 12.3
+      },
+      "formato": {
+        "nombre": "Formato y UX Writing",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "validaciones": {
+        "nombre": "Validaciones y Guardrails",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "logica_negocio": {
+        "nombre": "Lógica de Negocio",
+        "score": 100,
+        "peso": 0.05,
+        "ponderado": 5.0
+      }
+    },
+    "hallazgos": [
+      {
+        "dimension": "flow",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Apertura correcta",
+        "detalle": "El agente se identifica como Aura de Auna Salud en el primer mensaje.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "flow",
+        "tipo": "error",
+        "severidad": "alta",
+        "titulo": "Flow incompleto antes de transferencia",
+        "detalle": "Solo se completaron 1/5 pasos antes de transferir.",
+        "regla_violada": "El agente debe completar todos los estados antes de transferir.",
+        "como_resolver": "Reforzar las condiciones de transición entre estados."
+      },
+      {
+        "dimension": "constitucion",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "Muletillas frecuentes (1/2 mensajes)",
+        "detalle": "Varios mensajes empiezan con las mismas muletillas.",
+        "regla_violada": "Constitución S04: Cortesía Ligera Anti-robot.",
+        "como_resolver": "Reducir el uso de \"Gracias/Perfecto/Listo\" como apertura."
+      },
+      {
+        "dimension": "constitucion",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "Uso excesivo del nombre \"Juan\" (2 veces)",
+        "detalle": "El nombre del usuario se usa con demasiada frecuencia.",
+        "regla_violada": "Constitución S02: Uso del Nombre Anti-bot: Solo al inicio, en fricción/duda y al cerrar. Evitar muletilla.",
+        "como_resolver": "Usar el nombre solo 1 vez cada 6-8 turnos."
+      }
+    ],
+    "metadata": {
+      "lead_score": "0",
+      "lead_qualified": "Cold",
+      "city": "LIMA",
+      "distrito": "",
+      "edad": "52",
+      "programas": ""
+    }
+  },
+  {
+    "conversacion_id": "66fe7059-7a04-41cb-afc7-65bd398a5ff6",
+    "contacto": "Jessica F. Leon",
+    "canal": "infobip",
+    "status": "transferred",
+    "fecha_inicio": "2026-04-07 11:07:46",
+    "total_mensajes": 2,
+    "mensajes_usuario": 1,
+    "mensajes_agente": 1,
+    "score_global": 91.0,
+    "clasificacion": "Excelente",
+    "scores_dimension": {
+      "flow": {
+        "nombre": "Cumplimiento del Flow",
+        "score": 70,
+        "peso": 0.25,
+        "ponderado": 17.5
+      },
+      "protocolos": {
+        "nombre": "Cumplimiento de Protocolos",
+        "score": 100,
+        "peso": 0.2,
+        "ponderado": 20.0
+      },
+      "precision": {
+        "nombre": "Precisión de Información",
+        "score": 100,
+        "peso": 0.15,
+        "ponderado": 15.0
+      },
+      "constitucion": {
+        "nombre": "Constitución y Tono",
+        "score": 90,
+        "peso": 0.15,
+        "ponderado": 13.5
+      },
+      "formato": {
+        "nombre": "Formato y UX Writing",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "validaciones": {
+        "nombre": "Validaciones y Guardrails",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "logica_negocio": {
+        "nombre": "Lógica de Negocio",
+        "score": 100,
+        "peso": 0.05,
+        "ponderado": 5.0
+      }
+    },
+    "hallazgos": [
+      {
+        "dimension": "flow",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Apertura correcta",
+        "detalle": "El agente se identifica como Aura de Auna Salud en el primer mensaje.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "flow",
+        "tipo": "error",
+        "severidad": "alta",
+        "titulo": "Flow incompleto antes de transferencia",
+        "detalle": "Solo se completaron 0/5 pasos antes de transferir.",
+        "regla_violada": "El agente debe completar todos los estados antes de transferir.",
+        "como_resolver": "Reforzar las condiciones de transición entre estados."
+      },
+      {
+        "dimension": "constitucion",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "Uso excesivo del nombre \"Jessica\" (1 veces)",
+        "detalle": "El nombre del usuario se usa con demasiada frecuencia.",
+        "regla_violada": "Constitución S02: Uso del Nombre Anti-bot: Solo al inicio, en fricción/duda y al cerrar. Evitar muletilla.",
+        "como_resolver": "Usar el nombre solo 1 vez cada 6-8 turnos."
+      }
+    ],
+    "metadata": {
+      "lead_score": "",
+      "lead_qualified": "",
+      "city": "",
+      "distrito": "",
+      "edad": "",
+      "programas": ""
+    }
+  },
+  {
+    "conversacion_id": "00507905-dfff-45b0-a9d6-af0f6e0923e7",
+    "contacto": "Oscar Alberto",
+    "canal": "infobip",
+    "status": "active",
+    "fecha_inicio": "2026-04-07 10:37:46",
+    "total_mensajes": 13,
+    "mensajes_usuario": 6,
+    "mensajes_agente": 7,
+    "score_global": 92.7,
+    "clasificacion": "Excelente",
+    "scores_dimension": {
+      "flow": {
+        "nombre": "Cumplimiento del Flow",
+        "score": 100,
+        "peso": 0.25,
+        "ponderado": 25.0
+      },
+      "protocolos": {
+        "nombre": "Cumplimiento de Protocolos",
+        "score": 90,
+        "peso": 0.2,
+        "ponderado": 18.0
+      },
+      "precision": {
+        "nombre": "Precisión de Información",
+        "score": 90,
+        "peso": 0.15,
+        "ponderado": 13.5
+      },
+      "constitucion": {
+        "nombre": "Constitución y Tono",
+        "score": 100,
+        "peso": 0.15,
+        "ponderado": 15.0
+      },
+      "formato": {
+        "nombre": "Formato y UX Writing",
+        "score": 82,
+        "peso": 0.1,
+        "ponderado": 8.2
+      },
+      "validaciones": {
+        "nombre": "Validaciones y Guardrails",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "logica_negocio": {
+        "nombre": "Lógica de Negocio",
+        "score": 60,
+        "peso": 0.05,
+        "ponderado": 3.0
+      }
+    },
+    "hallazgos": [
+      {
+        "dimension": "flow",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Apertura correcta",
+        "detalle": "El agente se identifica como Aura de Auna Salud en el primer mensaje.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "protocolos",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Precio referencial entregado",
+        "detalle": "El agente respondió con un precio referencial cuando el usuario lo solicitó.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "protocolos",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "Falta \"desde\" en precio",
+        "detalle": "El precio referencial no usó la palabra \"desde\" como prefijo.",
+        "regla_violada": "Protocolo de Precios: Siempre usar \"desde\" y resaltar el monto en negrita.",
+        "como_resolver": "Ajustar el formato de entrega de precio a \"desde S/ [Monto]\"."
+      },
+      {
+        "dimension": "protocolos",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Frase legal de precio incluida",
+        "detalle": "Se incluyó correctamente la frase referencial del precio.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "protocolos",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Campaña vigente comunicada",
+        "detalle": "Se comunicó el descuento de la campaña vigente.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "precision",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "Nomenclatura incorrecta: \"piura\"",
+        "detalle": "Se mencionó \"piura\" sin anteponer \"Clínica Auna\".",
+        "regla_violada": "Constitución: Nomenclatura de Red: Anteponer siempre \"Clínica\" o \"Clínica Auna\".",
+        "como_resolver": "Usar siempre \"Clínica Auna Piura\" en lugar de solo \"piura\"."
+      },
+      {
+        "dimension": "formato",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "1 mensajes excesivamente largos (>500 chars)",
+        "detalle": "Algunos mensajes superan la longitud recomendada.",
+        "regla_violada": "Constitución S07: Guía 220-320 caracteres, máx 450 en precios.",
+        "como_resolver": "Recortar mensajes a 2-3 líneas con una idea principal por turno."
+      },
+      {
+        "dimension": "formato",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "1 mensajes con más de 3 bullets",
+        "detalle": "Algunos mensajes exceden el máximo de 3 bullets.",
+        "regla_violada": "Constitución S07: Regla de 3: Máximo 3 bullets por mensaje.",
+        "como_resolver": "Seleccionar los 3 beneficios más potentes para el perfil."
+      },
+      {
+        "dimension": "formato",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Uso correcto de negritas en precios",
+        "detalle": "Los precios y planes están resaltados en negritas.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "logica_negocio",
+        "tipo": "error",
+        "severidad": "critica",
+        "titulo": "Plan incorrecto: recomendó senior, debió ser classic",
+        "detalle": "Edad: 41, Ciudad: , Distrito: . La lógica indica classic.",
+        "regla_violada": "ST3: Senior ≥61, Premium solo Lima+Miraflores/SanIsidro, Classic el resto.",
+        "como_resolver": "Corregir la lógica de selección de plan en el estado de Recomendación."
+      }
+    ],
+    "metadata": {
+      "lead_score": "0.75",
+      "lead_qualified": "Very Hot",
+      "city": "",
+      "distrito": "",
+      "edad": "41",
+      "programas": "Auna Salud Senior"
+    }
+  },
+  {
+    "conversacion_id": "fa29c17a-3e47-4d91-a55e-2da1e6b09193",
+    "contacto": "Clau prueba 6",
+    "canal": "widget",
+    "status": "transferred",
+    "fecha_inicio": "2026-04-06 14:36:57",
+    "total_mensajes": 23,
+    "mensajes_usuario": 11,
+    "mensajes_agente": 12,
+    "score_global": 91.0,
+    "clasificacion": "Excelente",
+    "scores_dimension": {
+      "flow": {
+        "nombre": "Cumplimiento del Flow",
+        "score": 100,
+        "peso": 0.25,
+        "ponderado": 25.0
+      },
+      "protocolos": {
+        "nombre": "Cumplimiento de Protocolos",
+        "score": 100,
+        "peso": 0.2,
+        "ponderado": 20.0
+      },
+      "precision": {
+        "nombre": "Precisión de Información",
+        "score": 90,
+        "peso": 0.15,
+        "ponderado": 13.5
+      },
+      "constitucion": {
+        "nombre": "Constitución y Tono",
+        "score": 100,
+        "peso": 0.15,
+        "ponderado": 15.0
+      },
+      "formato": {
+        "nombre": "Formato y UX Writing",
+        "score": 70,
+        "peso": 0.1,
+        "ponderado": 7.0
+      },
+      "validaciones": {
+        "nombre": "Validaciones y Guardrails",
+        "score": 75,
+        "peso": 0.1,
+        "ponderado": 7.5
+      },
+      "logica_negocio": {
+        "nombre": "Lógica de Negocio",
+        "score": 60,
+        "peso": 0.05,
+        "ponderado": 3.0
+      }
+    },
+    "hallazgos": [
+      {
+        "dimension": "flow",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Apertura correcta",
+        "detalle": "El agente se identifica como Aura de Auna Salud en el primer mensaje.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "flow",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Flow completo hasta transferencia",
+        "detalle": "Se completaron 4/5 pasos principales del flow.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "precision",
+        "tipo": "error",
+        "severidad": "alta",
+        "titulo": "Precio sospechoso: S/20.0",
+        "detalle": "Se mencionó un precio de S/20.0 que parece ser un cálculo con descuento inventado.",
+        "regla_violada": "Protocolo Precios Regla #6: Nunca inventes montos con descuento.",
+        "como_resolver": "Solo usar precios de la tabla referencial. El descuento lo aplica el asesor."
+      },
+      {
+        "dimension": "formato",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "5 mensajes excesivamente largos (>500 chars)",
+        "detalle": "Algunos mensajes superan la longitud recomendada.",
+        "regla_violada": "Constitución S07: Guía 220-320 caracteres, máx 450 en precios.",
+        "como_resolver": "Recortar mensajes a 2-3 líneas con una idea principal por turno."
+      },
+      {
+        "dimension": "formato",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "3 mensajes con más de 3 bullets",
+        "detalle": "Algunos mensajes exceden el máximo de 3 bullets.",
+        "regla_violada": "Constitución S07: Regla de 3: Máximo 3 bullets por mensaje.",
+        "como_resolver": "Seleccionar los 3 beneficios más potentes para el perfil."
+      },
+      {
+        "dimension": "formato",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Uso correcto de negritas en precios",
+        "detalle": "Los precios y planes están resaltados en negritas.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "validaciones",
+        "tipo": "error",
+        "severidad": "critica",
+        "titulo": "Solicitud de dato sensible: \"clave\"",
+        "detalle": "El agente solicitó información financiera sensible.",
+        "regla_violada": "Constitución S08: Prohibición Financiera: Prohibido solicitar datos bancarios.",
+        "como_resolver": "Eliminar cualquier solicitud de datos financieros."
+      },
+      {
+        "dimension": "logica_negocio",
+        "tipo": "error",
+        "severidad": "critica",
+        "titulo": "Plan incorrecto: recomendó senior, debió ser classic",
+        "detalle": "Edad: 40, Ciudad: chiclayo, Distrito: . La lógica indica classic.",
+        "regla_violada": "ST3: Senior ≥61, Premium solo Lima+Miraflores/SanIsidro, Classic el resto.",
+        "como_resolver": "Corregir la lógica de selección de plan en el estado de Recomendación."
+      }
+    ],
+    "metadata": {
+      "lead_score": "0.52",
+      "lead_qualified": "Hot",
+      "city": "Chiclayo",
+      "distrito": "",
+      "edad": "40",
+      "programas": ""
+    }
+  },
+  {
+    "conversacion_id": "fba42823-4d84-4118-9ce7-bea1cae96251",
+    "contacto": "Clau prueba 5",
+    "canal": "widget",
+    "status": "transferred",
+    "fecha_inicio": "2026-04-06 14:26:09",
+    "total_mensajes": 3,
+    "mensajes_usuario": 1,
+    "mensajes_agente": 2,
+    "score_global": 92.5,
+    "clasificacion": "Excelente",
+    "scores_dimension": {
+      "flow": {
+        "nombre": "Cumplimiento del Flow",
+        "score": 70,
+        "peso": 0.25,
+        "ponderado": 17.5
+      },
+      "protocolos": {
+        "nombre": "Cumplimiento de Protocolos",
+        "score": 100,
+        "peso": 0.2,
+        "ponderado": 20.0
+      },
+      "precision": {
+        "nombre": "Precisión de Información",
+        "score": 100,
+        "peso": 0.15,
+        "ponderado": 15.0
+      },
+      "constitucion": {
+        "nombre": "Constitución y Tono",
+        "score": 100,
+        "peso": 0.15,
+        "ponderado": 15.0
+      },
+      "formato": {
+        "nombre": "Formato y UX Writing",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "validaciones": {
+        "nombre": "Validaciones y Guardrails",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "logica_negocio": {
+        "nombre": "Lógica de Negocio",
+        "score": 100,
+        "peso": 0.05,
+        "ponderado": 5.0
+      }
+    },
+    "hallazgos": [
+      {
+        "dimension": "flow",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Apertura correcta",
+        "detalle": "El agente se identifica como Aura de Auna Salud en el primer mensaje.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "flow",
+        "tipo": "error",
+        "severidad": "alta",
+        "titulo": "Flow incompleto antes de transferencia",
+        "detalle": "Solo se completaron 1/5 pasos antes de transferir.",
+        "regla_violada": "El agente debe completar todos los estados antes de transferir.",
+        "como_resolver": "Reforzar las condiciones de transición entre estados."
+      }
+    ],
+    "metadata": {
+      "lead_score": "0.39",
+      "lead_qualified": "Warm",
+      "city": "",
+      "distrito": "",
+      "edad": "",
+      "programas": ""
+    }
+  },
+  {
+    "conversacion_id": "d7d1b7b5-069e-46d9-ba77-2bdb565fb2b0",
+    "contacto": "Claudia parte 3",
+    "canal": "widget",
+    "status": "transferred",
+    "fecha_inicio": "2026-04-06 12:29:55",
+    "total_mensajes": 13,
+    "mensajes_usuario": 6,
+    "mensajes_agente": 7,
+    "score_global": 89.2,
+    "clasificacion": "Bueno",
+    "scores_dimension": {
+      "flow": {
+        "nombre": "Cumplimiento del Flow",
+        "score": 85,
+        "peso": 0.25,
+        "ponderado": 21.2
+      },
+      "protocolos": {
+        "nombre": "Cumplimiento de Protocolos",
+        "score": 100,
+        "peso": 0.2,
+        "ponderado": 20.0
+      },
+      "precision": {
+        "nombre": "Precisión de Información",
+        "score": 90,
+        "peso": 0.15,
+        "ponderado": 13.5
+      },
+      "constitucion": {
+        "nombre": "Constitución y Tono",
+        "score": 100,
+        "peso": 0.15,
+        "ponderado": 15.0
+      },
+      "formato": {
+        "nombre": "Formato y UX Writing",
+        "score": 70,
+        "peso": 0.1,
+        "ponderado": 7.0
+      },
+      "validaciones": {
+        "nombre": "Validaciones y Guardrails",
+        "score": 75,
+        "peso": 0.1,
+        "ponderado": 7.5
+      },
+      "logica_negocio": {
+        "nombre": "Lógica de Negocio",
+        "score": 100,
+        "peso": 0.05,
+        "ponderado": 5.0
+      }
+    },
+    "hallazgos": [
+      {
+        "dimension": "flow",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Apertura correcta",
+        "detalle": "El agente se identifica como Aura de Auna Salud en el primer mensaje.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "flow",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "Flow parcialmente completo",
+        "detalle": "Se completaron 3/5 pasos. Faltaron algunos pasos antes de transferir.",
+        "regla_violada": "Debe completar: Registro → Perfil → Recomendación → Calificación → Transferencia",
+        "como_resolver": "Verificar que el agente no saltó estados intermedios."
+      },
+      {
+        "dimension": "precision",
+        "tipo": "error",
+        "severidad": "alta",
+        "titulo": "Precio sospechoso: S/40.0",
+        "detalle": "Se mencionó un precio de S/40.0 que parece ser un cálculo con descuento inventado.",
+        "regla_violada": "Protocolo Precios Regla #6: Nunca inventes montos con descuento.",
+        "como_resolver": "Solo usar precios de la tabla referencial. El descuento lo aplica el asesor."
+      },
+      {
+        "dimension": "formato",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "4 mensajes excesivamente largos (>500 chars)",
+        "detalle": "Algunos mensajes superan la longitud recomendada.",
+        "regla_violada": "Constitución S07: Guía 220-320 caracteres, máx 450 en precios.",
+        "como_resolver": "Recortar mensajes a 2-3 líneas con una idea principal por turno."
+      },
+      {
+        "dimension": "formato",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "2 mensajes con más de 3 bullets",
+        "detalle": "Algunos mensajes exceden el máximo de 3 bullets.",
+        "regla_violada": "Constitución S07: Regla de 3: Máximo 3 bullets por mensaje.",
+        "como_resolver": "Seleccionar los 3 beneficios más potentes para el perfil."
+      },
+      {
+        "dimension": "formato",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Uso correcto de negritas en precios",
+        "detalle": "Los precios y planes están resaltados en negritas.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "validaciones",
+        "tipo": "error",
+        "severidad": "critica",
+        "titulo": "Solicitud de dato sensible: \"clave\"",
+        "detalle": "El agente solicitó información financiera sensible.",
+        "regla_violada": "Constitución S08: Prohibición Financiera: Prohibido solicitar datos bancarios.",
+        "como_resolver": "Eliminar cualquier solicitud de datos financieros."
+      },
+      {
+        "dimension": "logica_negocio",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Plan correcto: senior",
+        "detalle": "El plan recomendado es coherente con edad=70, ciudad=la molina, distrito=la perla.",
+        "regla_violada": "",
+        "como_resolver": ""
+      }
+    ],
+    "metadata": {
+      "lead_score": "0",
+      "lead_qualified": "Cold",
+      "city": "La Molina",
+      "distrito": "La Perla",
+      "edad": "70",
+      "programas": ""
+    }
+  },
+  {
+    "conversacion_id": "2ed747d6-3641-4728-aa68-c8c54a1c2745",
+    "contacto": "Claudia Prueba 2",
+    "canal": "widget",
+    "status": "transferred",
+    "fecha_inicio": "2026-04-06 12:24:59",
+    "total_mensajes": 3,
+    "mensajes_usuario": 1,
+    "mensajes_agente": 2,
+    "score_global": 91.3,
+    "clasificacion": "Excelente",
+    "scores_dimension": {
+      "flow": {
+        "nombre": "Cumplimiento del Flow",
+        "score": 70,
+        "peso": 0.25,
+        "ponderado": 17.5
+      },
+      "protocolos": {
+        "nombre": "Cumplimiento de Protocolos",
+        "score": 100,
+        "peso": 0.2,
+        "ponderado": 20.0
+      },
+      "precision": {
+        "nombre": "Precisión de Información",
+        "score": 100,
+        "peso": 0.15,
+        "ponderado": 15.0
+      },
+      "constitucion": {
+        "nombre": "Constitución y Tono",
+        "score": 92,
+        "peso": 0.15,
+        "ponderado": 13.8
+      },
+      "formato": {
+        "nombre": "Formato y UX Writing",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "validaciones": {
+        "nombre": "Validaciones y Guardrails",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "logica_negocio": {
+        "nombre": "Lógica de Negocio",
+        "score": 100,
+        "peso": 0.05,
+        "ponderado": 5.0
+      }
+    },
+    "hallazgos": [
+      {
+        "dimension": "flow",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Apertura correcta",
+        "detalle": "El agente se identifica como Aura de Auna Salud en el primer mensaje.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "flow",
+        "tipo": "error",
+        "severidad": "alta",
+        "titulo": "Flow incompleto antes de transferencia",
+        "detalle": "Solo se completaron 1/5 pasos antes de transferir.",
+        "regla_violada": "El agente debe completar todos los estados antes de transferir.",
+        "como_resolver": "Reforzar las condiciones de transición entre estados."
+      },
+      {
+        "dimension": "constitucion",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "Muletillas frecuentes (1/2 mensajes)",
+        "detalle": "Varios mensajes empiezan con las mismas muletillas.",
+        "regla_violada": "Constitución S04: Cortesía Ligera Anti-robot.",
+        "como_resolver": "Reducir el uso de \"Gracias/Perfecto/Listo\" como apertura."
+      }
+    ],
+    "metadata": {
+      "lead_score": "0",
+      "lead_qualified": "Cold",
+      "city": "",
+      "distrito": "",
+      "edad": "",
+      "programas": ""
+    }
+  },
+  {
+    "conversacion_id": "16154bfc-317d-449a-91f9-e8d4655e6eca",
+    "contacto": "Claudia Prueba 1",
+    "canal": "widget",
+    "status": "transferred",
+    "fecha_inicio": "2026-04-01 16:22:19",
+    "total_mensajes": 23,
+    "mensajes_usuario": 11,
+    "mensajes_agente": 12,
+    "score_global": 92.0,
+    "clasificacion": "Excelente",
+    "scores_dimension": {
+      "flow": {
+        "nombre": "Cumplimiento del Flow",
+        "score": 85,
+        "peso": 0.25,
+        "ponderado": 21.2
+      },
+      "protocolos": {
+        "nombre": "Cumplimiento de Protocolos",
+        "score": 90,
+        "peso": 0.2,
+        "ponderado": 18.0
+      },
+      "precision": {
+        "nombre": "Precisión de Información",
+        "score": 90,
+        "peso": 0.15,
+        "ponderado": 13.5
+      },
+      "constitucion": {
+        "nombre": "Constitución y Tono",
+        "score": 100,
+        "peso": 0.15,
+        "ponderado": 15.0
+      },
+      "formato": {
+        "nombre": "Formato y UX Writing",
+        "score": 92,
+        "peso": 0.1,
+        "ponderado": 9.2
+      },
+      "validaciones": {
+        "nombre": "Validaciones y Guardrails",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "logica_negocio": {
+        "nombre": "Lógica de Negocio",
+        "score": 100,
+        "peso": 0.05,
+        "ponderado": 5.0
+      }
+    },
+    "hallazgos": [
+      {
+        "dimension": "flow",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Apertura correcta",
+        "detalle": "El agente se identifica como Aura de Auna Salud en el primer mensaje.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "flow",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Flow completo hasta transferencia",
+        "detalle": "Se completaron 5/5 pasos principales del flow.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "flow",
+        "tipo": "advertencia",
+        "severidad": "alta",
+        "titulo": "Transferencia sin documento del titular",
+        "detalle": "El agente transfirió sin capturar TipoDocumento + Documento del titular.",
+        "regla_violada": "ST4 Regla Crítica #3: No transferir sin TipoDocumento + Documento.",
+        "como_resolver": "Agregar verificación de documento antes de ejecutar transferencia."
+      },
+      {
+        "dimension": "protocolos",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Precio referencial entregado",
+        "detalle": "El agente respondió con un precio referencial cuando el usuario lo solicitó.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "protocolos",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "Falta \"desde\" en precio",
+        "detalle": "El precio referencial no usó la palabra \"desde\" como prefijo.",
+        "regla_violada": "Protocolo de Precios: Siempre usar \"desde\" y resaltar el monto en negrita.",
+        "como_resolver": "Ajustar el formato de entrega de precio a \"desde S/ [Monto]\"."
+      },
+      {
+        "dimension": "protocolos",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Frase legal de precio incluida",
+        "detalle": "Se incluyó correctamente la frase referencial del precio.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "protocolos",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Campaña vigente comunicada",
+        "detalle": "Se comunicó el descuento de la campaña vigente.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "precision",
+        "tipo": "error",
+        "severidad": "alta",
+        "titulo": "Precio sospechoso: S/40.0",
+        "detalle": "Se mencionó un precio de S/40.0 que parece ser un cálculo con descuento inventado.",
+        "regla_violada": "Protocolo Precios Regla #6: Nunca inventes montos con descuento.",
+        "como_resolver": "Solo usar precios de la tabla referencial. El descuento lo aplica el asesor."
+      },
+      {
+        "dimension": "formato",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "1 mensajes excesivamente largos (>500 chars)",
+        "detalle": "Algunos mensajes superan la longitud recomendada.",
+        "regla_violada": "Constitución S07: Guía 220-320 caracteres, máx 450 en precios.",
+        "como_resolver": "Recortar mensajes a 2-3 líneas con una idea principal por turno."
+      },
+      {
+        "dimension": "formato",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Uso correcto de negritas en precios",
+        "detalle": "Los precios y planes están resaltados en negritas.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "logica_negocio",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Plan correcto: classic",
+        "detalle": "El plan recomendado es coherente con edad=25, ciudad=, distrito=la perla.",
+        "regla_violada": "",
+        "como_resolver": ""
+      }
+    ],
+    "metadata": {
+      "lead_score": "0.64",
+      "lead_qualified": "Hot",
+      "city": "",
+      "distrito": "La Perla",
+      "edad": "25",
+      "programas": ""
+    }
+  },
+  {
+    "conversacion_id": "c0d1292a-3d32-4c14-8958-f9f8ac27e90a",
+    "contacto": "daniprueba11",
+    "canal": "widget",
+    "status": "active",
+    "fecha_inicio": "2026-04-01 13:39:57",
+    "total_mensajes": 23,
+    "mensajes_usuario": 11,
+    "mensajes_agente": 12,
+    "score_global": 85.0,
+    "clasificacion": "Bueno",
+    "scores_dimension": {
+      "flow": {
+        "nombre": "Cumplimiento del Flow",
+        "score": 85,
+        "peso": 0.25,
+        "ponderado": 21.2
+      },
+      "protocolos": {
+        "nombre": "Cumplimiento de Protocolos",
+        "score": 70,
+        "peso": 0.2,
+        "ponderado": 14.0
+      },
+      "precision": {
+        "nombre": "Precisión de Información",
+        "score": 90,
+        "peso": 0.15,
+        "ponderado": 13.5
+      },
+      "constitucion": {
+        "nombre": "Constitución y Tono",
+        "score": 100,
+        "peso": 0.15,
+        "ponderado": 15.0
+      },
+      "formato": {
+        "nombre": "Formato y UX Writing",
+        "score": 92,
+        "peso": 0.1,
+        "ponderado": 9.2
+      },
+      "validaciones": {
+        "nombre": "Validaciones y Guardrails",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "logica_negocio": {
+        "nombre": "Lógica de Negocio",
+        "score": 40,
+        "peso": 0.05,
+        "ponderado": 2.0
+      }
+    },
+    "hallazgos": [
+      {
+        "dimension": "flow",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Apertura correcta",
+        "detalle": "El agente se identifica como Aura de Auna Salud en el primer mensaje.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "flow",
+        "tipo": "advertencia",
+        "severidad": "alta",
+        "titulo": "Transferencia sin documento del titular",
+        "detalle": "El agente transfirió sin capturar TipoDocumento + Documento del titular.",
+        "regla_violada": "ST4 Regla Crítica #3: No transferir sin TipoDocumento + Documento.",
+        "como_resolver": "Agregar verificación de documento antes de ejecutar transferencia."
+      },
+      {
+        "dimension": "protocolos",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Precio referencial entregado",
+        "detalle": "El agente respondió con un precio referencial cuando el usuario lo solicitó.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "protocolos",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "Falta \"desde\" en precio",
+        "detalle": "El precio referencial no usó la palabra \"desde\" como prefijo.",
+        "regla_violada": "Protocolo de Precios: Siempre usar \"desde\" y resaltar el monto en negrita.",
+        "como_resolver": "Ajustar el formato de entrega de precio a \"desde S/ [Monto]\"."
+      },
+      {
+        "dimension": "protocolos",
+        "tipo": "error",
+        "severidad": "media",
+        "titulo": "Falta frase legal de precio",
+        "detalle": "No se incluyó la frase: \"El precio final te lo compartirá el asesor...\"",
+        "regla_violada": "Protocolo de Precios Paso 2: Añadir wording exacto después del precio.",
+        "como_resolver": "Agregar la frase legal obligatoria después de cada mención de precio."
+      },
+      {
+        "dimension": "protocolos",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "No comunicó campaña vigente",
+        "detalle": "No se mencionó el descuento promocional después de entregar el precio.",
+        "regla_violada": "Protocolo de Precios Paso 3: Comunicar campaña vigente como acelerador.",
+        "como_resolver": "Agregar la comunicación de la campaña después del precio referencial."
+      },
+      {
+        "dimension": "precision",
+        "tipo": "error",
+        "severidad": "alta",
+        "titulo": "Precio sospechoso: S/40.0",
+        "detalle": "Se mencionó un precio de S/40.0 que parece ser un cálculo con descuento inventado.",
+        "regla_violada": "Protocolo Precios Regla #6: Nunca inventes montos con descuento.",
+        "como_resolver": "Solo usar precios de la tabla referencial. El descuento lo aplica el asesor."
+      },
+      {
+        "dimension": "formato",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "1 mensajes excesivamente largos (>500 chars)",
+        "detalle": "Algunos mensajes superan la longitud recomendada.",
+        "regla_violada": "Constitución S07: Guía 220-320 caracteres, máx 450 en precios.",
+        "como_resolver": "Recortar mensajes a 2-3 líneas con una idea principal por turno."
+      },
+      {
+        "dimension": "formato",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Uso correcto de negritas en precios",
+        "detalle": "Los precios y planes están resaltados en negritas.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "logica_negocio",
+        "tipo": "error",
+        "severidad": "critica",
+        "titulo": "Plan incorrecto: recomendó senior, debió ser premium",
+        "detalle": "Edad: 25, Ciudad: lima, Distrito: miraflores. La lógica indica premium.",
+        "regla_violada": "ST3: Senior ≥61, Premium solo Lima+Miraflores/SanIsidro, Classic el resto.",
+        "como_resolver": "Corregir la lógica de selección de plan en el estado de Recomendación."
+      },
+      {
+        "dimension": "logica_negocio",
+        "tipo": "error",
+        "severidad": "alta",
+        "titulo": "Múltiples planes ofrecidos: senior, classic, premium",
+        "detalle": "Se mencionaron múltiples planes para una sola persona.",
+        "regla_violada": "ST3 Regla #1: 1 plan por persona, siempre. Prohibido dar dos o más opciones.",
+        "como_resolver": "Recomendar un solo plan basado en la lógica de edad+ubicación."
+      }
+    ],
+    "metadata": {
+      "lead_score": "0.52",
+      "lead_qualified": "Hot",
+      "city": "Lima",
+      "distrito": "Miraflores",
+      "edad": "25",
+      "programas": ""
+    }
+  },
+  {
+    "conversacion_id": "344d41c3-d1e7-4ae2-99b4-54aa558d0556",
+    "contacto": "daniprueba10",
+    "canal": "widget",
+    "status": "transferred",
+    "fecha_inicio": "2026-04-01 13:36:54",
+    "total_mensajes": 9,
+    "mensajes_usuario": 4,
+    "mensajes_agente": 5,
+    "score_global": 92.8,
+    "clasificacion": "Excelente",
+    "scores_dimension": {
+      "flow": {
+        "nombre": "Cumplimiento del Flow",
+        "score": 85,
+        "peso": 0.25,
+        "ponderado": 21.2
+      },
+      "protocolos": {
+        "nombre": "Cumplimiento de Protocolos",
+        "score": 100,
+        "peso": 0.2,
+        "ponderado": 20.0
+      },
+      "precision": {
+        "nombre": "Precisión de Información",
+        "score": 90,
+        "peso": 0.15,
+        "ponderado": 13.5
+      },
+      "constitucion": {
+        "nombre": "Constitución y Tono",
+        "score": 92,
+        "peso": 0.15,
+        "ponderado": 13.8
+      },
+      "formato": {
+        "nombre": "Formato y UX Writing",
+        "score": 92,
+        "peso": 0.1,
+        "ponderado": 9.2
+      },
+      "validaciones": {
+        "nombre": "Validaciones y Guardrails",
+        "score": 100,
+        "peso": 0.1,
+        "ponderado": 10.0
+      },
+      "logica_negocio": {
+        "nombre": "Lógica de Negocio",
+        "score": 100,
+        "peso": 0.05,
+        "ponderado": 5.0
+      }
+    },
+    "hallazgos": [
+      {
+        "dimension": "flow",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Apertura correcta",
+        "detalle": "El agente se identifica como Aura de Auna Salud en el primer mensaje.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "flow",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "Flow parcialmente completo",
+        "detalle": "Se completaron 3/5 pasos. Faltaron algunos pasos antes de transferir.",
+        "regla_violada": "Debe completar: Registro → Perfil → Recomendación → Calificación → Transferencia",
+        "como_resolver": "Verificar que el agente no saltó estados intermedios."
+      },
+      {
+        "dimension": "precision",
+        "tipo": "error",
+        "severidad": "alta",
+        "titulo": "Precio sospechoso: S/40.0",
+        "detalle": "Se mencionó un precio de S/40.0 que parece ser un cálculo con descuento inventado.",
+        "regla_violada": "Protocolo Precios Regla #6: Nunca inventes montos con descuento.",
+        "como_resolver": "Solo usar precios de la tabla referencial. El descuento lo aplica el asesor."
+      },
+      {
+        "dimension": "constitucion",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "Muletillas frecuentes (2/5 mensajes)",
+        "detalle": "Varios mensajes empiezan con las mismas muletillas.",
+        "regla_violada": "Constitución S04: Cortesía Ligera Anti-robot.",
+        "como_resolver": "Reducir el uso de \"Gracias/Perfecto/Listo\" como apertura."
+      },
+      {
+        "dimension": "formato",
+        "tipo": "advertencia",
+        "severidad": "media",
+        "titulo": "1 mensajes excesivamente largos (>500 chars)",
+        "detalle": "Algunos mensajes superan la longitud recomendada.",
+        "regla_violada": "Constitución S07: Guía 220-320 caracteres, máx 450 en precios.",
+        "como_resolver": "Recortar mensajes a 2-3 líneas con una idea principal por turno."
+      },
+      {
+        "dimension": "formato",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Uso correcto de negritas en precios",
+        "detalle": "Los precios y planes están resaltados en negritas.",
+        "regla_violada": "",
+        "como_resolver": ""
+      },
+      {
+        "dimension": "logica_negocio",
+        "tipo": "positivo",
+        "severidad": "info",
+        "titulo": "Plan correcto: senior",
+        "detalle": "El plan recomendado es coherente con edad=77, ciudad=lima, distrito=surco.",
+        "regla_violada": "",
+        "como_resolver": ""
+      }
+    ],
+    "metadata": {
+      "lead_score": "0.52",
+      "lead_qualified": "Hot",
+      "city": "Lima",
+      "distrito": "Surco",
+      "edad": "77",
+      "programas": ""
+    }
+  }
+]
+};
+    </script>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        function getColorForScore(score) {
+            if (score >= 90) return 'color-green';
+            if (score >= 70) return 'color-yellow';
+            if (score >= 50) return 'color-orange';
+            return 'color-red';
+        }
+
+        function getColorClassForScore(score) {
+            if (score >= 90) return 'green';
+            if (score >= 70) return 'yellow';
+            if (score >= 50) return 'orange';
+            return 'red';
+        }
+
+        function getDimensionLabel(key) {
+            const labels = {
+                'flow': 'Cumplimiento del Flow',
+                'protocolos': 'Cumplimiento de Protocolos',
+                'precision': 'Precisión de Información',
+                'constitucion': 'Constitución y Tono',
+                'formato': 'Formato y UX Writing',
+                'validaciones': 'Validaciones y Guardrails',
+                'logica_negocio': 'Lógica de Negocio'
+            };
+            return labels[key] || key;
+        }
+
+        function renderDimensionBars() {
+            const container = document.getElementById('dimensionBarsContainer');
+            container.innerHTML = '';
+            const dimensions = qaData.resumen.promedios_por_dimension;
+            const dimensionOrder = ['flow', 'protocolos', 'precision', 'constitucion', 'formato', 'validaciones', 'logica_negocio'];
+
+            dimensionOrder.forEach(key => {
+                const dim = dimensions[key];
+                const score = dim.promedio;
+                const colorClass = getColorForScore(score);
+
+                const html = `
+                    <div class="mb-6">
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="font-semibold text-gray-900">${dim.nombre}</label>
+                            <span class="font-bold text-lg primary-text">${score}%</span>
+                        </div>
+                        <div class="dimension-bar ${colorClass}" style="width: ${score}%;"></div>
+                        <div class="flex justify-between text-xs text-gray-500 mt-1">
+                            <span>Min: ${dim.min}%</span>
+                            <span>Max: ${dim.max}%</span>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', html);
+            });
+        }
+
+        function renderErroresTable() {
+            const tbody = document.getElementById('erroresTableBody');
+            tbody.innerHTML = '';
+            const errores = qaData.resumen.top_errores;
+
+            errores.forEach((error, index) => {
+                const row = document.createElement('tr');
+                row.className = 'border-b hover:bg-gray-50';
+                const severidadClass = `severity-${error.severidad}`;
+                const dimensionLabel = getDimensionLabel(error.dimension);
+
+                row.innerHTML = `
+                    <td class="px-6 py-4 text-sm text-gray-900">${error.error}</td>
+                    <td class="px-6 py-4 text-center font-bold text-gray-900">${error.count}</td>
+                    <td class="px-6 py-4 text-center">
+                        <span class="severity-badge ${severidadClass}">
+                            ${error.severidad}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-center text-sm text-gray-600">${dimensionLabel}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function renderConversationsTable() {
+            const tbody = document.getElementById('conversationsTableBody');
+            tbody.innerHTML = '';
+            const conversaciones = qaData.evaluaciones;
+
+            conversaciones.forEach((conv, index) => {
+                const scoreColor = conv.score_global >= 90 ? 'text-green-600' : 'text-amber-600';
+                const clasificacionClass = conv.clasificacion === 'Excelente' ? 'text-green-700 bg-green-50' : 'text-amber-700 bg-amber-50';
+                const statusBg = conv.status === 'transferred' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800';
+
+                const row = document.createElement('tr');
+                row.className = 'conversation-row border-b';
+                row.setAttribute('data-index', index);
+
+                row.innerHTML = `
+                    <td class="px-6 py-4 font-medium text-gray-900">${conv.contacto}</td>
+                    <td class="px-6 py-4 text-sm text-gray-600">${conv.canal}</td>
+                    <td class="px-6 py-4 text-sm">
+                        <span class="px-2 py-1 rounded-full text-xs font-medium ${statusBg}">
+                            ${conv.status === 'transferred' ? 'Transferida' : 'Activa'}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-center font-bold ${scoreColor}">${conv.score_global}</td>
+                    <td class="px-6 py-4">
+                        <span class="px-3 py-1 rounded text-xs font-semibold ${clasificacionClass}">
+                            ${conv.clasificacion}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-center text-sm text-gray-600">${conv.total_mensajes}</td>
+                    <td class="px-6 py-4 text-center">
+                        <button class="text-sm primary-text font-semibold hover:underline expand-btn" data-conv-index="${index}">
+                            Ver detalles
+                        </button>
+                    </td>
+                `;
+
+                row.addEventListener('click', (e) => {
+                    const btn = e.target.closest('.expand-btn');
+                    if (btn) {
+                        const convIndex = parseInt(btn.getAttribute('data-conv-index'));
+                        toggleConversationExpand(convIndex, conversaciones[convIndex]);
+                    }
+                });
+
+                tbody.appendChild(row);
+            });
+        }
+
+        function toggleConversationExpand(index, conv) {
+            const container = document.getElementById('expansionContainer');
+            const currentExpandedIndex = container.getAttribute('data-expanded-index');
+
+            if (currentExpandedIndex == index) {
+                container.innerHTML = '';
+                container.classList.add('hidden');
+                container.removeAttribute('data-expanded-index');
+                return;
+            }
+
+            container.classList.remove('hidden');
+            container.setAttribute('data-expanded-index', index);
+
+            const html = `
+                <div class="bg-white rounded-lg shadow p-8">
+                    <h3 class="text-xl font-bold mb-2 primary-text">
+                        Detalles: ${conv.contacto}
+                    </h3>
+                    <p class="text-xs text-gray-500 mb-6">ID: ${conv.conversacion_id}</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-gray-50 p-4 rounded">
+                            <p class="text-gray-600 text-sm mb-1">Fecha de inicio</p>
+                            <p class="font-semibold text-sm">${conv.fecha_inicio}</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded">
+                            <p class="text-gray-600 text-sm mb-1">Total de mensajes</p>
+                            <p class="font-semibold text-sm">${conv.mensajes_usuario} usuario + ${conv.mensajes_agente} agente</p>
+                        </div>
+                    </div>
+
+                    <h4 class="text-lg font-bold mb-4 primary-text">Scores por Dimensión</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                        ${renderDimensionScores(conv.scores_dimension)}
+                    </div>
+
+                    <h4 class="text-lg font-bold mb-4 primary-text">Hallazgos</h4>
+                    <div class="space-y-3">
+                        ${renderHallazgos(conv.hallazgos)}
+                    </div>
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        function renderDimensionScores(scores) {
+            let html = '';
+            Object.keys(scores).forEach(key => {
+                const score = scores[key];
+                const scoreValue = score.score;
+                const color = getColorForScore(scoreValue);
+                const colorClass = getColorClassForScore(scoreValue);
+
+                html += `
+                    <div class="border border-gray-200 rounded p-4">
+                        <p class="text-sm text-gray-600 mb-2 font-semibold">${score.nombre}</p>
+                        <div class="flex items-center gap-3">
+                            <span class="text-2xl font-bold text-${colorClass}-600">${scoreValue}</span>
+                            <div class="flex-1">
+                                <div class="bg-gray-200 h-2 rounded-full">
+                                    <div class="h-full rounded-full dimension-bar ${color}" style="width: ${scoreValue}%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            return html;
+        }
+
+        function renderHallazgos(hallazgos) {
+            return hallazgos.map(h => {
+                let findingClass = 'finding-item finding-positive';
+                let icon = '✓';
+
+                if (h.tipo === 'advertencia') {
+                    findingClass = 'finding-item finding-warning';
+                    icon = '⚠';
+                } else if (h.tipo === 'error') {
+                    findingClass = 'finding-item finding-error';
+                    icon = '✕';
+                }
+
+                const severidadBadge = h.severidad !== 'info' ?
+                    `<span class="severity-badge severity-${h.severidad}" style="margin-left: 8px;">${h.severidad}</span>` : '';
+
+                let content = `
+                    <div class="${findingClass}">
+                        <div class="font-semibold mb-2">
+                            <span class="mr-2">${icon}</span>${h.titulo}
+                            ${severidadBadge}
+                        </div>
+                        <p class="text-sm text-gray-700 mb-2">${h.detalle}</p>
+                `;
+
+                if (h.regla_violada) {
+                    content += `
+                        <p class="text-xs text-gray-600 bg-gray-100 p-2 rounded mb-2">
+                            <strong>Regla violada:</strong> ${h.regla_violada}
+                        </p>
+                    `;
+                }
+
+                if (h.como_resolver) {
+                    content += `
+                        <p class="text-xs text-gray-600">
+                            <strong>Cómo resolver:</strong> ${h.como_resolver}
+                        </p>
+                    `;
+                }
+
+                content += '</div>';
+                return content;
+            }).join('');
+        }
+
+        function initializeDashboard() {
+            renderDimensionBars();
+            renderErroresTable();
+            renderConversationsTable();
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Try to load full evaluation data from JSON file
+            fetch('/qa_output/qa_report.json')
+                .then(response => {
+                    if (!response.ok) throw new Error('JSON not found');
+                    return response.json();
+                })
+                .then(data => {
+                    qaData.evaluaciones = data.evaluaciones || [];
+                    initializeDashboard();
+                })
+                .catch(error => {
+                    console.warn('Could not load external JSON:', error.message);
+                    // Initialize with empty evaluaciones if file not found
+                    if (!qaData.evaluaciones || qaData.evaluaciones.length === 0) {
+                        qaData.evaluaciones = [];
+                    }
+                    initializeDashboard();
+                });
+        });
+    </script>
+</body>
+</html>
