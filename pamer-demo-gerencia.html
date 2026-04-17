@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Revenue System · Corporación Pamer · Impulse</title>
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,700;1,800&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --green:#78F05A; --purple:#501450; --dark:#115540;
+  --magenta:#DC3296; --coral:#FF5733; --cyan:#00FF96;
+  --white:#FFFFFF; --text:#333333; --muted:#666666;
+  --bg-light:#F5F5F5; --card-bg:#FFFFFF;
+  --grad-hero:linear-gradient(135deg,#501450 0%,#7B2D7B 60%,#3a1a5a 100%);
+  --grad-dark:linear-gradient(180deg,#0A3223 0%,#115540 100%);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Urbanist',sans-serif;color:var(--text);background:#fff;overflow-x:hidden}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(10,20,16,0.93);backdrop-filter:blur(14px);border-bottom:1px solid rgba(120,240,90,0.15);height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 40px}
+.nav-brand{font-size:15px;font-weight:800;color:var(--green);letter-spacing:0.06em}
+.nav-links{display:flex;gap:4px}
+.nav-links a{color:rgba(255,255,255,0.5);font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;padding:6px 10px;border-radius:20px;transition:.2s}
+.nav-links a:hover,.nav-links a.active{color:var(--white);background:rgba(120,240,90,0.12)}
+.nav-badge{background:var(--green);color:#0a1f10;font-size:11px;font-weight:800;padding:5px 14px;border-radius:20px;letter-spacing:.06em}
+
+/* ── SECTION BASE ── */
+section{padding:100px 60px 80px;position:relative;overflow:hidden}
+.container{max-width:1120px;margin:0 auto;width:100%}
+.section-label{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:20px}
+.label-green{background:rgba(120,240,90,.12);color:var(--green);border:1px solid rgba(120,240,90,.25)}
+.label-purple{background:rgba(220,50,150,.12);color:var(--magenta);border:1px solid rgba(220,50,150,.25)}
+.label-cyan{background:rgba(0,255,150,.1);color:var(--cyan);border:1px solid rgba(0,255,150,.25)}
+.label-coral{background:rgba(255,87,51,.12);color:var(--coral);border:1px solid rgba(255,87,51,.25)}
+.label-light{background:rgba(80,20,80,.1);color:var(--purple);border:1px solid rgba(80,20,80,.2)}
+h2.section-title{font-size:clamp(30px,3.5vw,50px);font-weight:800;line-height:1.1;letter-spacing:-.02em;margin-bottom:14px}
+p.section-sub{font-size:17px;color:var(--muted);line-height:1.65;max-width:680px}
+
+/* ── HERO ── */
+#hero{background:var(--grad-hero);min-height:100vh;display:flex;align-items:center;padding-top:120px}
+#hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 80% 40%,rgba(120,240,90,.08) 0%,transparent 70%)}
+.hero-eyebrow{font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:20px}
+.hero-h1{font-size:clamp(44px,6vw,80px);font-weight:900;color:#fff;line-height:1;letter-spacing:-.03em;margin-bottom:24px}
+.hero-h1 em{font-style:italic;color:var(--green)}
+.hero-sub{font-size:18px;color:rgba(255,255,255,.65);max-width:560px;line-height:1.65;margin-bottom:40px}
+.hero-chips{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:48px}
+.chip{padding:7px 16px;border-radius:20px;font-size:12px;font-weight:700;letter-spacing:.06em;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.75)}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:0}
+.hstat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:22px 18px}
+.hstat .n{font-size:28px;font-weight:800;color:var(--green);line-height:1;margin-bottom:6px}
+.hstat .n.red{color:#ff6b8a}
+.hstat .l{font-size:12px;color:rgba(255,255,255,.6)}
+
+/* ── QUIÉNES SOMOS ── */
+#quienes{background:#fff}
+.impulse-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:44px;align-items:start}
+.pillar-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.pillar{background:var(--bg-light);border-radius:14px;padding:22px 20px;border:1px solid #eee;transition:.2s}
+.pillar:hover{border-color:var(--green);transform:translateY(-2px)}
+.pillar-icon{font-size:26px;margin-bottom:10px}
+.pillar h4{font-size:14px;font-weight:700;margin-bottom:6px;color:var(--text)}
+.pillar p{font-size:13px;color:var(--muted);line-height:1.5}
+.edu-clients{background:var(--bg-light);border-radius:16px;padding:28px;margin-top:14px}
+.edu-clients h4{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.client-grid{display:flex;flex-wrap:wrap;gap:10px}
+.client-tag{background:#fff;border:1px solid #ddd;border-radius:20px;padding:6px 14px;font-size:12px;font-weight:600;color:var(--text)}
+.client-tag.highlight{border-color:var(--green);color:var(--dark);background:rgba(120,240,90,.08)}
+.hubspot-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,87,51,.06);border:1px solid rgba(255,87,51,.2);border-radius:10px;padding:12px 18px;font-size:13px;font-weight:700;color:var(--coral);margin-top:14px}
+
+/* ── CONVERSIA ── */
+#conversia{background:var(--grad-dark)}
+#conversia::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 30% 60%,rgba(220,50,150,.12) 0%,transparent 70%)}
+.conversia-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:60px;margin-top:44px;align-items:center}
+.conversia-north-star{background:rgba(255,255,255,.04);border:1px solid rgba(120,240,90,.2);border-radius:20px;padding:32px}
+.ns-quote{font-size:17px;font-weight:600;color:#fff;line-height:1.6;font-style:italic;margin-bottom:20px}
+.ns-tagline{font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--green)}
+.conversia-pillars{display:flex;flex-direction:column;gap:16px}
+.conv-pillar{background:rgba(255,255,255,.04);border-left:3px solid var(--magenta);border-radius:0 12px 12px 0;padding:18px 20px;transition:.2s}
+.conv-pillar:hover{background:rgba(255,255,255,.07)}
+.conv-pillar h4{font-size:14px;font-weight:700;color:#fff;margin-bottom:4px}
+.conv-pillar p{font-size:13px;color:rgba(255,255,255,.55);line-height:1.5}
+.conv-pillar.green{border-left-color:var(--green)}
+.conv-pillar.cyan{border-left-color:var(--cyan)}
+.not-a-bot{display:inline-flex;align-items:center;gap:10px;background:rgba(220,50,150,.12);border:1px solid rgba(220,50,150,.3);border-radius:10px;padding:12px 18px;margin-bottom:24px}
+.not-a-bot span{font-size:13px;font-weight:700;color:var(--magenta)}
+
+/* ── SOCIAL LEARNING ── */
+#social{background:#fff}
+.sl-layout{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;margin-top:44px}
+.sl-story{display:flex;flex-direction:column;gap:18px}
+.story-step{display:flex;gap:16px;align-items:flex-start}
+.step-num{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0}
+.step-num.orange{background:rgba(255,87,51,.1);color:var(--coral)}
+.step-num.green{background:rgba(120,240,90,.1);color:var(--dark)}
+.step-num.purple{background:rgba(80,20,80,.1);color:var(--purple)}
+.step-num.cyan{background:rgba(0,255,150,.1);color:var(--dark)}
+.step-body h4{font-size:14px;font-weight:700;margin-bottom:4px}
+.step-body p{font-size:13px;color:var(--muted);line-height:1.5}
+.sl-results{background:linear-gradient(135deg,#0A3223,#115540);border-radius:20px;padding:32px}
+.sl-results h4{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:24px}
+.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.rstat{background:rgba(255,255,255,.06);border-radius:12px;padding:18px 16px;text-align:center}
+.rstat .rn{font-size:30px;font-weight:800;color:var(--green);line-height:1;margin-bottom:4px}
+.rstat .rn.mag{color:var(--magenta)}
+.rstat .rl{font-size:11px;color:rgba(255,255,255,.5);line-height:1.4}
+.benchmark-bar{margin-top:20px;background:rgba(255,255,255,.06);border-radius:12px;padding:18px}
+.bar-label{display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.6);margin-bottom:8px}
+.bar-track{height:10px;background:rgba(255,255,255,.1);border-radius:10px;overflow:hidden;margin-bottom:6px}
+.bar-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--green),#4FC840);transition:width 1.5s ease}
+.bar-vs{font-size:11px;color:rgba(255,255,255,.4)}
+.bar-vs span{color:var(--green);font-weight:700}
+.institutions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.inst-tag{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:4px 12px;font-size:11px;color:rgba(255,255,255,.7);font-weight:600}
+
+/* ── COI/ROI ── */
+#coi{background:var(--bg-light)}
+.coi-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:44px}
+.coi-box{background:linear-gradient(135deg,#1a0020,#3a0540);border:1px solid rgba(220,50,150,.3);border-radius:20px;padding:36px;text-align:center}
+.coi-label{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--magenta);margin-bottom:12px}
+.coi-big{font-size:clamp(48px,5vw,72px);font-weight:900;color:var(--magenta);line-height:1;letter-spacing:-.03em}
+.coi-period{font-size:14px;color:rgba(255,255,255,.5);margin-top:8px}
+.coi-note{font-size:12px;color:rgba(255,255,255,.35);margin-top:6px}
+.roi-box{background:#fff;border:1px solid #eee;border-radius:20px;padding:32px}
+.roi-comparison{display:flex;flex-direction:column;gap:16px}
+.comp-row{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-radius:12px}
+.comp-row.cost{background:rgba(120,240,90,.06);border:1px solid rgba(120,240,90,.15)}
+.comp-row.opp{background:rgba(255,87,51,.06);border:1px solid rgba(255,87,51,.15)}
+.comp-row .cr-label{font-size:13px;font-weight:600;color:var(--muted)}
+.comp-row .cr-val{font-size:20px;font-weight:800}
+.comp-row.cost .cr-val{color:var(--dark)}
+.comp-row.opp .cr-val{color:var(--coral)}
+.roi-calc{margin-top:16px;background:linear-gradient(135deg,#0A3223,#115540);border-radius:14px;padding:20px 22px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.rc-item .rc-n{font-size:26px;font-weight:800;color:var(--green);line-height:1}
+.rc-item .rc-l{font-size:11px;color:rgba(255,255,255,.5);margin-top:3px}
+.ltv-explainer{background:#fff;border:1px solid #eee;border-radius:16px;padding:24px;margin-top:16px}
+.ltv-explainer h4{font-size:13px;font-weight:700;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px}
+.ltv-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #f0f0f0}
+.ltv-row:last-child{border:none}
+.ltv-tag{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;flex-shrink:0}
+.ltv-tag.col{background:rgba(120,240,90,.1);color:var(--dark)}
+.ltv-tag.aca{background:rgba(220,50,150,.1);color:var(--purple)}
+.ltv-formula{font-size:12px;color:var(--muted);flex:1}
+.ltv-val{font-size:16px;font-weight:800;color:var(--dark)}
+
+/* ── RESULTADOS ── */
+#resultados{background:#fff}
+.timeline-h{position:relative;margin-top:56px}
+.tl-line{position:absolute;top:26px;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--green),var(--dark));border-radius:3px;z-index:0}
+.tl-items{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;position:relative;z-index:1}
+.tl-item{position:relative}
+.tl-dot{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;border:3px solid #fff;margin:0 auto 18px;box-shadow:0 0 0 3px var(--green)}
+.tl-dot.d1{background:rgba(120,240,90,.15);color:var(--dark)}
+.tl-dot.d3{background:rgba(120,240,90,.35);color:var(--dark)}
+.tl-dot.d6{background:rgba(120,240,90,.65);color:var(--dark)}
+.tl-dot.d12{background:var(--green);color:#0a2010}
+.tl-card{background:var(--bg-light);border-radius:14px;padding:20px 18px;border-top:3px solid var(--green)}
+.tl-month{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:8px}
+.tl-card h4{font-size:15px;font-weight:700;margin-bottom:10px;color:var(--text)}
+.tl-bullets{list-style:none;display:flex;flex-direction:column;gap:6px}
+.tl-bullets li{font-size:12px;color:var(--muted);padding-left:14px;position:relative;line-height:1.4}
+.tl-bullets li::before{content:'→';position:absolute;left:0;color:var(--green);font-weight:700}
+.metric-highlight{background:linear-gradient(135deg,#0A3223,#115540);border-radius:16px;padding:24px 28px;margin-top:32px;display:flex;align-items:center;gap:32px}
+.mh-stat .mn{font-size:36px;font-weight:800;color:var(--green);line-height:1}
+.mh-stat .ml{font-size:12px;color:rgba(255,255,255,.5);margin-top:4px}
+.mh-text{font-size:14px;color:rgba(255,255,255,.75);line-height:1.6}
+.mh-text strong{color:#fff}
+.mh-divider{width:1px;height:60px;background:rgba(255,255,255,.1)}
+
+/* ── PROCESO ── */
+#proceso{background:var(--grad-hero)}
+#proceso::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 60% at 20% 50%,rgba(120,240,90,.06) 0%,transparent 70%)}
+.proceso-tabs{display:flex;gap:8px;margin-bottom:32px;margin-top:32px}
+.ptab{padding:10px 22px;border-radius:24px;font-size:13px;font-weight:700;cursor:pointer;border:1.5px solid rgba(255,255,255,.2);color:rgba(255,255,255,.6);transition:.2s;background:transparent}
+.ptab.active-hoy{border-color:var(--coral);color:var(--coral);background:rgba(255,87,51,.1)}
+.ptab.active-f1{border-color:var(--green);color:var(--green);background:rgba(120,240,90,.1)}
+.ptab.active-f2{border-color:#C880FF;color:#C880FF;background:rgba(200,128,255,.1)}
+.proceso-panel{display:none;animation:fadeIn .3s ease}
+.proceso-panel.active{display:grid}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.proceso-panel.p-hoy{grid-template-columns:1fr;max-width:700px}
+.proceso-panel.p-f1,.proceso-panel.p-f2{grid-template-columns:1fr 1fr;gap:32px}
+.flow-card{background:rgba(255,255,255,.05);border-radius:18px;padding:28px}
+.flow-card.red-border{border:1px solid rgba(255,87,51,.3)}
+.flow-card.green-border{border:1px solid rgba(120,240,90,.25)}
+.flow-card.purple-border{border:1px solid rgba(200,128,255,.3)}
+.flow-header{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.flow-icon{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.flow-icon.red{background:rgba(255,87,51,.15)}
+.flow-icon.green{background:rgba(120,240,90,.12)}
+.flow-icon.purple{background:rgba(200,128,255,.15)}
+.flow-title{font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.flow-title.red{color:var(--coral)}
+.flow-title.green{color:var(--green)}
+.flow-title.purple{color:#C880FF}
+.flow-steps-list{display:flex;flex-direction:column;gap:0}
+.fstep{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.05);align-items:flex-start}
+.fstep:last-child{border:none}
+.fdot{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;margin-top:1px}
+.fdot.red{background:rgba(255,87,51,.15);color:var(--coral);border:1px solid rgba(255,87,51,.3)}
+.fdot.green{background:rgba(120,240,90,.12);color:var(--green);border:1px solid rgba(120,240,90,.3)}
+.fdot.purple{background:rgba(200,128,255,.12);color:#C880FF;border:1px solid rgba(200,128,255,.3)}
+.fstep-text{font-size:13px;color:rgba(255,255,255,.8);line-height:1.45;padding-top:3px}
+.fstep-note{font-size:11px;color:rgba(255,255,255,.35);margin-top:2px}
+.warning-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,87,51,.1);border:1px solid rgba(255,87,51,.3);border-radius:8px;padding:8px 12px;margin-top:14px;font-size:11px;color:var(--coral);font-weight:600}
+.safe-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(120,240,90,.08);border:1px solid rgba(120,240,90,.2);border-radius:8px;padding:8px 12px;margin-top:14px;font-size:11px;color:var(--green);font-weight:600}
+.hub-note{background:rgba(255,255,255,.04);border-radius:10px;padding:14px 16px;margin-top:16px;font-size:12px;color:rgba(255,255,255,.55);line-height:1.5}
+.hub-note strong{color:rgba(255,255,255,.85)}
+
+/* ── PROPUESTA ── */
+#propuesta{background:var(--bg-light)}
+.propuesta-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:44px}
+.fase-card{border-radius:22px;padding:36px;position:relative;overflow:hidden}
+.fase-card.f1{background:#fff;border:2px solid var(--green)}
+.fase-card.f2{background:linear-gradient(135deg,rgba(80,20,80,.06),rgba(17,85,64,.04));border:1.5px solid rgba(200,128,255,.3)}
+.fase-badge-pill{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:16px}
+.f1 .fase-badge-pill{background:var(--green);color:#0a2010}
+.f2 .fase-badge-pill{background:rgba(200,128,255,.2);color:#9040CC;border:1px solid rgba(200,128,255,.4)}
+.fase-price{font-size:clamp(36px,4vw,52px);font-weight:900;line-height:1;letter-spacing:-.03em;margin-bottom:6px}
+.f1 .fase-price{color:var(--dark)}
+.f2 .fase-price{color:#9040CC}
+.fase-price-note{font-size:13px;color:var(--muted);margin-bottom:22px}
+.fase-items{display:flex;flex-direction:column;gap:10px}
+.fi{display:flex;gap:10px;font-size:13px;color:var(--muted);align-items:flex-start;line-height:1.4}
+.fi-icon{flex-shrink:0;margin-top:2px}
+.fi strong{color:var(--text)}
+.fase-breakdown{margin-top:20px;background:var(--bg-light);border-radius:12px;padding:16px}
+.fb-row{display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-bottom:1px solid #eee}
+.fb-row:last-child{border:none;font-weight:700;font-size:13px;color:var(--dark)}
+.fb-row .fb-label{color:var(--muted)}
+.f2-note{margin-top:16px;background:rgba(200,128,255,.06);border:1px solid rgba(200,128,255,.2);border-radius:10px;padding:12px 14px;font-size:12px;color:#9040CC;line-height:1.5}
+.f2-what{margin-top:16px;background:rgba(80,20,80,.05);border-radius:12px;padding:16px}
+.f2-what h5{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+
+/* ── TIMELINE CIERRE ── */
+#cierre{background:var(--grad-dark)}
+#cierre::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 60% at 70% 40%,rgba(120,240,90,.06) 0%,transparent 70%)}
+.cierre-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:52px;position:relative}
+.cierre-line{position:absolute;top:28px;left:12.5%;right:12.5%;height:2px;background:linear-gradient(90deg,rgba(120,240,90,.5),var(--green));z-index:0}
+.cs{text-align:center;position:relative;z-index:1}
+.cs-dot{width:56px;height:56px;border-radius:50%;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:22px;border:2px solid rgba(255,255,255,.1)}
+.cs-dot.highlight{background:var(--green);border-color:var(--green)}
+.cs-dot.dim{background:rgba(255,255,255,.06)}
+.cs-date{font-size:13px;font-weight:800;color:var(--green);margin-bottom:4px}
+.cs-title{font-size:15px;font-weight:700;color:#fff;margin-bottom:6px}
+.cs-body{font-size:12px;color:rgba(255,255,255,.45);line-height:1.5}
+.coi-urgency{margin-top:48px;background:rgba(255,255,255,.04);border:1px solid rgba(120,240,90,.15);border-radius:18px;padding:28px 32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+.cu-text{font-size:16px;color:rgba(255,255,255,.75);max-width:560px;line-height:1.6}
+.cu-text strong{color:#fff}
+.btn-cta{background:var(--green);color:#0a2010;font-family:'Urbanist',sans-serif;font-size:15px;font-weight:800;padding:16px 32px;border-radius:28px;border:none;cursor:pointer;letter-spacing:.04em;text-decoration:none;display:inline-block;transition:.2s}
+.btn-cta:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(120,240,90,.3)}
+
+/* ── FOOTER ── */
+footer{background:#0A1F16;border-top:1px solid rgba(255,255,255,.06);padding:24px 60px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+footer .fl{font-size:13px;font-weight:700;color:var(--green);letter-spacing:.08em}
+footer .fc{font-size:12px;color:rgba(255,255,255,.25)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .hero-stats,.tl-items,.cierre-steps,.propuesta-grid,.coi-grid,.impulse-grid,.conversia-grid,.sl-layout,.proceso-panel.p-f1,.proceso-panel.p-f2{grid-template-columns:1fr}
+  section{padding:80px 28px 60px}
+  nav{padding:0 20px}
+  .nav-links{display:none}
+  .pillar-cards{grid-template-columns:1fr}
+  .result-grid{grid-template-columns:1fr 1fr}
+  .tl-line,.cierre-line{display:none}
+}
+@media(max-width:600px){
+  .hero-h1{font-size:40px}
+  .result-grid{grid-template-columns:1fr}
+  .roi-calc{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">IMPULSE × PAMER</div>
+  <div class="nav-links">
+    <a href="#quienes">Nosotros</a>
+    <a href="#conversia">Conversia</a>
+    <a href="#social">Social Learning</a>
+    <a href="#coi">ROI</a>
+    <a href="#resultados">Resultados</a>
+    <a href="#proceso">Proceso</a>
+    <a href="#propuesta">Propuesta</a>
+    <a href="#cierre">Siguiente paso</a>
+  </div>
+  <div class="nav-badge">Confidencial</div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+<div class="container">
+  <div class="hero-eyebrow">Propuesta Ejecutiva · Corporación Pamer · Abril 2026</div>
+  <h1 class="hero-h1">El <em>Revenue System</em><br/>que convierte más<br/>matrículas.</h1>
+  <p class="hero-sub">HubSpot + Conversia: calificación automática de leads 24/7, visibilidad total del proceso comercial y ROI medible en menos de 2 meses.</p>
+  <div class="hero-chips">
+    <div class="chip">🎓 Educación Superior</div>
+    <div class="chip">🤖 Agentes AI en Producción</div>
+    <div class="chip">🇵🇪 Experiencia en Perú</div>
+    <div class="chip">💎 HubSpot Diamond Partner</div>
+  </div>
+  <div class="hero-stats">
+    <div class="hstat"><div class="n red">S/ 92,400</div><div class="l">perdidos cada mes por proceso manual</div></div>
+    <div class="hstat"><div class="n">S/ 18,000</div><div class="l">LTV por estudiante de colegio</div></div>
+    <div class="hstat"><div class="n">&lt; 2 meses</div><div class="l">payback estimado Fase 1</div></div>
+    <div class="hstat"><div class="n">2.1×</div><div class="l">tasa de conversión vs benchmark sector</div></div>
+  </div>
+</div>
+</section>
+
+<!-- QUIÉNES SOMOS -->
+<section id="quienes">
+<div class="container">
+  <div class="section-label label-light">01 · Quiénes somos</div>
+  <h2 class="section-title">Enterprise Revenue Systems<br/><span style="color:var(--dark)">Partner para HubSpot y Conversia</span></h2>
+  <p class="section-sub">Diseñamos y operamos sistemas de ingresos que conectan estrategia, datos, procesos y agentes de IA para convertir más oportunidades de forma predecible.</p>
+
+  <div class="impulse-grid">
+    <div>
+      <div class="pillar-cards">
+        <div class="pillar">
+          <div class="pillar-icon">🧠</div>
+          <h4>Estrategia de Revenue</h4>
+          <p>Diagnóstico, diseño de sistema e implementación alineada al modelo de negocio.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">🤖</div>
+          <h4>Agentes AI en Producción</h4>
+          <p>Conversia: agentes que nutren, califican y hacen handoff al equipo humano 24/7.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">📊</div>
+          <h4>HubSpot Enterprise</h4>
+          <p>Implementación y operación de HubSpot como core de datos y Revenue Operations.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">📈</div>
+          <h4>Resultados Medibles</h4>
+          <p>No pilotos — sistemas en producción con métricas de conversión e impacto en ingresos.</p>
+        </div>
+      </div>
+      <div class="hubspot-badge" style="margin-top:20px">
+        <span style="font-size:18px">🏆</span>
+        <span>HubSpot Diamond Partner — Latinoamérica</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="edu-clients">
+        <h4>Experiencia en Educación</h4>
+        <div class="client-grid">
+          <div class="client-tag highlight">Social Learning</div>
+          <div class="client-tag highlight">Grupo Laureate</div>
+          <div class="client-tag">UPC</div>
+          <div class="client-tag">UPN</div>
+          <div class="client-tag">Cibertec</div>
+          <div class="client-tag">Siglo 21 · ARG</div>
+          <div class="client-tag">Alianza Francesa</div>
+          <div class="client-tag">UCSP · Arequipa</div>
+        </div>
+      </div>
+      <div style="background:var(--bg-light);border-radius:16px;padding:24px;margin-top:14px;border-left:4px solid var(--green)">
+        <p style="font-size:14px;color:var(--muted);line-height:1.65"><strong style="color:var(--dark)">En educación, el que responde primero con el mensaje correcto, gana la matrícula.</strong> Nuestra especialidad es construir el sistema que garantiza esa respuesta — siempre, en segundos, con el contexto correcto.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- CONVERSIA -->
+<section id="conversia">
+<div class="container">
+  <div class="section-label label-purple">02 · La plataforma</div>
+  <h2 class="section-title" style="color:#fff">Conversia no es un <em style="font-style:italic;color:var(--magenta)">chatbot</em></h2>
+
+  <div class="conversia-grid">
+    <div>
+      <div class="not-a-bot">
+        <span style="font-size:16px">⚡</span>
+        <span>First Data, then AI Agents.</span>
+      </div>
+      <div class="conversia-north-star">
+        <p class="ns-quote">"Conversia es el Data & AI Revenue System que convierte conversaciones y datos dispersos en un sistema unificado de inteligencia y ejecución, donde Agentes AI y equipos humanos trabajan juntos para crecer el revenue y mejorar la experiencia del cliente."</p>
+        <div class="ns-tagline">North Star · Conversia 2026</div>
+      </div>
+    </div>
+
+    <div class="conversia-pillars">
+      <div class="conv-pillar green">
+        <h4>🗄️ Data Core Unificado</h4>
+        <p>Centraliza la identidad del cliente, su comportamiento y sus conversaciones en una sola fuente de verdad. Sin Excel, sin silos, sin versiones paralelas de la realidad.</p>
+      </div>
+      <div class="conv-pillar">
+        <h4>🤖 Agentes AI Autónomos</h4>
+        <p>Agentes que nutren y califican leads 24/7, hacen recontacto inteligente, actualizan el CRM automáticamente y hacen handoff al humano justo cuando agrega valor.</p>
+      </div>
+      <div class="conv-pillar cyan">
+        <h4>💼 Workspace para Equipos</h4>
+        <p>El espacio de trabajo donde asesores y Agentes AI colaboran juntos. Pipeline ordenado, Insights de cada lead, historial completo — todo en una pantalla.</p>
+      </div>
+      <div style="background:rgba(255,255,255,.04);border-radius:12px;padding:16px 18px;margin-top:4px">
+        <p style="font-size:13px;color:rgba(255,255,255,.5);line-height:1.6">Probado en operación real con instituciones educativas en <strong style="color:rgba(255,255,255,.8)">Chile, Argentina y México</strong>. No es un piloto — es un sistema en producción.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- SOCIAL LEARNING -->
+<section id="social">
+<div class="container">
+  <div class="section-label label-cyan" style="color:var(--dark);border-color:rgba(0,200,100,.3);background:rgba(0,200,100,.08)">03 · Caso de Éxito</div>
+  <h2 class="section-title">Social Learning:<br/><span style="color:var(--dark)">de caos operativo a 2.1× conversión</span></h2>
+
+  <div class="sl-layout">
+    <div class="sl-story">
+      <div class="story-step">
+        <div class="step-num orange">1</div>
+        <div class="step-body">
+          <h4>El desafío</h4>
+          <p>Red de educación superior en Chile (IPP), Argentina (Teclab) y México (Onmex). Más demanda de la que el equipo humano podía atender. Tres fricciones: cobertura insuficiente en picos, baja contactabilidad y asesores sin contexto para cerrar.</p>
+        </div>
+      </div>
+      <div class="story-step">
+        <div class="step-num green">2</div>
+        <div class="step-body">
+          <h4>Cómo se resolvió</h4>
+          <p>Un Agente AI por institución en Conversia, integrado con HubSpot Enterprise. El agente nutre y califica 24/7, hace recontacto inteligente si el lead cae en silencio y hace handoff al asesor con historial completo, intención detectada y siguiente acción recomendada.</p>
+        </div>
+      </div>
+      <div class="story-step">
+        <div class="step-num cyan">3</div>
+        <div class="step-body">
+          <h4>Hacia dónde van</h4>
+          <p>Con el ROI validado en 5 meses, el siguiente paso es la orquestación completa: conectar campañas de marketing, admisión y seguimiento post-matrícula en un solo sistema de ingresos. El mismo camino que Pamer puede recorrer.</p>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="sl-results">
+        <h4>Resultados · Oct 2025 – Feb 2026</h4>
+        <div class="institutions">
+          <div class="inst-tag">🇨🇱 IPP · Chile</div>
+          <div class="inst-tag">🇦🇷 Teclab · Argentina</div>
+          <div class="inst-tag">🇲🇽 Onmex · México</div>
+        </div>
+        <div class="result-grid" style="margin-top:18px">
+          <div class="rstat">
+            <div class="rn" id="cnt1">110,799</div>
+            <div class="rl">leads impactados</div>
+          </div>
+          <div class="rstat">
+            <div class="rn" id="cnt2">38,236</div>
+            <div class="rl">leads gestionados</div>
+          </div>
+          <div class="rstat">
+            <div class="rn mag" id="cnt3">11,318</div>
+            <div class="rl">leads de calidad entregados a asesores</div>
+          </div>
+          <div class="rstat">
+            <div class="rn mag">$2.51</div>
+            <div class="rl">USD por lead gestionado</div>
+          </div>
+        </div>
+        <div class="benchmark-bar">
+          <div class="bar-label"><span>Tasa de conversión a Lead de Calidad</span></div>
+          <div style="margin-bottom:12px">
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+              <span style="font-size:11px;color:rgba(255,255,255,.5)">Benchmark del sector</span>
+              <span style="font-size:11px;font-weight:700;color:rgba(255,255,255,.5)">14%</span>
+            </div>
+            <div class="bar-track"><div class="bar-fill" data-width="47" style="width:0%;background:rgba(255,255,255,.2)"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+              <span style="font-size:11px;color:var(--green)">Social Learning con Conversia</span>
+              <span style="font-size:11px;font-weight:700;color:var(--green)">29.6%</span>
+            </div>
+            <div class="bar-track"><div class="bar-fill" data-width="100" style="width:0%"></div></div>
+          </div>
+          <div class="bar-vs" style="margin-top:10px">Resultado: <span>2.1× la tasa promedio del sector</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- COI / ROI -->
+<section id="coi">
+<div class="container">
+  <div class="section-label label-coral">04 · La inversión vista al revés</div>
+  <h2 class="section-title">Antes del precio,<br/><span style="color:var(--dark)">¿cuánto cuesta no actuar?</span></h2>
+
+  <div class="coi-grid">
+    <div>
+      <div class="coi-box">
+        <div class="coi-label">Costo de Inacción · Mensual</div>
+        <div class="coi-big">S/ 92,400</div>
+        <div class="coi-period">cada mes sin el sistema</div>
+        <div class="coi-note">= S/ 1,108,800 en 12 meses sobre la mesa</div>
+      </div>
+      <div class="ltv-explainer">
+        <h4>Cómo se calcula · Con datos reales de Pamer</h4>
+        <div class="ltv-row">
+          <div class="ltv-tag col">Colegio</div>
+          <div class="ltv-formula">S/600/mes × 10 meses × 3 años</div>
+          <div class="ltv-val">S/ 18,000</div>
+        </div>
+        <div class="ltv-row">
+          <div class="ltv-tag aca">Academia</div>
+          <div class="ltv-formula">S/1,500/mes × 3 meses</div>
+          <div class="ltv-val">S/ 4,500</div>
+        </div>
+        <p style="font-size:12px;color:var(--muted);margin-top:12px;line-height:1.5">Cada lead de colegio que no se convierte no vale S/600 — vale <strong style="color:var(--dark)">S/18,000 de LTV</strong>. El costo real de perder un lead es el valor de toda su relación con Pamer.</p>
+      </div>
+    </div>
+
+    <div>
+      <div class="roi-box">
+        <h4 style="font-size:13px;font-weight:700;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px">La inversión en perspectiva — Fase 1</h4>
+        <div class="roi-comparison">
+          <div class="comp-row cost">
+            <div class="cr-label">Costo diario Fase 1</div>
+            <div class="cr-val">~S/ 525 / día</div>
+          </div>
+          <div class="comp-row opp">
+            <div class="cr-label">Oportunidad diaria perdida</div>
+            <div class="cr-val">~S/ 3,080 / día</div>
+          </div>
+        </div>
+        <div class="roi-calc">
+          <div class="rc-item">
+            <div class="rc-n">&lt; 2 meses</div>
+            <div class="rc-l">Payback estimado</div>
+          </div>
+          <div class="rc-item">
+            <div class="rc-n">~478%</div>
+            <div class="rc-l">ROI estimado Año 1</div>
+          </div>
+          <div class="rc-item">
+            <div class="rc-n">$51,100</div>
+            <div class="rc-l">Inversión total Año 1</div>
+          </div>
+          <div class="rc-item">
+            <div class="rc-n">S/1.1M</div>
+            <div class="rc-l">Delta de ingresos Año 1</div>
+          </div>
+        </div>
+        <div style="background:rgba(120,240,90,.06);border:1px solid rgba(120,240,90,.15);border-radius:12px;padding:16px;margin-top:16px">
+          <p style="font-size:13px;color:var(--dark);line-height:1.6"><strong>La Fase 1 no es un gasto — es un multiplicador.</strong> Por cada sol invertido en el sistema, el estimado es recuperar S/5.78 en ingresos incrementales durante el primer año.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- RESULTADOS -->
+<section id="resultados">
+<div class="container">
+  <div class="section-label label-green">05 · Resultados alcanzables</div>
+  <h2 class="section-title">La métrica que importa:<br/><span style="color:var(--dark)">Tasa de Conversión Lead → Matrícula</span></h2>
+  <p class="section-sub">Hoy esa tasa depende de si el asesor tuvo tiempo. Con el Revenue System, es predecible, medible y mejorable.</p>
+
+  <div class="timeline-h">
+    <div class="tl-line"></div>
+    <div class="tl-items">
+      <div class="tl-item">
+        <div class="tl-dot d1">M1</div>
+        <div class="tl-card">
+          <div class="tl-month">Mes 1 · Go Live</div>
+          <h4>El sistema enciende</h4>
+          <ul class="tl-bullets">
+            <li>Agente AI responde leads en &lt;1 minuto, 24/7</li>
+            <li>WhatsApp Business API oficial activa</li>
+            <li>Asesores operando desde Workspace</li>
+            <li>Cero riesgo de penalización</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot d3">M3</div>
+        <div class="tl-card">
+          <div class="tl-month">Mes 3 · Primeros resultados</div>
+          <h4>La conversión sube</h4>
+          <ul class="tl-bullets">
+            <li>Tasa Lead→Matrícula empieza a mejorar</li>
+            <li>~40% menos carga administrativa</li>
+            <li>Pipeline visible para jefatura</li>
+            <li>Leads fríos reactivados automáticamente</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot d6">M6</div>
+        <div class="tl-card">
+          <div class="tl-month">Mes 6 · ROI validado</div>
+          <h4>La inversión recuperada</h4>
+          <ul class="tl-bullets">
+            <li>Payback completado</li>
+            <li>S/554,400 en delta acumulado</li>
+            <li>Outbound activo y seguro</li>
+            <li>Asesores 100% en cerrar</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot d12">M12</div>
+        <div class="tl-card">
+          <div class="tl-month">Mes 12 · Sistema maduro</div>
+          <h4>Listo para Fase 2</h4>
+          <ul class="tl-bullets">
+            <li>Conversión estabilizada y mejorada</li>
+            <li>12 meses de data lista para escalar</li>
+            <li>Pamer crece sin aumentar headcount</li>
+            <li>Decisión de Fase 2 con números reales</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="metric-highlight">
+    <div class="mh-stat"><div class="mn">2.1×</div><div class="ml">conversión vs benchmark</div></div>
+    <div class="mh-divider"></div>
+    <div class="mh-text">Benchmark de referencia validado: <strong>Social Learning logró 29.6% de tasa de calidad de leads vs 14% del sector</strong> en los primeros 5 meses de operación con Conversia. Ese es el estándar que ya está probado en el sector educativo.</div>
+  </div>
+</div>
+</section>
+
+<!-- PROCESO -->
+<section id="proceso">
+<div class="container">
+  <div class="section-label label-green">06 · El proceso</div>
+  <h2 class="section-title" style="color:#fff">Tres momentos.<br/><em style="font-style:italic;color:var(--green)">Un camino claro.</em></h2>
+
+  <div class="proceso-tabs">
+    <div class="ptab active-hoy" onclick="showProceso('hoy',this)">⚠️ Hoy</div>
+    <div class="ptab" onclick="showProceso('f1',this)">✅ Fase 1</div>
+    <div class="ptab" onclick="showProceso('f2',this)">🚀 Fase 2</div>
+  </div>
+
+  <!-- HOY -->
+  <div class="proceso-panel p-hoy active" id="panel-hoy">
+    <div class="flow-card red-border">
+      <div class="flow-header">
+        <div class="flow-icon red">⚠️</div>
+        <div>
+          <div class="flow-title red">Proceso actual</div>
+          <div style="font-size:12px;color:rgba(255,255,255,.4);margin-top:2px">FlexiChat + Excel + WhatsApp personal + celular</div>
+        </div>
+      </div>
+      <div class="flow-steps-list">
+        <div class="fstep"><div class="fdot red">1</div><div><div class="fstep-text">Lead ingresa al canal digital</div></div></div>
+        <div class="fstep"><div class="fdot red">2</div><div><div class="fstep-text">Asesor atiende manualmente por WhatsApp</div><div class="fstep-note">sin SLA, sin priorización, depende de disponibilidad</div></div></div>
+        <div class="fstep"><div class="fdot red">3</div><div><div class="fstep-text">Trabaja en FlexiChat y duplica en Excel</div><div class="fstep-note">dos sistemas, sin historial centralizado</div></div></div>
+        <div class="fstep"><div class="fdot red">4</div><div><div class="fstep-text">Llama desde celular personal</div><div class="fstep-note">sin registro, sin grabación, sin visibilidad de jefatura</div></div></div>
+        <div class="fstep"><div class="fdot red">5</div><div><div class="fstep-text">Padre completa inscripción en web manualmente</div><div class="fstep-note">espera voucher de confirmación</div></div></div>
+        <div class="fstep"><div class="fdot red">6</div><div><div class="fstep-text">Asesor cambia estado en Excel</div><div class="fstep-note">sin reporting automático, sin trazabilidad</div></div></div>
+      </div>
+      <div class="warning-pill">🚫 Outbound bloqueado — riesgo de penalización de números en WhatsApp</div>
+    </div>
+  </div>
+
+  <!-- FASE 1 -->
+  <div class="proceso-panel p-f1" id="panel-f1" style="display:none">
+    <div class="flow-card green-border">
+      <div class="flow-header">
+        <div class="flow-icon green">🤖</div>
+        <div>
+          <div class="flow-title green">Agente AI + Workspace</div>
+          <div style="font-size:12px;color:rgba(255,255,255,.4);margin-top:2px">Conversia · WhatsApp Business API oficial</div>
+        </div>
+      </div>
+      <div class="flow-steps-list">
+        <div class="fstep"><div class="fdot green">1</div><div><div class="fstep-text">Lead entra por Lead Ad o CTW</div><div class="fstep-note">Conversia responde automáticamente en segundos</div></div></div>
+        <div class="fstep"><div class="fdot green">2</div><div><div class="fstep-text">Agente AI nutre y califica 24/7</div><div class="fstep-note">hace recontacto inteligente si cae en silencio</div></div></div>
+        <div class="fstep"><div class="fdot green">3</div><div><div class="fstep-text">Lead calificado → asignado al asesor correcto</div><div class="fstep-note">workflow automático por producto, sede o criterio</div></div></div>
+        <div class="fstep"><div class="fdot green">4</div><div><div class="fstep-text">Asesor trabaja desde Workspace</div><div class="fstep-note">Insights listos: resumen, score, próxima acción</div></div></div>
+        <div class="fstep"><div class="fdot green">5</div><div><div class="fstep-text">Agente CRM actualiza HubSpot automáticamente</div><div class="fstep-note">sin que el asesor toque nada — gobernanza de datos</div></div></div>
+      </div>
+      <div class="safe-pill">✅ WhatsApp Business API oficial · Outbound habilitado y seguro</div>
+    </div>
+    <div>
+      <div class="flow-card green-border" style="margin-bottom:16px">
+        <h4 style="font-size:13px;font-weight:700;color:var(--green);margin-bottom:12px">💼 Workspace — el espacio del asesor</h4>
+        <div class="flow-steps-list">
+          <div class="fstep"><div class="fdot green">→</div><div><div class="fstep-text">Conversaciones activas en un solo lugar</div></div></div>
+          <div class="fstep"><div class="fdot green">→</div><div><div class="fstep-text">Panel de Insights por lead (score, contexto, acción)</div></div></div>
+          <div class="fstep"><div class="fdot green">→</div><div><div class="fstep-text">Registro de actividades: llamadas, notas, adjuntos</div></div></div>
+          <div class="fstep"><div class="fdot green">→</div><div><div class="fstep-text">Pipeline ordenado con alertas de seguimiento</div></div></div>
+          <div class="fstep"><div class="fdot green">→</div><div><div class="fstep-text">Dashboard de productividad personal</div></div></div>
+        </div>
+      </div>
+      <div class="hub-note">
+        <strong>HubSpot en Fase 1 = Gobernanza de datos.</strong> El equipo de ventas opera en Workspace (Conversia). Toda la data se replica en tiempo real en HubSpot CRM. Ninguna integración con sistemas propios de Pamer en esta fase. La data queda lista y limpia para cuando se active la Fase 2.
+      </div>
+    </div>
+  </div>
+
+  <!-- FASE 2 -->
+  <div class="proceso-panel p-f2" id="panel-f2" style="display:none">
+    <div class="flow-card purple-border">
+      <div class="flow-header">
+        <div class="flow-icon purple">🚀</div>
+        <div>
+          <div class="flow-title purple">Marketing Hub Pro · Año 2</div>
+          <div style="font-size:12px;color:rgba(255,255,255,.4);margin-top:2px">Orquestación completa desde HubSpot</div>
+        </div>
+      </div>
+      <div class="flow-steps-list">
+        <div class="fstep"><div class="fdot purple">→</div><div><div class="fstep-text">Anuncios, WhatsApp, email y SMS orquestados desde HubSpot</div><div class="fstep-note">Business Manager conectado — todo en un solo sistema</div></div></div>
+        <div class="fstep"><div class="fdot purple">→</div><div><div class="fstep-text">Flujos de nurturing automatizados end-to-end</div></div></div>
+        <div class="fstep"><div class="fdot purple">→</div><div><div class="fstep-text">Agente AI con Tools autónomos</div><div class="fstep-note">el agente puede ejecutar el proceso de inscripción y matrícula</div></div></div>
+        <div class="fstep"><div class="fdot purple">→</div><div><div class="fstep-text">Integración con sistema de matrículas de Pamer</div><div class="fstep-note">desarrollo de APP e integraciones nativas en HubSpot</div></div></div>
+        <div class="fstep"><div class="fdot purple">→</div><div><div class="fstep-text">Bases para HubSpot Service Hub</div><div class="fstep-note">atención a estudiantes matriculados desde la misma plataforma</div></div></div>
+      </div>
+    </div>
+    <div class="flow-card purple-border">
+      <div class="flow-header">
+        <div class="flow-icon purple">📞</div>
+        <div>
+          <div class="flow-title purple">Sales Hub Pro · Decisión opcional</div>
+          <div style="font-size:12px;color:rgba(255,255,255,.4);margin-top:2px">Si el equipo quiere operar desde HubSpot</div>
+        </div>
+      </div>
+      <div class="flow-steps-list">
+        <div class="fstep"><div class="fdot purple">→</div><div><div class="fstep-text">Llamadas desde HubSpot con registro automático</div><div class="fstep-note">reemplaza Interphono — todo queda grabado y registrado</div></div></div>
+        <div class="fstep"><div class="fdot purple">→</div><div><div class="fstep-text">Plantillas de WhatsApp y correo desde HubSpot</div></div></div>
+        <div class="fstep"><div class="fdot purple">→</div><div><div class="fstep-text">Automatizaciones avanzadas de seguimiento</div></div></div>
+        <div class="fstep"><div class="fdot purple">→</div><div><div class="fstep-text">Reportes de productividad, cuotas y pipeline por asesor</div></div></div>
+        <div class="fstep"><div class="fdot purple">→</div><div><div class="fstep-text">Revenue reporting avanzado: CAC, LTV, conversión por etapa</div></div></div>
+      </div>
+      <div class="hub-note" style="margin-top:14px">
+        <strong>Se activa en el Año 2</strong> — cuando el ROI de Fase 1 ya está validado en datos reales. Sales Hub Pro tiene sentido <strong>si Pamer decide unificar toda la operación comercial en HubSpot</strong>. Si el equipo prefiere continuar en Workspace, no es necesario.
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- PROPUESTA -->
+<section id="propuesta">
+<div class="container">
+  <div class="section-label label-light">07 · La propuesta</div>
+  <h2 class="section-title">Dos fases.<br/><span style="color:var(--dark)">Un camino diseñado para Pamer.</span></h2>
+
+  <div class="propuesta-grid">
+    <!-- FASE 1 -->
+    <div class="fase-card f1">
+      <div class="fase-badge-pill">Fase 1 · Comenzar hoy</div>
+      <div class="fase-price">$51,100</div>
+      <div class="fase-price-note">Año 1 · Contrato anual · Pagos trimestrales · No incluye IGV</div>
+      <div class="fase-items">
+        <div class="fi"><span class="fi-icon">✅</span><span><strong>Implementación completa:</strong> base de conocimiento, configuración del agente, QA, Go Live supervisado</span></div>
+        <div class="fi"><span class="fi-icon">✅</span><span><strong>Conversia:</strong> ~2,000 conversaciones orquestadas/mes + 25 asesores en Workspace</span></div>
+        <div class="fi"><span class="fi-icon">✅</span><span><strong>WhatsApp Business API oficial:</strong> 5,000 conversaciones de marketing/mes</span></div>
+        <div class="fi"><span class="fi-icon">✅</span><span><strong>HubSpot Smart CRM:</strong> gobernanza de datos en tiempo real</span></div>
+        <div class="fi"><span class="fi-icon">✅</span><span><strong>Alineación y entrenamiento</strong> de equipos incluidos</span></div>
+        <div class="fi"><span class="fi-icon">✅</span><span><strong>Gestión Impulse M4–M6:</strong> optimización y soporte sin costo adicional</span></div>
+      </div>
+      <div class="fase-breakdown">
+        <div class="fb-row"><span class="fb-label">Implementación (única vez)</span><span>$9,000</span></div>
+        <div class="fb-row"><span class="fb-label">HubSpot Smart CRM</span><span>$300/mes</span></div>
+        <div class="fb-row"><span class="fb-label">Conversia Conversaciones</span><span>$2,500/mes</span></div>
+        <div class="fb-row"><span class="fb-label">Sales Seats (25 asesores)</span><span>$375/mes</span></div>
+        <div class="fb-row"><span class="fb-label">WhatsApp Marketing</span><span>$625/mes</span></div>
+        <div class="fb-row"><span class="fb-label">Total mensual M2+</span><span>$3,800/mes</span></div>
+        <div class="fb-row"><span class="fb-label">Inversión Año 1</span><span style="color:var(--dark)">$51,100</span></div>
+      </div>
+    </div>
+
+    <!-- FASE 2 -->
+    <div class="fase-card f2">
+      <div class="fase-badge-pill">Fase 2 · Año 2</div>
+      <div class="fase-price" style="color:#9040CC">Referencial*</div>
+      <div class="fase-price-note">Precios sujetos a alcance, desarrollos y precios vigentes de plataformas</div>
+      <div class="fase-items">
+        <div class="fi"><span class="fi-icon" style="color:#9040CC">→</span><span>Todo lo de Fase 1, más:</span></div>
+        <div class="fi"><span class="fi-icon" style="color:#9040CC">→</span><span><strong>HubSpot Marketing Hub Pro:</strong> anuncios, WhatsApp, email y SMS desde HubSpot</span></div>
+        <div class="fi"><span class="fi-icon" style="color:#9040CC">→</span><span><strong>HubSpot Sales Hub Pro (opcional):</strong> llamadas, plantillas, cuotas, reportes avanzados</span></div>
+        <div class="fi"><span class="fi-icon" style="color:#9040CC">→</span><span><strong>Integración con sistema de matrículas</strong> de Pamer (APP + integraciones nativas en HubSpot)</span></div>
+        <div class="fi"><span class="fi-icon" style="color:#9040CC">→</span><span><strong>Agente AI con Tools autónomos</strong> para ejecutar inscripción y matrícula</span></div>
+        <div class="fi"><span class="fi-icon" style="color:#9040CC">→</span><span><strong>Bases para Service Hub:</strong> atención a estudiantes matriculados</span></div>
+      </div>
+      <div class="f2-what">
+        <h5>¿Cuándo activar la Fase 2?</h5>
+        <p style="font-size:12px;color:var(--muted);line-height:1.5">Cuando el ROI de la Fase 1 esté validado en números reales — aproximadamente en el Mes 12. La decisión se toma con data concreta de conversión, CAC y LTV, no con estimaciones.</p>
+      </div>
+      <div class="f2-note">* Los precios de Fase 2 son referenciales y pueden variar según cambios de precios de las plataformas, alcance de los desarrollos e integraciones requeridas.</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- CIERRE -->
+<section id="cierre">
+<div class="container">
+  <div class="section-label label-green">08 · El siguiente paso</div>
+  <h2 class="section-title" style="color:#fff">Una decisión.<br/><em style="font-style:italic;color:var(--green)">Una fecha.</em></h2>
+
+  <div class="cierre-steps">
+    <div class="cierre-line"></div>
+    <div class="cs">
+      <div class="cs-dot highlight">✍️</div>
+      <div class="cs-date">24 de Abril</div>
+      <div class="cs-title">Firma de contrato</div>
+      <div class="cs-body">Aprobación del comité y activación del proyecto</div>
+    </div>
+    <div class="cs">
+      <div class="cs-dot dim">🚀</div>
+      <div class="cs-date">28 de Abril</div>
+      <div class="cs-title">Kick Off</div>
+      <div class="cs-body">Arranque oficial con el equipo de implementación de Impulse</div>
+    </div>
+    <div class="cs">
+      <div class="cs-dot dim">⚙️</div>
+      <div class="cs-date">1 – 20 de Mayo</div>
+      <div class="cs-title">Implementación</div>
+      <div class="cs-body">Configuración, QA, entrenamiento y puesta en vivo</div>
+    </div>
+    <div class="cs">
+      <div class="cs-dot highlight">🎯</div>
+      <div class="cs-date">26 – 29 de Mayo</div>
+      <div class="cs-title">Go Live</div>
+      <div class="cs-body">El Agente AI atiende leads. El equipo opera desde Workspace.</div>
+    </div>
+  </div>
+
+  <div class="coi-urgency">
+    <div class="cu-text">Cada semana de espera son <strong>S/ 23,100</strong> que no se capturan. El equipo de Impulse está listo para hacer el Kick Off el 28 de Abril si firmamos antes del 24.</div>
+    <a href="mailto:eduardo.eneque@impulse.lat" class="btn-cta">Confirmar propuesta →</a>
+  </div>
+</div>
+</section>
+
+<footer>
+  <div class="fl">IMPULSE</div>
+  <span class="fc">Revenue System para Corporación Pamer · Abril 2026 · Confidencial</span>
+  <span class="fc">eduardo.eneque@impulse.lat</span>
+</footer>
+
+<script>
+// Nav active state
+const sections=document.querySelectorAll('section[id]');
+const links=document.querySelectorAll('.nav-links a');
+const io=new IntersectionObserver(e=>{
+  e.forEach(en=>{
+    if(en.isIntersecting){
+      links.forEach(a=>{
+        a.classList.toggle('active',a.getAttribute('href')==='#'+en.target.id);
+      });
+    }
+  });
+},{threshold:0.4});
+sections.forEach(s=>io.observe(s));
+
+// Animate bars on scroll
+const bars=document.querySelectorAll('.bar-fill[data-width]');
+const barIO=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.style.width=e.target.dataset.width+'%';
+      barIO.unobserve(e.target);
+    }
+  });
+},{threshold:0.5});
+bars.forEach(b=>barIO.observe(b));
+
+// Process tabs
+function showProceso(tab,el){
+  document.querySelectorAll('.proceso-panel').forEach(p=>p.style.display='none');
+  document.querySelectorAll('.ptab').forEach(t=>{
+    t.className='ptab';
+  });
+  document.getElementById('panel-'+tab).style.display='grid';
+  el.className='ptab active-'+tab;
+}
+
+// Counter animation
+function animateCounter(el,target,duration=1800){
+  const start=performance.now();
+  const update=now=>{
+    const p=Math.min((now-start)/duration,1);
+    const ease=1-Math.pow(1-p,3);
+    el.textContent=Math.round(ease*target).toLocaleString();
+    if(p<1)requestAnimationFrame(update);
+  };
+  requestAnimationFrame(update);
+}
+const counterIO=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      animateCounter(document.getElementById('cnt1'),110799);
+      animateCounter(document.getElementById('cnt2'),38236);
+      animateCounter(document.getElementById('cnt3'),11318);
+      counterIO.disconnect();
+    }
+  });
+},{threshold:0.5});
+const sl=document.getElementById('social');
+if(sl)counterIO.observe(sl);
+
+// Fix: proceso panel initial state
+document.getElementById('panel-hoy').style.display='grid';
+</script>
+</body>
+</html>
