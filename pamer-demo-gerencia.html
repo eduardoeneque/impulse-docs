@@ -171,16 +171,13 @@ p.section-sub{font-size:17px;color:var(--muted);line-height:1.65;max-width:680px
 /* ── PROCESO ── */
 #proceso{background:var(--grad-hero)}
 #proceso::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 60% at 20% 50%,rgba(120,240,90,.06) 0%,transparent 70%)}
-.proceso-tabs{display:flex;gap:8px;margin-bottom:32px;margin-top:32px}
-.ptab{padding:10px 22px;border-radius:24px;font-size:13px;font-weight:700;cursor:pointer;border:1.5px solid rgba(255,255,255,.2);color:rgba(255,255,255,.6);transition:.2s;background:transparent}
-.ptab.active-hoy{border-color:var(--coral);color:var(--coral);background:rgba(255,87,51,.1)}
-.ptab.active-f1{border-color:var(--green);color:var(--green);background:rgba(120,240,90,.1)}
-.ptab.active-f2{border-color:#C880FF;color:#C880FF;background:rgba(200,128,255,.1)}
-.proceso-panel{display:none;animation:fadeIn .3s ease}
-.proceso-panel.active{display:grid}
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.proceso-panel.p-hoy{grid-template-columns:1fr;max-width:700px}
-.proceso-panel.p-f1,.proceso-panel.p-f2{grid-template-columns:1fr 1fr;gap:32px}
+.proceso-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px}
+.pcol-label{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:20px;font-size:12px;font-weight:800;letter-spacing:.08em;margin-bottom:18px}
+.pcol-label.red{background:rgba(255,87,51,.12);color:var(--coral);border:1px solid rgba(255,87,51,.3)}
+.pcol-label.green{background:rgba(120,240,90,.1);color:var(--green);border:1px solid rgba(120,240,90,.25)}
+.pcol-label.purple{background:rgba(200,128,255,.1);color:#C880FF;border:1px solid rgba(200,128,255,.3)}
+.pcol-title{font-size:16px;font-weight:800;color:#fff;margin-bottom:4px}
+.pcol-sub{font-size:11px;color:rgba(255,255,255,.35);margin-bottom:20px}
 .flow-card{background:rgba(255,255,255,.05);border-radius:18px;padding:28px}
 .flow-card.red-border{border:1px solid rgba(255,87,51,.3)}
 .flow-card.green-border{border:1px solid rgba(120,240,90,.25)}
@@ -258,7 +255,7 @@ footer .fc{font-size:12px;color:rgba(255,255,255,.25)}
 
 /* ── RESPONSIVE ── */
 @media(max-width:900px){
-  .hero-stats,.tl-items,.cierre-steps,.propuesta-grid,.coi-grid,.impulse-grid,.conversia-grid,.sl-layout,.proceso-panel.p-f1,.proceso-panel.p-f2{grid-template-columns:1fr}
+  .hero-stats,.tl-items,.cierre-steps,.propuesta-grid,.coi-grid,.impulse-grid,.conversia-grid,.sl-layout,.proceso-grid{grid-template-columns:1fr}
   section{padding:80px 28px 60px}
   nav{padding:0 20px}
   .nav-links{display:none}
@@ -640,107 +637,65 @@ footer .fc{font-size:12px;color:rgba(255,255,255,.25)}
   <div class="section-label label-green">06 · El proceso</div>
   <h2 class="section-title" style="color:#fff">Tres momentos.<br/><em style="font-style:italic;color:var(--green)">Un camino claro.</em></h2>
 
-  <div class="proceso-tabs">
-    <div class="ptab active-hoy" onclick="showProceso('hoy',this)">⚠️ Hoy</div>
-    <div class="ptab" onclick="showProceso('f1',this)">✅ Fase 1</div>
-    <div class="ptab" onclick="showProceso('f2',this)">🚀 Fase 2</div>
-  </div>
+  <div class="proceso-grid">
 
-  <!-- HOY -->
-  <div class="proceso-panel p-hoy active" id="panel-hoy">
-    <div class="flow-card red-border">
-      <div class="flow-header">
-        <div class="flow-icon red">⚠️</div>
-        <div>
-          <div class="flow-title red">Proceso actual</div>
-          <div style="font-size:12px;color:rgba(255,255,255,.4);margin-top:2px">FlexiChat + Excel + WhatsApp personal + celular</div>
-        </div>
-      </div>
-      <div class="flow-steps-list">
-        <div class="fstep"><div class="fdot red">1</div><div><div class="fstep-text">Lead ingresa al canal digital</div></div></div>
-        <div class="fstep"><div class="fdot red">2</div><div><div class="fstep-text">Asesor atiende manualmente por WhatsApp</div><div class="fstep-note">sin SLA, sin priorización, depende de disponibilidad</div></div></div>
-        <div class="fstep"><div class="fdot red">3</div><div><div class="fstep-text">Trabaja en FlexiChat y duplica en Excel</div><div class="fstep-note">dos sistemas, sin historial centralizado</div></div></div>
-        <div class="fstep"><div class="fdot red">4</div><div><div class="fstep-text">Llama desde celular personal</div><div class="fstep-note">sin registro, sin grabación, sin visibilidad de jefatura</div></div></div>
-        <div class="fstep"><div class="fdot red">5</div><div><div class="fstep-text">Padre completa inscripción en web manualmente</div><div class="fstep-note">espera voucher de confirmación</div></div></div>
-        <div class="fstep"><div class="fdot red">6</div><div><div class="fstep-text">Asesor cambia estado en Excel</div><div class="fstep-note">sin reporting automático, sin trazabilidad</div></div></div>
-      </div>
-      <div class="warning-pill">🚫 Outbound bloqueado — riesgo de penalización de números en WhatsApp</div>
-    </div>
-  </div>
-
-  <!-- FASE 1 -->
-  <div class="proceso-panel p-f1" id="panel-f1" style="display:none">
-    <div class="flow-card green-border">
-      <div class="flow-header">
-        <div class="flow-icon green">🤖</div>
-        <div>
-          <div class="flow-title green">Agente AI + Workspace</div>
-          <div style="font-size:12px;color:rgba(255,255,255,.4);margin-top:2px">Conversia · WhatsApp Business API oficial</div>
-        </div>
-      </div>
-      <div class="flow-steps-list">
-        <div class="fstep"><div class="fdot green">1</div><div><div class="fstep-text">Lead entra por Lead Ad o CTW</div><div class="fstep-note">Conversia responde automáticamente en segundos</div></div></div>
-        <div class="fstep"><div class="fdot green">2</div><div><div class="fstep-text">Agente AI nutre y califica 24/7</div><div class="fstep-note">hace recontacto inteligente si cae en silencio</div></div></div>
-        <div class="fstep"><div class="fdot green">3</div><div><div class="fstep-text">Lead calificado → asignado al asesor correcto</div><div class="fstep-note">workflow automático por producto, sede o criterio</div></div></div>
-        <div class="fstep"><div class="fdot green">4</div><div><div class="fstep-text">Asesor trabaja desde Workspace</div><div class="fstep-note">Insights listos: resumen, score, próxima acción</div></div></div>
-        <div class="fstep"><div class="fdot green">5</div><div><div class="fstep-text">Agente CRM actualiza HubSpot automáticamente</div><div class="fstep-note">sin que el asesor toque nada — gobernanza de datos</div></div></div>
-      </div>
-      <div class="safe-pill">✅ WhatsApp Business API oficial · Outbound habilitado y seguro</div>
-    </div>
+    <!-- COL 1: HOY -->
     <div>
-      <div class="flow-card green-border" style="margin-bottom:16px">
-        <h4 style="font-size:13px;font-weight:700;color:var(--green);margin-bottom:12px">💼 Workspace — el espacio del asesor</h4>
+      <div class="pcol-label red">⚠️ Hoy</div>
+      <div class="pcol-title">Proceso actual</div>
+      <div class="pcol-sub">FlexiChat + Excel + WhatsApp personal + celular</div>
+      <div class="flow-card red-border">
         <div class="flow-steps-list">
-          <div class="fstep"><div class="fdot green">→</div><div><div class="fstep-text">Conversaciones activas en un solo lugar</div></div></div>
-          <div class="fstep"><div class="fdot green">→</div><div><div class="fstep-text">Panel de Insights por lead (score, contexto, acción)</div></div></div>
-          <div class="fstep"><div class="fdot green">→</div><div><div class="fstep-text">Registro de actividades: llamadas, notas, adjuntos</div></div></div>
-          <div class="fstep"><div class="fdot green">→</div><div><div class="fstep-text">Pipeline ordenado con alertas de seguimiento</div></div></div>
-          <div class="fstep"><div class="fdot green">→</div><div><div class="fstep-text">Dashboard de productividad personal</div></div></div>
+          <div class="fstep"><div class="fdot red">1</div><div><div class="fstep-text">Lead ingresa al canal digital</div></div></div>
+          <div class="fstep"><div class="fdot red">2</div><div><div class="fstep-text">Asesor atiende manualmente por WhatsApp</div><div class="fstep-note">sin SLA, sin priorización</div></div></div>
+          <div class="fstep"><div class="fdot red">3</div><div><div class="fstep-text">Trabaja en FlexiChat y duplica en Excel</div><div class="fstep-note">dos sistemas, sin historial centralizado</div></div></div>
+          <div class="fstep"><div class="fdot red">4</div><div><div class="fstep-text">Llama desde celular personal</div><div class="fstep-note">sin registro, sin grabación</div></div></div>
+          <div class="fstep"><div class="fdot red">5</div><div><div class="fstep-text">Padre completa inscripción en web manualmente</div></div></div>
+          <div class="fstep"><div class="fdot red">6</div><div><div class="fstep-text">Asesor cambia estado en Excel</div><div class="fstep-note">sin reporting, sin trazabilidad</div></div></div>
+        </div>
+        <div class="warning-pill" style="margin-top:16px">🚫 Outbound bloqueado — riesgo de penalización WhatsApp</div>
+      </div>
+    </div>
+
+    <!-- COL 2: FASE 1 -->
+    <div>
+      <div class="pcol-label green">✅ Fase 1 · Año 1</div>
+      <div class="pcol-title">Agente AI + Workspace</div>
+      <div class="pcol-sub">Conversia · WhatsApp Business API oficial</div>
+      <div class="flow-card green-border" style="margin-bottom:14px">
+        <div class="flow-steps-list">
+          <div class="fstep"><div class="fdot green">1</div><div><div class="fstep-text">Lead entra por Lead Ad o CTW</div><div class="fstep-note">Conversia responde automáticamente en segundos</div></div></div>
+          <div class="fstep"><div class="fdot green">2</div><div><div class="fstep-text">Agente AI nutre y califica 24/7</div><div class="fstep-note">recontacto inteligente si cae en silencio</div></div></div>
+          <div class="fstep"><div class="fdot green">3</div><div><div class="fstep-text">Lead calificado → asesor correcto</div><div class="fstep-note">workflow automático por producto o sede</div></div></div>
+          <div class="fstep"><div class="fdot green">4</div><div><div class="fstep-text">Asesor trabaja desde Workspace</div><div class="fstep-note">resumen, score, próxima acción listos</div></div></div>
+          <div class="fstep"><div class="fdot green">5</div><div><div class="fstep-text">HubSpot se actualiza automáticamente</div><div class="fstep-note">gobernanza de datos · el asesor no toca nada</div></div></div>
+        </div>
+        <div class="safe-pill" style="margin-top:16px">✅ Outbound habilitado y seguro</div>
+      </div>
+      <div class="hub-note">
+        <strong>HubSpot = Gobernanza de datos.</strong> El equipo opera en Workspace. Sin integración con sistemas Pamer en Fase 1 — la data queda lista para Fase 2.
+      </div>
+    </div>
+
+    <!-- COL 3: FASE 2 -->
+    <div>
+      <div class="pcol-label purple">🚀 Fase 2 · Año 2</div>
+      <div class="pcol-title">Orquestación completa</div>
+      <div class="pcol-sub">Marketing Hub Pro + decisión Sales Hub Pro</div>
+      <div class="flow-card purple-border" style="margin-bottom:14px">
+        <div class="flow-steps-list">
+          <div class="fstep"><div class="fdot purple">→</div><div><div class="fstep-text">Anuncios, WhatsApp, email y SMS desde HubSpot</div><div class="fstep-note">Business Manager conectado — un solo sistema</div></div></div>
+          <div class="fstep"><div class="fdot purple">→</div><div><div class="fstep-text">Flujos de nurturing end-to-end automatizados</div></div></div>
+          <div class="fstep"><div class="fdot purple">→</div><div><div class="fstep-text">Agente AI ejecuta inscripción y matrícula</div><div class="fstep-note">integración con sistema de matrículas Pamer</div></div></div>
+          <div class="fstep"><div class="fdot purple">→</div><div><div class="fstep-text">Sales Hub Pro (opcional)</div><div class="fstep-note">reemplaza Interphono · llamadas + reporting desde HubSpot</div></div></div>
+          <div class="fstep"><div class="fdot purple">→</div><div><div class="fstep-text">Service Hub · atención post-matrícula</div></div></div>
         </div>
       </div>
       <div class="hub-note">
-        <strong>HubSpot en Fase 1 = Gobernanza de datos.</strong> El equipo de ventas opera en Workspace (Conversia). Toda la data se replica en tiempo real en HubSpot CRM. Ninguna integración con sistemas propios de Pamer en esta fase. La data queda lista y limpia para cuando se active la Fase 2.
+        <strong>Se activa en Año 2</strong> cuando el ROI de Fase 1 está validado en datos reales — no en estimaciones.
       </div>
     </div>
-  </div>
 
-  <!-- FASE 2 -->
-  <div class="proceso-panel p-f2" id="panel-f2" style="display:none">
-    <div class="flow-card purple-border">
-      <div class="flow-header">
-        <div class="flow-icon purple">🚀</div>
-        <div>
-          <div class="flow-title purple">Marketing Hub Pro · Año 2</div>
-          <div style="font-size:12px;color:rgba(255,255,255,.4);margin-top:2px">Orquestación completa desde HubSpot</div>
-        </div>
-      </div>
-      <div class="flow-steps-list">
-        <div class="fstep"><div class="fdot purple">→</div><div><div class="fstep-text">Anuncios, WhatsApp, email y SMS orquestados desde HubSpot</div><div class="fstep-note">Business Manager conectado — todo en un solo sistema</div></div></div>
-        <div class="fstep"><div class="fdot purple">→</div><div><div class="fstep-text">Flujos de nurturing automatizados end-to-end</div></div></div>
-        <div class="fstep"><div class="fdot purple">→</div><div><div class="fstep-text">Agente AI con Tools autónomos</div><div class="fstep-note">el agente puede ejecutar el proceso de inscripción y matrícula</div></div></div>
-        <div class="fstep"><div class="fdot purple">→</div><div><div class="fstep-text">Integración con sistema de matrículas de Pamer</div><div class="fstep-note">desarrollo de APP e integraciones nativas en HubSpot</div></div></div>
-        <div class="fstep"><div class="fdot purple">→</div><div><div class="fstep-text">Bases para HubSpot Service Hub</div><div class="fstep-note">atención a estudiantes matriculados desde la misma plataforma</div></div></div>
-      </div>
-    </div>
-    <div class="flow-card purple-border">
-      <div class="flow-header">
-        <div class="flow-icon purple">📞</div>
-        <div>
-          <div class="flow-title purple">Sales Hub Pro · Decisión opcional</div>
-          <div style="font-size:12px;color:rgba(255,255,255,.4);margin-top:2px">Si el equipo quiere operar desde HubSpot</div>
-        </div>
-      </div>
-      <div class="flow-steps-list">
-        <div class="fstep"><div class="fdot purple">→</div><div><div class="fstep-text">Llamadas desde HubSpot con registro automático</div><div class="fstep-note">reemplaza Interphono — todo queda grabado y registrado</div></div></div>
-        <div class="fstep"><div class="fdot purple">→</div><div><div class="fstep-text">Plantillas de WhatsApp y correo desde HubSpot</div></div></div>
-        <div class="fstep"><div class="fdot purple">→</div><div><div class="fstep-text">Automatizaciones avanzadas de seguimiento</div></div></div>
-        <div class="fstep"><div class="fdot purple">→</div><div><div class="fstep-text">Reportes de productividad, cuotas y pipeline por asesor</div></div></div>
-        <div class="fstep"><div class="fdot purple">→</div><div><div class="fstep-text">Revenue reporting avanzado: CAC, LTV, conversión por etapa</div></div></div>
-      </div>
-      <div class="hub-note" style="margin-top:14px">
-        <strong>Se activa en el Año 2</strong> — cuando el ROI de Fase 1 ya está validado en datos reales. Sales Hub Pro tiene sentido <strong>si Pamer decide unificar toda la operación comercial en HubSpot</strong>. Si el equipo prefiere continuar en Workspace, no es necesario.
-      </div>
-    </div>
   </div>
 </div>
 </section>
@@ -873,15 +828,6 @@ const barIO=new IntersectionObserver(entries=>{
 },{threshold:0.5});
 bars.forEach(b=>barIO.observe(b));
 
-// Process tabs
-function showProceso(tab,el){
-  document.querySelectorAll('.proceso-panel').forEach(p=>p.style.display='none');
-  document.querySelectorAll('.ptab').forEach(t=>{
-    t.className='ptab';
-  });
-  document.getElementById('panel-'+tab).style.display='grid';
-  el.className='ptab active-'+tab;
-}
 
 // Counter animation
 function animateCounter(el,target,duration=1800){
@@ -907,8 +853,6 @@ const counterIO=new IntersectionObserver(entries=>{
 const sl=document.getElementById('social');
 if(sl)counterIO.observe(sl);
 
-// Fix: proceso panel initial state
-document.getElementById('panel-hoy').style.display='grid';
 </script>
 </body>
 </html>
