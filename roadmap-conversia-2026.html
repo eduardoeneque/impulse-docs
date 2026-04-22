@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conversia — Product Roadmap 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700;1,800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green-dark: #0A3223;
+    --green-mid: #115540;
+    --green-neon: #78F05A;
+    --green-neon-dim: rgba(120,240,90,0.15);
+    --green-neon-glow: rgba(120,240,90,0.3);
+    --magenta: #DC3296;
+    --magenta-dim: rgba(220,50,150,0.15);
+    --magenta-glow: rgba(220,50,150,0.35);
+    --purple: #501450;
+    --cyan: #22DEFF;
+    --cyan-dim: rgba(34,222,255,0.12);
+    --amber: #F5A623;
+    --amber-dim: rgba(245,166,35,0.12);
+    --card-bg: rgba(255,255,255,0.055);
+    --card-border: rgba(255,255,255,0.10);
+    --card-border-hover: rgba(120,240,90,0.4);
+    --text-primary: #FFFFFF;
+    --text-secondary: rgba(255,255,255,0.65);
+    --text-muted: rgba(255,255,255,0.38);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Urbanist', -apple-system, sans-serif;
+    background: var(--green-dark);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--green-dark); }
+  ::-webkit-scrollbar-thumb { background: var(--green-mid); border-radius: 3px; }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 20px var(--green-neon-glow); }
+    50% { box-shadow: 0 0 40px var(--green-neon-glow), 0 0 60px var(--green-neon-dim); }
+  }
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-8px); max-height: 0; }
+    to { opacity: 1; transform: translateY(0); max-height: 1000px; }
+  }
+  @keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+  @keyframes orbFloat {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-20px) scale(1.05); }
+  }
+
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10,50,35,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(120,240,90,0.15);
+    padding: 0 2rem;
+    height: 60px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 1.1rem; font-weight: 800; letter-spacing: -0.02em;
+    color: var(--text-primary);
+    text-decoration: none;
+  }
+  .nav-logo .dot { color: var(--green-neon); font-size: 1.4rem; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--text-secondary); font-size: 0.85rem; font-weight: 600;
+    text-decoration: none; letter-spacing: 0.03em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--green-neon); }
+  .nav-badge {
+    background: var(--green-neon); color: var(--green-dark);
+    font-size: 0.72rem; font-weight: 800; padding: 4px 12px; border-radius: 20px;
+    text-transform: uppercase; letter-spacing: 0.04em;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+    padding: 80px 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-orb {
+    position: absolute; border-radius: 50%; pointer-events: none;
+    filter: blur(80px); animation: orbFloat 8s ease-in-out infinite;
+  }
+  .hero-orb-1 {
+    width: 500px; height: 500px; top: -100px; right: -100px;
+    background: radial-gradient(circle, rgba(120,240,90,0.18) 0%, transparent 70%);
+    animation-delay: 0s;
+  }
+  .hero-orb-2 {
+    width: 400px; height: 400px; bottom: -80px; left: -80px;
+    background: radial-gradient(circle, rgba(220,50,150,0.15) 0%, transparent 70%);
+    animation-delay: 3s;
+  }
+  .hero-orb-3 {
+    width: 300px; height: 300px; top: 40%; left: 50%; transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(34,222,255,0.08) 0%, transparent 70%);
+    animation-delay: 5s;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(120,240,90,0.1); border: 1px solid rgba(120,240,90,0.3);
+    color: var(--green-neon); font-size: 0.78rem; font-weight: 700;
+    padding: 6px 16px; border-radius: 20px; letter-spacing: 0.08em; text-transform: uppercase;
+    margin-bottom: 1.5rem; animation: fadeInUp 0.8s ease both;
+  }
+  .hero-eyebrow .pulse {
+    width: 7px; height: 7px; background: var(--green-neon); border-radius: 50%;
+    animation: pulseGlow 2s ease-in-out infinite;
+  }
+  .hero h1 {
+    font-size: clamp(2.6rem, 6vw, 5.2rem); font-weight: 900; line-height: 1.05;
+    letter-spacing: -0.03em;
+    animation: fadeInUp 0.8s ease 0.1s both;
+  }
+  .hero h1 .line-neon { color: var(--green-neon); display: block; }
+  .hero-subtitle {
+    font-size: clamp(1rem, 2vw, 1.25rem); color: var(--text-secondary); font-weight: 500;
+    max-width: 640px; margin: 1.5rem auto 2.5rem;
+    animation: fadeInUp 0.8s ease 0.2s both;
+  }
+  .hero-cta-row {
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    animation: fadeInUp 0.8s ease 0.3s both;
+  }
+  .btn-primary {
+    background: var(--green-neon); color: var(--green-dark);
+    font-size: 0.9rem; font-weight: 800; padding: 13px 28px; border-radius: 8px;
+    text-decoration: none; letter-spacing: 0.02em; transition: all 0.2s;
+    animation: pulseGlow 3s ease-in-out infinite;
+  }
+  .btn-primary:hover { transform: translateY(-2px); filter: brightness(1.1); }
+  .btn-ghost {
+    background: transparent; color: var(--text-primary); border: 1px solid var(--card-border);
+    font-size: 0.9rem; font-weight: 700; padding: 13px 28px; border-radius: 8px;
+    text-decoration: none; transition: all 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--green-neon); color: var(--green-neon); transform: translateY(-2px); }
+
+  /* ─── HERO STATS ─── */
+  .hero-stats {
+    display: flex; gap: 2.5rem; justify-content: center; flex-wrap: wrap;
+    margin-top: 4rem; padding-top: 3rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    animation: fadeInUp 0.8s ease 0.4s both;
+    position: relative; z-index: 1;
+  }
+  .stat-item { text-align: center; }
+  .stat-number {
+    font-size: 2.2rem; font-weight: 900; color: var(--green-neon);
+    letter-spacing: -0.04em; display: block;
+  }
+  .stat-label { font-size: 0.8rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* ─── SECTION COMMON ─── */
+  section { padding: 5rem 2rem; max-width: 1200px; margin: 0 auto; }
+  .section-label {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--text-muted); margin-bottom: 1rem;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.1); }
+  .section-h2 {
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 900; letter-spacing: -0.03em;
+    margin-bottom: 0.75rem;
+  }
+  .section-subtitle { color: var(--text-secondary); font-size: 1.05rem; max-width: 640px; }
+
+  /* ─── TIMELINE STRIP ─── */
+  .timeline-strip {
+    background: rgba(255,255,255,0.025); border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding: 1.5rem 2rem; overflow: auto;
+  }
+  .timeline-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 0; }
+  .tl-item {
+    flex: 1; text-align: center; position: relative; min-width: 140px;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .tl-item:hover .tl-dot { transform: scale(1.4); }
+  .tl-dot {
+    width: 14px; height: 14px; border-radius: 50%; margin: 0 auto 8px;
+    transition: transform 0.2s;
+    position: relative; z-index: 1;
+  }
+  .tl-dot.done { background: var(--green-neon); box-shadow: 0 0 10px var(--green-neon-glow); }
+  .tl-dot.active { background: var(--magenta); box-shadow: 0 0 10px var(--magenta-glow); animation: pulseGlow 2s infinite; }
+  .tl-dot.future { background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3); }
+  .tl-connector {
+    flex: 1; height: 1px; position: relative; top: -14px;
+  }
+  .tl-connector.done { background: var(--green-neon); opacity: 0.5; }
+  .tl-connector.active { background: linear-gradient(to right, var(--green-neon), var(--magenta)); opacity: 0.5; }
+  .tl-connector.future { background: rgba(255,255,255,0.15); }
+  .tl-label { font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); letter-spacing: 0.05em; }
+  .tl-sublabel { font-size: 0.65rem; color: var(--text-muted); }
+
+  /* ─── ACT DIVIDER ─── */
+  .act-divider {
+    padding: 3rem 2rem 0;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .act-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em;
+    padding: 5px 14px; border-radius: 20px; margin-bottom: 0.75rem;
+  }
+  .act-tag.done { background: rgba(120,240,90,0.12); color: var(--green-neon); border: 1px solid rgba(120,240,90,0.3); }
+  .act-tag.current { background: var(--magenta-dim); color: var(--magenta); border: 1px solid rgba(220,50,150,0.3); }
+  .act-tag.vision { background: var(--cyan-dim); color: var(--cyan); border: 1px solid rgba(34,222,255,0.3); }
+  .act-title { font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 900; letter-spacing: -0.03em; margin-bottom: 0.5rem; }
+  .act-subtitle { color: var(--text-secondary); font-size: 1rem; max-width: 700px; }
+
+  /* ─── CARDS GRID ─── */
+  .cards-grid { display: grid; gap: 1.25rem; }
+  .cards-grid-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+  .cards-grid-3 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 1.5rem;
+    transition: all 0.25s ease;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    opacity: 0; transition: opacity 0.25s;
+  }
+  .card:hover {
+    border-color: rgba(120,240,90,0.35);
+    transform: translateY(-4px);
+    background: rgba(255,255,255,0.08);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.3), 0 0 30px rgba(120,240,90,0.06);
+  }
+  .card:hover::before { opacity: 1; background: linear-gradient(to right, var(--green-neon), transparent); }
+
+  .card-magenta:hover { border-color: rgba(220,50,150,0.35); }
+  .card-magenta:hover::before { background: linear-gradient(to right, var(--magenta), transparent); }
+  .card-cyan:hover { border-color: rgba(34,222,255,0.35); }
+  .card-cyan:hover::before { background: linear-gradient(to right, var(--cyan), transparent); }
+  .card-amber:hover { border-color: rgba(245,166,35,0.35); }
+  .card-amber:hover::before { background: linear-gradient(to right, var(--amber), transparent); }
+
+  .card-icon {
+    width: 42px; height: 42px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; margin-bottom: 1rem;
+    flex-shrink: 0;
+  }
+  .icon-green { background: var(--green-neon-dim); }
+  .icon-magenta { background: var(--magenta-dim); }
+  .icon-cyan { background: var(--cyan-dim); }
+  .icon-amber { background: var(--amber-dim); }
+  .icon-purple { background: rgba(80,20,80,0.4); }
+
+  .card h3 { font-size: 1rem; font-weight: 800; margin-bottom: 0.4rem; letter-spacing: -0.01em; }
+  .card p { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.55; }
+  .card-badge {
+    display: inline-block; font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; padding: 3px 9px; border-radius: 10px; margin-bottom: 0.75rem;
+  }
+  .badge-done { background: rgba(120,240,90,0.15); color: var(--green-neon); border: 1px solid rgba(120,240,90,0.3); }
+  .badge-shipping { background: var(--magenta-dim); color: var(--magenta); border: 1px solid rgba(220,50,150,0.3); }
+  .badge-planned { background: rgba(255,255,255,0.06); color: var(--text-muted); border: 1px solid rgba(255,255,255,0.12); }
+  .badge-vision { background: var(--cyan-dim); color: var(--cyan); border: 1px solid rgba(34,222,255,0.3); }
+  .badge-amber { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(245,166,35,0.3); }
+  .badge-q3 { background: rgba(120,138,255,0.12); color: #98A8FF; border: 1px solid rgba(120,138,255,0.3); }
+
+  .card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1rem; }
+  .tag {
+    font-size: 0.68rem; font-weight: 700; padding: 3px 9px; border-radius: 6px;
+    background: rgba(255,255,255,0.06); color: var(--text-muted);
+  }
+  .tag-green { background: rgba(120,240,90,0.1); color: rgba(120,240,90,0.8); }
+  .tag-magenta { background: rgba(220,50,150,0.1); color: rgba(220,50,150,0.8); }
+  .tag-cyan { background: rgba(34,222,255,0.1); color: rgba(34,222,255,0.8); }
+  .tag-amber { background: rgba(245,166,35,0.1); color: rgba(245,166,35,0.8); }
+
+  /* ─── PILLAR SECTION ─── */
+  .pillar-wrap {
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    transition: all 0.25s;
+  }
+  .pillar-wrap:hover { border-color: rgba(255,255,255,0.14); }
+
+  .pillar-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.5rem 2rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    user-select: none;
+  }
+  .pillar-header:hover { background: rgba(255,255,255,0.03); }
+  .pillar-header-left { display: flex; align-items: center; gap: 1rem; }
+  .pillar-number {
+    width: 38px; height: 38px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem; font-weight: 900; flex-shrink: 0;
+  }
+  .pn-magenta { background: var(--magenta-dim); color: var(--magenta); border: 1px solid rgba(220,50,150,0.3); }
+  .pn-green { background: var(--green-neon-dim); color: var(--green-neon); border: 1px solid rgba(120,240,90,0.3); }
+  .pn-cyan { background: var(--cyan-dim); color: var(--cyan); border: 1px solid rgba(34,222,255,0.3); }
+  .pn-amber { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(245,166,35,0.3); }
+  .pn-purple { background: rgba(80,20,80,0.3); color: #C08AFF; border: 1px solid rgba(192,138,255,0.3); }
+
+  .pillar-info h3 { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.01em; }
+  .pillar-info p { font-size: 0.82rem; color: var(--text-secondary); margin-top: 2px; }
+  .pillar-arrow {
+    width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,0.06);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; transition: all 0.25s; flex-shrink: 0;
+  }
+  .pillar-arrow.open { transform: rotate(180deg); background: rgba(120,240,90,0.1); color: var(--green-neon); }
+
+  .pillar-body {
+    display: none; padding: 0 2rem 2rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .pillar-body.open { display: block; animation: slideDown 0.35s ease; }
+
+  /* ─── Q1 ACHIEVEMENT CARD ─── */
+  .q1-card {
+    background: linear-gradient(135deg, rgba(120,240,90,0.08) 0%, rgba(120,240,90,0.02) 100%);
+    border: 1px solid rgba(120,240,90,0.2);
+    border-radius: 14px; padding: 1.25rem 1.5rem;
+    display: flex; align-items: flex-start; gap: 1rem;
+    transition: all 0.25s;
+  }
+  .q1-card:hover { border-color: rgba(120,240,90,0.4); transform: translateY(-2px); }
+  .q1-checkmark {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--green-neon); display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 0.8rem; margin-top: 2px;
+    box-shadow: 0 0 12px var(--green-neon-glow);
+  }
+  .q1-card h4 { font-size: 0.95rem; font-weight: 800; margin-bottom: 0.25rem; }
+  .q1-card p { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5; }
+
+  /* ─── VISION SECTION ─── */
+  .vision-bg {
+    background: linear-gradient(135deg, rgba(10,50,35,0.9) 0%, rgba(17,85,64,0.5) 50%, rgba(10,50,35,0.9) 100%);
+    border-top: 1px solid rgba(34,222,255,0.15);
+    border-bottom: 1px solid rgba(34,222,255,0.15);
+    padding: 5rem 2rem;
+    position: relative; overflow: hidden;
+  }
+  .vision-bg::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 50% 50%, rgba(34,222,255,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .vision-inner { max-width: 1200px; margin: 0 auto; position: relative; }
+  .vision-statement {
+    font-size: clamp(1.3rem, 3vw, 2.2rem); font-weight: 900; text-align: center;
+    line-height: 1.25; letter-spacing: -0.025em; margin: 2rem 0;
+  }
+  .vision-statement em { font-style: normal; color: var(--cyan); }
+  .vision-layers { display: flex; align-items: stretch; gap: 0; margin-top: 3rem; }
+  .vision-layer {
+    background: rgba(34,222,255,0.05); border: 1px solid rgba(34,222,255,0.15);
+    border-radius: 16px; padding: 1.75rem;
+    position: relative; transition: all 0.25s;
+    text-align: center; flex: 1;
+  }
+  .vision-layer:hover { transform: translateY(-4px); border-color: rgba(34,222,255,0.35); background: rgba(34,222,255,0.08); }
+  .vision-layer-num {
+    font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--cyan); margin-bottom: 0.75rem;
+  }
+  .vision-layer h4 { font-size: 1.05rem; font-weight: 800; margin-bottom: 0.5rem; }
+  .vision-layer p { font-size: 0.82rem; color: var(--text-secondary); }
+  .vision-layer-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+  .layer-arrow { color: var(--text-muted); font-size: 1.5rem; display: flex; align-items: center; justify-content: center; padding: 0 1rem; flex-shrink: 0; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--green-mid); border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 3rem 2rem; text-align: center;
+  }
+  .footer-inner { max-width: 800px; margin: 0 auto; }
+  .footer-logo { font-size: 1.3rem; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+  .footer-logo span { color: var(--green-neon); }
+  footer p { color: var(--text-muted); font-size: 0.82rem; margin-top: 0.5rem; }
+  .footer-divider { width: 60px; height: 2px; background: var(--green-neon); margin: 1.5rem auto; border-radius: 1px; }
+
+  /* ─── PROGRESS BAR ─── */
+  .progress-container { margin-bottom: 2rem; }
+  .progress-label { display: flex; justify-content: space-between; margin-bottom: 6px; }
+  .progress-label span { font-size: 0.8rem; font-weight: 700; color: var(--text-secondary); }
+  .progress-bar { height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 2px; transition: width 1.5s ease; }
+  .progress-fill-green { background: linear-gradient(to right, rgba(120,240,90,0.5), var(--green-neon)); }
+  .progress-fill-magenta { background: linear-gradient(to right, rgba(220,50,150,0.5), var(--magenta)); }
+
+  /* ─── OVERVIEW GRID ─── */
+  .overview-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1.5rem; margin-top: 2.5rem;
+  }
+  @media (max-width: 700px) { .overview-grid { grid-template-columns: 1fr; } }
+
+  .overview-block {
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 16px; padding: 1.5rem;
+  }
+  .overview-block h4 { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 1rem; }
+
+  .principle-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 0.75rem; }
+  .principle-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green-neon); flex-shrink: 0; margin-top: 6px; box-shadow: 0 0 8px var(--green-neon-glow); }
+  .principle-text { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5; }
+  .principle-text strong { color: var(--text-primary); font-weight: 700; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    nav { padding: 0 1rem; }
+    .nav-links { display: none; }
+    .hero h1 { font-size: 2.2rem; }
+    .hero-stats { gap: 1.5rem; }
+    section { padding: 3rem 1rem; }
+    .pillar-header { padding: 1.25rem 1.25rem; }
+    .pillar-body { padding: 0 1.25rem 1.25rem; }
+  }
+
+  /* ─── SCROLL PROGRESS ─── */
+  .scroll-progress {
+    position: fixed; top: 60px; left: 0; right: 0; height: 2px; z-index: 99;
+    background: transparent;
+  }
+  .scroll-progress-bar {
+    height: 100%; background: linear-gradient(to right, var(--green-neon), var(--magenta));
+    width: 0%; transition: width 0.1s;
+  }
+</style>
+</head>
+<body>
+
+<!-- SCROLL PROGRESS -->
+<div class="scroll-progress"><div class="scroll-progress-bar" id="scrollBar"></div></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">
+    <svg height="26" viewBox="0 0 196 36" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+      <text y="29" font-family="Urbanist,sans-serif" font-size="32" font-weight="800" fill="white">c</text>
+      <g transform="translate(19,1)"><g transform="translate(15,15)">
+        <path fill="#78F05A" d="M 0,-14 A 14,14 0 0,1 14,0 L 9,0 A 9,9 0 0,0 0,-9 Z"/>
+        <polygon fill="#78F05A" points="14,3 10,-1 18,-1"/>
+        <g transform="rotate(120)">
+          <path fill="#78F05A" d="M 0,-14 A 14,14 0 0,1 14,0 L 9,0 A 9,9 0 0,0 0,-9 Z"/>
+          <polygon fill="#78F05A" points="14,3 10,-1 18,-1"/>
+        </g>
+        <g transform="rotate(240)">
+          <path fill="#78F05A" d="M 0,-14 A 14,14 0 0,1 14,0 L 9,0 A 9,9 0 0,0 0,-9 Z"/>
+          <polygon fill="#78F05A" points="14,3 10,-1 18,-1"/>
+        </g>
+      </g></g>
+      <text x="54" y="29" font-family="Urbanist,sans-serif" font-size="32" font-weight="800" fill="white">nversia</text>
+    </svg>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#q1">Q1 2026</a></li>
+    <li><a href="#q2">Q2 2026</a></li>
+    <li><a href="#vision">Visión</a></li>
+  </ul>
+  <span class="nav-badge">Roadmap 2026</span>
+</nav>
+
+<!-- HERO -->
+<div class="hero" id="hero">
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-orb hero-orb-3"></div>
+
+  <div class="hero-eyebrow" style="position:relative;z-index:1;">
+    <span class="pulse"></span>
+    Product Roadmap 2026 · Actualizado Abril 2026
+  </div>
+
+  <h1 style="position:relative;z-index:1;">
+    El sistema que convierte
+    <span class="line-neon">datos en revenue.</span>
+  </h1>
+
+  <p class="hero-subtitle" style="position:relative;z-index:1;">
+    Conversia es la plataforma de Data &amp; AI Revenue para empresas que venden por conversación.
+    Primero datos estructurados, luego inteligencia artificial sobre ese contexto.
+  </p>
+
+  <div class="hero-cta-row" style="position:relative;z-index:1;">
+    <a href="#q1" class="btn-primary">Ver Q1 — Logros</a>
+    <a href="#q2" class="btn-ghost">Q2 2026 — Próximos lanzamientos</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-item">
+      <span class="stat-number">6</span>
+      <span class="stat-label">Logros Q1</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">5</span>
+      <span class="stat-label">Pilares Q2</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">20+</span>
+      <span class="stat-label">Iniciativas activas</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">2028</span>
+      <span class="stat-label">Visión de largo plazo</span>
+    </div>
+  </div>
+</div>
+
+<!-- TIMELINE STRIP -->
+<div class="timeline-strip">
+  <div class="timeline-inner">
+    <div class="tl-item" onclick="document.getElementById('q1').scrollIntoView({behavior:'smooth'})">
+      <div class="tl-dot done"></div>
+      <div class="tl-label">Q1 2026</div>
+      <div class="tl-sublabel">Completado ✓</div>
+    </div>
+    <div class="tl-connector done"></div>
+    <div class="tl-item" onclick="document.getElementById('q2').scrollIntoView({behavior:'smooth'})">
+      <div class="tl-dot active"></div>
+      <div class="tl-label">Q2 2026</div>
+      <div class="tl-sublabel">En progreso →</div>
+    </div>
+    <div class="tl-connector active"></div>
+    <div class="tl-item" onclick="document.getElementById('vision').scrollIntoView({behavior:'smooth'})">
+      <div class="tl-dot future"></div>
+      <div class="tl-label">H2 2026</div>
+      <div class="tl-sublabel">Próximo</div>
+    </div>
+    <div class="tl-connector future"></div>
+    <div class="tl-item" onclick="document.getElementById('vision').scrollIntoView({behavior:'smooth'})">
+      <div class="tl-dot future"></div>
+      <div class="tl-label">2027–2028</div>
+      <div class="tl-sublabel">Visión</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════ ACT 1: Q1 ═══════════════ -->
+<div class="act-divider" id="q1">
+  <div class="act-tag done">✓ Acto 1 · Q1 2026</div>
+  <div class="act-title">Los cimientos de la precisión</div>
+  <div class="act-subtitle">
+    En Q1 rediseñamos la arquitectura de Conversia para que los agentes sean más estables, precisos y predecibles.
+    Construir bien desde adentro para poder construir más rápido desde afuera.
+  </div>
+</div>
+
+<section style="padding-top: 2rem;">
+  <div class="section-label" style="margin-bottom:1.5rem;">
+    <span>Lanzamientos completados</span>
+  </div>
+
+  <div style="margin-bottom:1rem;">
+    <div class="progress-container">
+      <div class="progress-label">
+        <span>Q1 2026 — Entregado</span>
+        <span style="color:var(--green-neon);font-weight:800;">100%</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill progress-fill-green" style="width:100%;"></div></div>
+    </div>
+  </div>
+
+  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:1rem;" class="reveal">
+
+    <div class="q1-card">
+      <div class="q1-checkmark">✓</div>
+      <div>
+        <h4>Agentes Estables y Precisos — V2</h4>
+        <p>Nueva arquitectura con procesamiento paralelo, contratos estructurados y Flow Agent asíncrono. Los agentes ahora operan sin ambigüedad: cada acción tiene una salida definida y verificable. Menor tasa de errores, mayor consistencia en cada conversación.</p>
+      </div>
+    </div>
+
+    <div class="q1-card">
+      <div class="q1-checkmark">✓</div>
+      <div>
+        <h4>Properties 2.0</h4>
+        <p>Sistema de propiedades reestructurado con tipado estricto y sincronización más robusta con el CRM. Las variables que el agente extrae durante la conversación ahora se mapean con precisión al perfil del contacto.</p>
+      </div>
+    </div>
+
+    <div class="q1-card">
+      <div class="q1-checkmark">✓</div>
+      <div>
+        <h4>Signals — Intención en tiempo real</h4>
+        <p>El agente detecta señales de intención de compra durante la conversación y las registra como eventos estructurados. Las señales alimentan el scoring del lead directamente desde el contexto conversacional.</p>
+      </div>
+    </div>
+
+    <div class="q1-card">
+      <div class="q1-checkmark">✓</div>
+      <div>
+        <h4>Workflows 2.0</h4>
+        <p>Motor de automatizaciones rediseñado con soporte a múltiples nodos, lógica condicional y mayor control sobre las acciones que el agente puede ejecutar después de cada conversación.</p>
+      </div>
+    </div>
+
+    <div class="q1-card">
+      <div class="q1-checkmark">✓</div>
+      <div>
+        <h4>Visibilidad del Gasto</h4>
+        <p>El cliente puede ver en tiempo real la evolución de su consumo diario en la plataforma: conversaciones activas, uso del mes y proyección. Sin sorpresas en la factura y con visibilidad completa sobre el costo de operar sus agentes.</p>
+      </div>
+    </div>
+
+    <div class="q1-card" style="border-color:rgba(245,166,35,0.25);background:linear-gradient(135deg,rgba(245,166,35,0.07) 0%,rgba(245,166,35,0.02) 100%);">
+      <div class="q1-checkmark" style="background:var(--amber);box-shadow:0 0 12px rgba(245,166,35,0.4);">⏳</div>
+      <div>
+        <h4>HubSpot Marketplace <span style="font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:8px;background:rgba(245,166,35,0.15);color:var(--amber);border:1px solid rgba(245,166,35,0.3);vertical-align:middle;margin-left:6px;">En aprobación</span></h4>
+        <p>Conversia está en proceso de aprobación en el Marketplace oficial de HubSpot. Validación de mercado, acceso a nuevos canales de distribución y credibilidad como plataforma integrada al ecosistema HubSpot.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Principios aprendidos -->
+  <div class="overview-grid reveal" style="margin-top:2.5rem;">
+    <div class="overview-block">
+      <h4>Lo que aprendimos en Q1</h4>
+      <div class="principle-item">
+        <div class="principle-dot"></div>
+        <div class="principle-text"><strong>Estabilidad antes que velocidad.</strong> Un agente preciso genera más confianza que un agente rápido con errores.</div>
+      </div>
+      <div class="principle-item">
+        <div class="principle-dot"></div>
+        <div class="principle-text"><strong>Los datos no mienten.</strong> Las Properties y Signals son el puente entre conversación y CRM — sin ellas no hay inteligencia.</div>
+      </div>
+      <div class="principle-item">
+        <div class="principle-dot"></div>
+        <div class="principle-text"><strong>La distribución importa.</strong> HubSpot Marketplace valida que el mercado busca exactamente lo que estamos construyendo.</div>
+      </div>
+    </div>
+    <div class="overview-block">
+      <h4>Impacto directo</h4>
+      <div class="principle-item">
+        <div class="principle-dot" style="background:var(--magenta);box-shadow:0 0 8px var(--magenta-glow);"></div>
+        <div class="principle-text"><strong>Menor tasa de errores.</strong> V2 reduce significativamente los fallos por instrucciones ambiguas o flujos mal definidos.</div>
+      </div>
+      <div class="principle-item">
+        <div class="principle-dot" style="background:var(--magenta);box-shadow:0 0 8px var(--magenta-glow);"></div>
+        <div class="principle-text"><strong>Onboarding más predecible.</strong> Properties 2.0 y Workflows 2.0 reducen el tiempo de configuración inicial de agentes.</div>
+      </div>
+      <div class="principle-item">
+        <div class="principle-dot" style="background:var(--magenta);box-shadow:0 0 8px var(--magenta-glow);"></div>
+        <div class="principle-text"><strong>Datos capturados automáticamente.</strong> Signals convierte cada conversación en inteligencia estructurada sin trabajo manual del equipo.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════ ACT 2: Q2 ═══════════════ -->
+<div class="act-divider" id="q2" style="padding-top:4rem;">
+  <div class="act-tag current">→ Acto 2 · Q2 2026</div>
+  <div class="act-title">Inteligencia conectada, experiencias unificadas</div>
+  <div class="act-subtitle">
+    Con los cimientos listos, Q2 extiende Conversia hacia afuera: mejores interfaces para configurar agentes,
+    más canales integrados, mayor contexto sobre el cliente y nuevas herramientas para desarrolladores.
+  </div>
+</div>
+
+<section style="padding-top:2rem;">
+
+  <div style="margin-bottom:2rem;" class="reveal">
+    <div class="progress-container">
+      <div class="progress-label">
+        <span>Q2 2026 — En progreso</span>
+        <span style="color:var(--magenta);font-weight:800;">En construcción</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill progress-fill-magenta" style="width:20%;"></div></div>
+    </div>
+    <div style="display:flex;gap:1.5rem;flex-wrap:wrap;margin-top:0.75rem;">
+      <span style="font-size:0.78rem;color:var(--text-muted);">● <span style="color:var(--magenta);">5 Pilares</span> de desarrollo</span>
+      <span style="font-size:0.78rem;color:var(--text-muted);">● <span style="color:var(--green-neon);">Abril — Junio 2026</span></span>
+      <span style="font-size:0.78rem;color:var(--text-muted);">● Lanzamientos graduales por pilar</span>
+    </div>
+  </div>
+
+  <!-- PILAR 1 -->
+  <div class="pillar-wrap reveal">
+    <div class="pillar-header" onclick="togglePillar('p1')">
+      <div class="pillar-header-left">
+        <div class="pillar-number pn-magenta">1</div>
+        <div class="pillar-info">
+          <h3>Agente Builder — Configuración sin fricción</h3>
+          <p>Configurar agentes debe ser tan fácil como armar un flujo en un CRM</p>
+        </div>
+      </div>
+      <div class="pillar-arrow" id="arrow-p1">▾</div>
+    </div>
+    <div class="pillar-body" id="body-p1">
+      <div style="height:1.25rem;"></div>
+      <div class="cards-grid cards-grid-2">
+
+        <div class="card card-magenta">
+          <div class="card-badge badge-shipping">Shipping Q2</div>
+          <div class="card-icon icon-magenta">🧱</div>
+          <h3>Configurador en 3 Pasos</h3>
+          <p>Nuevo flujo guiado para lanzar un agente desde cero: definir objetivo → conectar canales → activar. Reduce la curva de aprendizaje para nuevos clientes y acelera el onboarding.</p>
+          <div class="card-tags">
+            <span class="tag tag-magenta">UX</span>
+            <span class="tag">Onboarding</span>
+            <span class="tag">Self-service</span>
+          </div>
+        </div>
+
+        <div class="card card-magenta">
+          <div class="card-badge badge-shipping">Shipping Q2</div>
+          <div class="card-icon icon-magenta">🔀</div>
+          <h3>Flow 2.0 — Estados por contexto</h3>
+          <p>Los estados del agente ya no son transiciones rígidas sino etapas nombradas por el contexto de la conversación. El agente puede moverse libremente entre estados según lo que el usuario necesite, sin romper el flujo.</p>
+          <div class="card-tags">
+            <span class="tag tag-magenta">Arquitectura</span>
+            <span class="tag">Conversación</span>
+          </div>
+        </div>
+
+        <div class="card card-magenta">
+          <div class="card-badge badge-shipping">Shipping Q2</div>
+          <div class="card-icon icon-magenta">💬</div>
+          <h3>Plataforma de Feedback Centralizado</h3>
+          <p>El equipo deja feedback sobre las conversaciones del agente directamente en la plataforma — sin WhatsApp, Excel ni emails. Cada observación genera un ticket que resuelve automáticamente un Agente AI de Soporte Técnico. Lo que el AI no puede resolver, lo atiende el equipo de operaciones. Incidencias centralizadas, con trazabilidad completa.</p>
+          <div class="card-tags">
+            <span class="tag tag-magenta">Feedback</span>
+            <span class="tag">Tickets</span>
+            <span class="tag">Operaciones</span>
+          </div>
+        </div>
+
+        <div class="card card-magenta">
+          <div class="card-badge badge-shipping">Shipping Q2</div>
+          <div class="card-icon icon-magenta">🤖</div>
+          <h3>Agente QA Semanal</h3>
+          <p>Un agente AI analiza automáticamente las conversaciones de la semana, identifica patrones de error, detecta desviaciones del guión y genera recomendaciones de corrección concretas. El humano revisa las sugerencias y decide cuáles aplica. Mejora continua del agente sin trabajo manual de análisis.</p>
+          <div class="card-tags">
+            <span class="tag tag-magenta">QA</span>
+            <span class="tag">Análisis</span>
+            <span class="tag">Mejora continua</span>
+          </div>
+        </div>
+
+        <div class="card card-magenta">
+          <div class="card-badge badge-shipping">Shipping Q2</div>
+          <div class="card-icon icon-magenta">🔌</div>
+          <h3>Conversia MCP — Modo Lectura</h3>
+          <p>Protocolo MCP que permite leer toda la arquitectura del agente: configuración, base de conocimiento, conversaciones y contactos. Ideal para análisis de calidad, auditorías de conversación e identificación de errores desde herramientas externas.</p>
+          <div class="card-tags">
+            <span class="tag tag-magenta">API</span>
+            <span class="tag">Read Access</span>
+            <span class="tag">QA</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- PILAR 2 -->
+  <div class="pillar-wrap reveal">
+    <div class="pillar-header" onclick="togglePillar('p2')">
+      <div class="pillar-header-left">
+        <div class="pillar-number pn-green">2</div>
+        <div class="pillar-info">
+          <h3>Canales e Integraciones — Conversia donde está tu cliente</h3>
+          <p>Más canales, datos más ricos, revenue orchestration bidireccional</p>
+        </div>
+      </div>
+      <div class="pillar-arrow" id="arrow-p2">▾</div>
+    </div>
+    <div class="pillar-body" id="body-p2">
+      <div style="height:1.25rem;"></div>
+      <div class="cards-grid cards-grid-2">
+
+        <div class="card">
+          <div class="card-badge badge-shipping">Shipping Q2</div>
+          <div class="card-icon icon-green">📱</div>
+          <h3>Meta Business Integration</h3>
+          <p>Conversia se conecta con META Business Manager para cerrar el ciclo de atribución de campañas. El flujo: lanzas una campaña en META → los leads llegan a Conversia con el identificador de campaña → conforme el agente califica cada lead, devuelve esa tipificación a META para que su algoritmo optimice la pauta y traiga más leads similares. Más datos reales a META = mejor performance de campañas.</p>
+          <div class="card-tags">
+            <span class="tag tag-green">META Ads</span>
+            <span class="tag tag-green">Atribución</span>
+            <span class="tag">CAPI</span>
+            <span class="tag">Optimización</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:0.75rem;">
+            <span class="card-badge badge-shipping" style="margin-bottom:0;">Desarrollo Q2</span>
+            <span class="card-badge badge-q3" style="margin-bottom:0;">Lanzamiento Q3</span>
+          </div>
+          <div class="card-icon icon-green">🔄</div>
+          <h3>HubSpot Bidirectional Signals</h3>
+          <p>Sincronización bidireccional: las señales de conversación actualizan el CRM en tiempo real, y los cambios en el CRM pueden modificar el comportamiento del agente. Datos que fluyen en ambas direcciones sin trabajo manual.</p>
+          <div class="card-tags">
+            <span class="tag tag-green">HubSpot</span>
+            <span class="tag">CRM</span>
+            <span class="tag">Bidireccional</span>
+          </div>
+        </div>
+
+        <div class="card" style="grid-column:span 2;">
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:0.75rem;">
+            <span class="card-badge badge-shipping" style="margin-bottom:0;">Desarrollo Q2</span>
+            <span class="card-badge badge-q3" style="margin-bottom:0;">Lanzamiento Q3</span>
+          </div>
+          <div class="card-icon icon-green">💰</div>
+          <h3>Revenue Orchestration</h3>
+          <p>Conversia conecta las conversaciones con acciones concretas de revenue: asignación automática de deals, alertas a ventas cuando un lead califica, trigger de seguimiento post-conversación y sincronización de etapa en el pipeline. El agente no solo conversa — orquesta el proceso de venta.</p>
+          <div class="card-tags">
+            <span class="tag tag-green">Revenue</span>
+            <span class="tag tag-green">Pipeline</span>
+            <span class="tag">Automatización</span>
+            <span class="tag">Ventas</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- PILAR 3 -->
+  <div class="pillar-wrap reveal">
+    <div class="pillar-header" onclick="togglePillar('p3')">
+      <div class="pillar-header-left">
+        <div class="pillar-number pn-cyan">3</div>
+        <div class="pillar-info">
+          <h3>Experiencia &amp; Workflows — Donde converge el equipo</h3>
+          <p>Inbox colaborativo, analítica de contexto y nuevos canales de entrada</p>
+        </div>
+      </div>
+      <div class="pillar-arrow" id="arrow-p3">▾</div>
+    </div>
+    <div class="pillar-body" id="body-p3">
+      <div style="height:1.25rem;"></div>
+      <div class="cards-grid cards-grid-2">
+
+        <div class="card card-cyan">
+          <div class="card-badge badge-shipping">Shipping Q2</div>
+          <div class="card-icon icon-cyan">💬</div>
+          <h3>Conversia Workspace</h3>
+          <p>Inbox colaborativo AI→Humano donde el agente escala conversaciones al equipo con contexto completo. Incluye Deal Management para ver el estado del lead en el CRM desde la misma interfaz, y Productivity Dashboard para que supervisores vean métricas en tiempo real.</p>
+          <div class="card-tags">
+            <span class="tag tag-cyan">Inbox</span>
+            <span class="tag tag-cyan">Colaboración</span>
+            <span class="tag">Supervisión</span>
+          </div>
+        </div>
+
+        <div class="card card-cyan">
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:0.75rem;">
+            <span class="card-badge badge-shipping" style="margin-bottom:0;">Desarrollo Q2</span>
+            <span class="card-badge badge-q3" style="margin-bottom:0;">Lanzamiento Q3</span>
+          </div>
+          <div class="card-icon icon-cyan">📊</div>
+          <h3>Context Analytics</h3>
+          <p>Convierte los "datos oscuros" de llamadas, WhatsApp y email en contexto estructurado. Cada conversación produce inteligencia: temas recurrentes, objeciones frecuentes, señales de intención, sentimiento del cliente. La conversación se vuelve datos que mejoran el negocio.</p>
+          <div class="card-tags">
+            <span class="tag tag-cyan">Analytics</span>
+            <span class="tag">Datos</span>
+            <span class="tag">Inteligencia</span>
+          </div>
+        </div>
+
+        <div class="card card-cyan">
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:0.75rem;">
+            <span class="card-badge badge-shipping" style="margin-bottom:0;">Desarrollo Q2</span>
+            <span class="card-badge badge-q3" style="margin-bottom:0;">Lanzamiento Q3</span>
+          </div>
+          <div class="card-icon icon-cyan">🎙️</div>
+          <h3>Voice Agent — Llamadas Salientes</h3>
+          <p>Conversia entra al canal de voz con llamadas salientes. El agente llama proactivamente a leads o clientes, conduce la conversación con el mismo contexto del CRM y las señales previas, y registra el resultado en el pipeline. Seguimiento automatizado sin intervención humana.</p>
+          <div class="card-tags">
+            <span class="tag tag-cyan">Voz</span>
+            <span class="tag">Saliente</span>
+            <span class="tag">Outbound</span>
+          </div>
+        </div>
+
+        <div class="card card-cyan">
+          <div class="card-badge badge-shipping">Shipping Q2</div>
+          <div class="card-icon icon-cyan">⚡</div>
+          <h3>Nuevos Nodos de Workflow — AI Node</h3>
+          <p>Nuevas acciones disponibles en el motor de automatizaciones. El AI Node permite que un workflow dispare un razonamiento adicional del modelo: resumir, clasificar, evaluar o generar texto a partir del contexto de la conversación, sin salir del flujo.</p>
+          <div class="card-tags">
+            <span class="tag tag-cyan">Workflows</span>
+            <span class="tag tag-cyan">AI</span>
+            <span class="tag">Automatización</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Sub-sección: Experiencia Conversacional Enriquecida -->
+      <div style="margin-top:1.75rem;padding-top:1.5rem;border-top:1px solid rgba(34,222,255,0.12);">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:1.25rem;">
+          <span style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.09em;color:var(--cyan);">✦ Experiencia Conversacional Enriquecida</span>
+          <div style="flex:1;height:1px;background:rgba(34,222,255,0.15);"></div>
+          <span style="font-size:0.68rem;font-weight:700;padding:3px 9px;border-radius:10px;background:rgba(34,222,255,0.08);color:rgba(34,222,255,0.7);border:1px solid rgba(34,222,255,0.2);">Q2 2026</span>
+        </div>
+        <div class="cards-grid cards-grid-3">
+
+          <div class="card card-cyan">
+            <div class="card-badge badge-shipping">Shipping Q2</div>
+            <div class="card-icon icon-cyan">🖼️</div>
+            <h3>Rich Media Replies</h3>
+            <p>El agente no solo responde con texto — puede entregar audio, video, PDFs e imágenes como parte de su respuesta. Ideal para enviar catálogos, fichas técnicas, videos de producto o comprobantes directamente en la conversación.</p>
+            <div class="card-tags">
+              <span class="tag tag-cyan">Multimedia</span>
+              <span class="tag">Audio</span>
+              <span class="tag">Video</span>
+              <span class="tag">PDF</span>
+            </div>
+          </div>
+
+          <div class="card card-cyan">
+            <div class="card-badge badge-shipping">Shipping Q2</div>
+            <div class="card-icon icon-cyan">🎤</div>
+            <h3>TTS / STT en WhatsApp</h3>
+            <p>El agente entiende los mensajes de voz que envía el usuario en WhatsApp: los transcribe, procesa y responde en texto o con un audio generado. La conversación por voz ya no requiere que el usuario escriba.</p>
+            <div class="card-tags">
+              <span class="tag tag-cyan">Voz</span>
+              <span class="tag">STT</span>
+              <span class="tag">TTS</span>
+              <span class="tag">WhatsApp</span>
+            </div>
+          </div>
+
+          <div class="card card-cyan">
+            <div class="card-badge badge-shipping">Shipping Q2</div>
+            <div class="card-icon icon-cyan">🎨</div>
+            <h3>AI Image Generation</h3>
+            <p>El agente decide enriquecer su respuesta generando imágenes con IA: visualizaciones de producto, comparativas, diagramas explicativos o contenido personalizado que complementa el texto de la respuesta.</p>
+            <div class="card-tags">
+              <span class="tag tag-cyan">IA Generativa</span>
+              <span class="tag">Imágenes</span>
+              <span class="tag">UX</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PILAR 4 -->
+  <div class="pillar-wrap reveal">
+    <div class="pillar-header" onclick="togglePillar('p4')">
+      <div class="pillar-header-left">
+        <div class="pillar-number pn-amber">4</div>
+        <div class="pillar-info">
+          <h3>Observabilidad — Confianza a través de la transparencia</h3>
+          <p>Visibilidad operativa para clientes y equipo interno</p>
+        </div>
+      </div>
+      <div class="pillar-arrow" id="arrow-p4">▾</div>
+    </div>
+    <div class="pillar-body" id="body-p4">
+      <div style="height:1.25rem;"></div>
+      <div class="cards-grid cards-grid-2">
+
+        <div class="card card-amber">
+          <div class="card-badge badge-amber">Shipping Q2</div>
+          <div class="card-icon icon-amber">🔔</div>
+          <h3>Alertas Inteligentes basadas en Logs</h3>
+          <p>Ya tenemos logs detallados de errores por agente y conversación. Lo que viene ahora es que puedas configurar alertas sobre esos logs: umbrales de error, tipos de fallo, frecuencia. El sistema te notifica proactivamente antes de que el problema escale, sin necesidad de monitorear manualmente.</p>
+          <div class="card-tags">
+            <span class="tag tag-amber">Alertas</span>
+            <span class="tag">Logs</span>
+            <span class="tag">Monitoreo</span>
+            <span class="tag">Proactivo</span>
+          </div>
+        </div>
+
+        <div class="card card-amber">
+          <div class="card-badge badge-amber">Shipping Q2</div>
+          <div class="card-icon icon-amber">🌐</div>
+          <h3>Status Page Público</h3>
+          <p>Página pública de estado de la plataforma con uptime en tiempo real, historial de incidentes y notificaciones. Los clientes y prospectos pueden ver la confiabilidad de Conversia sin tener que preguntar al equipo de soporte.</p>
+          <div class="card-tags">
+            <span class="tag tag-amber">Uptime</span>
+            <span class="tag">Confianza</span>
+            <span class="tag">Transparencia</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- PILAR 5 -->
+  <div class="pillar-wrap reveal">
+    <div class="pillar-header" onclick="togglePillar('p5')">
+      <div class="pillar-header-left">
+        <div class="pillar-number pn-purple">5</div>
+        <div class="pillar-info">
+          <h3>Developer Platform — Conversia como infraestructura</h3>
+          <p>API, MCP y CLI para que equipos técnicos extiendan Conversia a su medida</p>
+        </div>
+      </div>
+      <div class="pillar-arrow" id="arrow-p5">▾</div>
+    </div>
+    <div class="pillar-body" id="body-p5">
+      <div style="height:1.25rem;"></div>
+      <div class="cards-grid cards-grid-3">
+
+        <div class="card" style="border-color:rgba(192,138,255,0.15);">
+          <div class="card-badge badge-planned">Q2 2026</div>
+          <div class="card-icon icon-purple">⚙️</div>
+          <h3>REST API Pública</h3>
+          <p>API documentada para integrar Conversia con los sistemas internos del cliente: CRMs propios, ERP, sistemas de tickets o cualquier herramienta de su stack. Autenticación segura con tokens por organización.</p>
+          <div class="card-tags">
+            <span class="tag">REST</span>
+            <span class="tag">API</span>
+            <span class="tag">Integraciones</span>
+          </div>
+        </div>
+
+        <div class="card" style="border-color:rgba(192,138,255,0.15);">
+          <div class="card-badge badge-planned">Q2 2026</div>
+          <div class="card-icon icon-purple">🔗</div>
+          <h3>MCP Tools para Agentes</h3>
+          <p>Herramientas MCP que permiten a otros agentes de IA acceder a la data de Conversia: leer arquitectura del agente, historial de conversaciones, contactos y knowledge base para análisis avanzado sin salir del flujo de trabajo.</p>
+          <div class="card-tags">
+            <span class="tag">MCP</span>
+            <span class="tag">IA</span>
+            <span class="tag">Interoperabilidad</span>
+          </div>
+        </div>
+
+        <div class="card" style="border-color:rgba(192,138,255,0.15);">
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:0.75rem;">
+            <span class="card-badge badge-planned" style="margin-bottom:0;">Desarrollo Q2</span>
+            <span class="card-badge badge-q3" style="margin-bottom:0;">Lanzamiento Q3</span>
+          </div>
+          <div class="card-icon icon-purple">💻</div>
+          <h3>CLI de Conversia</h3>
+          <p>Interfaz de línea de comandos para que equipos técnicos gestionen agentes, descarguen conversaciones, ejecuten scripts de mantenimiento y automaticen operaciones recurrentes desde su terminal.</p>
+          <div class="card-tags">
+            <span class="tag">CLI</span>
+            <span class="tag">DevTools</span>
+            <span class="tag">Automatización</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- ═══════════════ ACT 3: VISION ═══════════════ -->
+<div class="vision-bg" id="vision">
+  <div class="vision-inner">
+
+    <div style="text-align:center;">
+      <div class="act-tag vision" style="display:inline-flex;margin-bottom:1rem;">◈ Acto 3 · Visión 2026 — 2028</div>
+    </div>
+
+    <div class="vision-statement reveal">
+      El futuro del revenue no es más vendedores.<br>
+      Es <em>máximo contexto + máxima personalización</em><br>
+      entregado en el momento exacto.
+    </div>
+
+    <p style="text-align:center;color:var(--text-secondary);font-size:0.95rem;max-width:600px;margin:0 auto 3rem;" class="reveal">
+      Conversia evoluciona hacia un <strong style="color:var(--text-primary);">Data &amp; AI Revenue System</strong>:
+      la plataforma que une datos conversacionales, inteligencia artificial y flujos de revenue en una sola capa.
+      Primero datos. Luego inteligencia sobre esos datos.
+    </p>
+
+    <div style="text-align:center;margin-bottom:2rem;" class="reveal">
+      <div style="display:inline-flex;align-items:center;gap:10px;padding:10px 20px;background:rgba(34,222,255,0.08);border:1px solid rgba(34,222,255,0.2);border-radius:10px;">
+        <span style="color:var(--cyan);font-size:0.85rem;font-weight:800;">Tesis central</span>
+        <span style="color:var(--text-muted);font-size:0.8rem;">→</span>
+        <span style="color:var(--text-primary);font-size:0.9rem;font-weight:700;">First Data, then AI Agents</span>
+      </div>
+    </div>
+
+    <div class="vision-layers reveal">
+
+      <div class="vision-layer">
+        <div class="vision-layer-icon">🏗️</div>
+        <div class="vision-layer-num">Capa 1 · Hoy</div>
+        <h4>Data Platform</h4>
+        <p>Cada conversación produce datos estructurados. Properties, Signals y Context Analytics construyen el perfil completo del cliente desde la conversación.</p>
+      </div>
+
+      <div class="layer-arrow">→</div>
+
+      <div class="vision-layer">
+        <div class="vision-layer-icon">🧠</div>
+        <div class="vision-layer-num">Capa 2 · Q2–Q3 2026</div>
+        <h4>AI &amp; Intelligence Platform</h4>
+        <p>Sobre los datos, modelos que aprenden del contexto acumulado. Predicción de intención, personalización de agentes por cliente, scoring dinámico de oportunidades.</p>
+      </div>
+
+      <div class="layer-arrow">→</div>
+
+      <div class="vision-layer">
+        <div class="vision-layer-icon">🎯</div>
+        <div class="vision-layer-num">Capa 3 · Q4 2026 · 2027</div>
+        <h4>Experience &amp; Workflows</h4>
+        <p>El sistema orquesta el revenue completo: desde el primer mensaje hasta el cierre y la retención. Workflows adaptativos que aprenden del comportamiento del cliente y se ajustan automáticamente.</p>
+      </div>
+
+    </div>
+
+    <!-- Vision pillars -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:3rem;" class="reveal">
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:1.25rem;text-align:center;">
+        <div style="font-size:1.5rem;margin-bottom:0.5rem;">🔮</div>
+        <div style="font-size:0.8rem;font-weight:800;color:var(--cyan);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:0.4rem;">Máximo Contexto</div>
+        <p style="font-size:0.8rem;color:var(--text-secondary);">El agente conoce al cliente mejor que cualquier vendedor. Historial completo de interacciones, preferencias y señales de compra.</p>
+      </div>
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:1.25rem;text-align:center;">
+        <div style="font-size:1.5rem;margin-bottom:0.5rem;">✨</div>
+        <div style="font-size:0.8rem;font-weight:800;color:var(--cyan);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:0.4rem;">Personalización Real</div>
+        <p style="font-size:0.8rem;color:var(--text-secondary);">Cada conversación se adapta al cliente, no al producto. El agente ajusta su tono, propuesta y timing según el perfil de cada persona.</p>
+      </div>
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:1.25rem;text-align:center;">
+        <div style="font-size:1.5rem;margin-bottom:0.5rem;">⚡</div>
+        <div style="font-size:0.8rem;font-weight:800;color:var(--cyan);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:0.4rem;">Revenue Automatizado</div>
+        <p style="font-size:0.8rem;color:var(--text-secondary);">De la conversación al cierre sin fricción. Conversia orquesta cada paso del proceso de venta de forma autónoma y escalable.</p>
+      </div>
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:1.25rem;text-align:center;">
+        <div style="font-size:1.5rem;margin-bottom:0.5rem;">🔗</div>
+        <div style="font-size:0.8rem;font-weight:800;color:var(--cyan);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:0.4rem;">Stack Integrado</div>
+        <p style="font-size:0.8rem;color:var(--text-secondary);">Conversia como capa de inteligencia del stack de ventas: conectado con CRM, canales y herramientas del equipo en tiempo real.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo" style="display:flex;align-items:center;justify-content:center;gap:4px;">
+    <svg height="22" viewBox="0 0 196 36" xmlns="http://www.w3.org/2000/svg">
+      <text y="29" font-family="Urbanist,sans-serif" font-size="32" font-weight="800" fill="white">c</text>
+      <g transform="translate(19,1)"><g transform="translate(15,15)">
+        <path fill="#78F05A" d="M 0,-14 A 14,14 0 0,1 14,0 L 9,0 A 9,9 0 0,0 0,-9 Z"/>
+        <polygon fill="#78F05A" points="14,3 10,-1 18,-1"/>
+        <g transform="rotate(120)"><path fill="#78F05A" d="M 0,-14 A 14,14 0 0,1 14,0 L 9,0 A 9,9 0 0,0 0,-9 Z"/><polygon fill="#78F05A" points="14,3 10,-1 18,-1"/></g>
+        <g transform="rotate(240)"><path fill="#78F05A" d="M 0,-14 A 14,14 0 0,1 14,0 L 9,0 A 9,9 0 0,0 0,-9 Z"/><polygon fill="#78F05A" points="14,3 10,-1 18,-1"/></g>
+      </g></g>
+      <text x="54" y="29" font-family="Urbanist,sans-serif" font-size="32" font-weight="800" fill="white">nversia</text>
+    </svg>
+  </div>
+    <p>Data &amp; AI Revenue System</p>
+    <div class="footer-divider"></div>
+    <p>Product Roadmap 2026 · Interno &amp; Confidencial</p>
+    <p style="margin-top:0.5rem;">Actualizado Abril 2026 · Sujeto a cambios según priorización del equipo</p>
+  </div>
+</footer>
+
+
+<script>
+  // Pillar toggle
+  function togglePillar(id) {
+    const body = document.getElementById('body-' + id);
+    const arrow = document.getElementById('arrow-' + id);
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    arrow.classList.toggle('open', !isOpen);
+  }
+
+  // Open first pillar by default
+  document.addEventListener('DOMContentLoaded', () => {
+    togglePillar('p1');
+  });
+
+  // Scroll progress bar
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = (scrollTop / docHeight) * 100;
+    document.getElementById('scrollBar').style.width = progress + '%';
+  });
+
+  // Reveal on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Animate progress bars on scroll
+  const progObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const fills = entry.target.querySelectorAll('.progress-fill');
+        fills.forEach(fill => {
+          const w = fill.style.width;
+          fill.style.width = '0%';
+          setTimeout(() => { fill.style.width = w; }, 100);
+        });
+      }
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelectorAll('.progress-container').forEach(el => progObserver.observe(el));
+</script>
+
+</body>
+</html>
