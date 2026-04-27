@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pintar el Futuro — Adelanta Factoring</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #0F172A; color: #F1F5F9; min-height: 100vh; overflow: hidden; }
+
+  .nav {
+    position: fixed; top: 24px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 8px; z-index: 100;
+    background: rgba(15,23,42,0.9); backdrop-filter: blur(12px);
+    border: 1px solid rgba(249,115,22,0.3); border-radius: 40px; padding: 8px 16px;
+  }
+  .nav-dot {
+    width: 28px; height: 28px; border-radius: 50%;
+    border: 2px solid rgba(249,115,22,0.4); background: transparent;
+    cursor: pointer; font-size: 11px; color: #94A3B8;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; transition: all 0.25s;
+  }
+  .nav-dot.active, .nav-dot:hover { background: #F97316; border-color: #F97316; color: white; }
+
+  .slide {
+    display: none; min-height: 100vh; padding: 88px 72px 48px;
+    position: relative; overflow: hidden; flex-direction: column; justify-content: center;
+  }
+  .slide.active { display: flex; }
+
+  .slide-1 { background: linear-gradient(135deg, #0F172A 0%, #1E293B 60%, #0F172A 100%); }
+  .slide-2 { background: linear-gradient(140deg, #0F172A 0%, #1a0800 60%, #0F172A 100%); }
+  .slide-3 { background: linear-gradient(140deg, #0F172A 0%, #061a06 60%, #0F172A 100%); }
+  .slide-4 { background: linear-gradient(140deg, #0F172A 0%, #060d1a 60%, #0F172A 100%); }
+  .slide-5 { background: linear-gradient(135deg, #0F172A 0%, #1E293B 60%, #0F172A 100%); }
+  .slide-6 { background: linear-gradient(140deg, #0F172A 0%, #0a0f1e 60%, #0F172A 100%); }
+
+  .deco { position: absolute; border-radius: 50%; pointer-events: none; opacity: 0.05; }
+  .deco-tr { width: 700px; height: 700px; top: -250px; right: -250px; }
+  .deco-bl { width: 500px; height: 500px; bottom: -200px; left: -200px; }
+
+  .logo-strip {
+    position: absolute; top: 22px; left: 72px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .logo-mark {
+    width: 34px; height: 34px; background: #F97316; border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px; font-weight: 900; color: white;
+  }
+  .logo-name { font-size: 13px; font-weight: 700; color: #64748B; letter-spacing: 1.5px; }
+  .logo-sep { width: 1px; height: 18px; background: rgba(249,115,22,0.25); }
+  .client-tag { font-size: 12px; color: #F97316; font-weight: 600; }
+  .slide-num { position: absolute; bottom: 24px; right: 72px; font-size: 11px; color: #334155; letter-spacing: 2px; }
+
+  .tag {
+    display: inline-block; background: rgba(249,115,22,0.12);
+    border: 1px solid rgba(249,115,22,0.35); color: #F97316;
+    font-size: 10px; font-weight: 700; letter-spacing: 2.5px;
+    padding: 5px 14px; border-radius: 4px; margin-bottom: 18px; text-transform: uppercase;
+  }
+  h1 { font-size: clamp(30px, 3.6vw, 50px); font-weight: 800; line-height: 1.18; margin-bottom: 14px; }
+  h1 span { color: #F97316; }
+  .sub { font-size: clamp(13px, 1.5vw, 17px); color: #64748B; max-width: 640px; line-height: 1.65; margin-bottom: 32px; }
+
+  /* ---- SLIDE 1 ---- */
+  .metrics-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+  .m-card {
+    background: rgba(239,68,68,0.07); border: 1px solid rgba(239,68,68,0.25);
+    border-radius: 10px; padding: 20px 18px;
+  }
+  .m-label { font-size: 9px; font-weight: 700; letter-spacing: 2px; color: #EF4444; text-transform: uppercase; margin-bottom: 10px; }
+  .m-value { font-size: clamp(28px,3vw,42px); font-weight: 900; color: #EF4444; line-height: 1; margin-bottom: 6px; }
+  .m-desc { font-size: 12px; color: #64748B; line-height: 1.5; }
+
+  .quote-box {
+    background: rgba(249,115,22,0.05); border-left: 3px solid #F97316;
+    border-radius: 0 8px 8px 0; padding: 16px 20px; max-width: 820px;
+  }
+  .q-text { font-size: clamp(13px,1.4vw,16px); font-style: italic; color: #CBD5E1; line-height: 1.6; }
+  .q-src { font-size: 11px; color: #F97316; font-weight: 600; margin-top: 6px; }
+
+  /* ---- SLIDE 2 ---- */
+  .ba-grid { display: grid; grid-template-columns: 1fr 56px 1fr; gap: 0; align-items: stretch; margin-top: 20px; }
+  .ba-panel { border-radius: 10px; padding: 24px; }
+  .ba-before { background: rgba(239,68,68,0.07); border: 1px solid rgba(239,68,68,0.25); }
+  .ba-after { background: rgba(249,115,22,0.07); border: 1px solid rgba(249,115,22,0.25); display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; }
+  .ba-arrow-col { display:flex; align-items:center; justify-content:center; }
+  .ba-arrow { width:40px; height:40px; background:#F97316; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; color:white; font-weight:900; }
+  .ba-lbl { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; }
+  .ba-lbl-red { color: #EF4444; }
+  .ba-lbl-orange { color: #F97316; }
+  .ba-item { font-size: 13px; color: #94A3B8; line-height: 1.55; margin-bottom: 9px; padding-left: 14px; position: relative; }
+  .ba-item::before { content:''; position:absolute; left:0; top:7px; width:5px; height:5px; border-radius:50%; background:#EF4444; }
+  .cause-title { font-size: clamp(16px,1.8vw,22px); font-weight: 800; color: #F1F5F9; line-height: 1.4; margin-bottom: 10px; }
+  .cause-sub { font-size: 13px; color: #64748B; line-height: 1.6; max-width: 240px; }
+
+  /* ---- SLIDE 3 ---- */
+  .outcomes-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin-top: 20px; }
+  .o-card { background: rgba(16,185,129,0.07); border: 1px solid rgba(16,185,129,0.25); border-radius: 10px; padding: 22px; }
+  .o-label { font-size: 9px; font-weight: 700; letter-spacing: 2px; color: #10B981; text-transform: uppercase; margin-bottom: 6px; }
+  .o-title { font-size: 13px; font-weight: 700; color: #6EE7B7; margin-bottom: 14px; }
+  .o-item { font-size: 12.5px; color: #94A3B8; line-height: 1.55; margin-bottom: 8px; padding-left: 14px; position: relative; }
+  .o-item::before { content:''; position:absolute; left:0; top:7px; width:5px; height:5px; border-radius:50%; background:#10B981; }
+  .roi-strip { display:flex; gap:14px; margin-top:20px; }
+  .roi-pill {
+    background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.35);
+    border-radius: 8px; padding: 10px 18px; display:flex; align-items:center; gap:12px;
+  }
+  .roi-num { font-size: 22px; font-weight: 900; color: #10B981; }
+  .roi-lbl { font-size: 11px; color: #64748B; line-height: 1.4; }
+
+  /* ---- SLIDE 4 ---- */
+  .modules-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 0; margin-top: 20px; }
+  .mod {
+    padding: 22px 24px; position:relative;
+  }
+  .mod:not(:last-child)::after {
+    content:''; position:absolute; right:0; top:12%; height:76%; width:1px; background:rgba(249,115,22,0.2);
+  }
+  .mod-1 { background: rgba(249,115,22,0.07); border: 1px solid rgba(249,115,22,0.22); border-radius: 10px 0 0 10px; }
+  .mod-2 { background: rgba(59,130,246,0.07); border-top: 1px solid rgba(59,130,246,0.22); border-bottom: 1px solid rgba(59,130,246,0.22); }
+  .mod-3 { background: rgba(16,185,129,0.07); border: 1px solid rgba(16,185,129,0.22); border-radius: 0 10px 10px 0; }
+  .mod-num { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
+  .mod-num-1 { color: #F97316; }
+  .mod-num-2 { color: #60A5FA; }
+  .mod-num-3 { color: #10B981; }
+  .mod-title { font-size: 15px; font-weight: 700; color: #F1F5F9; margin-bottom: 4px; }
+  .mod-stack { font-size: 11px; color: #475569; margin-bottom: 12px; }
+  .mod-item { font-size: 12px; color: #94A3B8; line-height: 1.6; margin-bottom: 5px; }
+  .mod-check { color: #F97316; margin-right: 5px; }
+  .mod-check-2 { color: #60A5FA; margin-right: 5px; }
+  .mod-check-3 { color: #10B981; margin-right: 5px; }
+
+  .sol-map { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
+  .sol-row { display:flex; align-items:center; gap:12px; }
+  .sol-pain { flex:1; background:rgba(239,68,68,0.07); border:1px solid rgba(239,68,68,0.2); border-radius:7px; padding:9px 14px; font-size:12.5px; color:#FCA5A5; }
+  .sol-arr { color:#F97316; font-size:18px; flex-shrink:0; }
+  .sol-product { background:rgba(249,115,22,0.1); border:1px solid rgba(249,115,22,0.3); border-radius:7px; padding:7px 12px; font-size:11px; font-weight:700; color:#FDBA74; white-space:nowrap; }
+  .sol-arr2 { color:#10B981; font-size:18px; flex-shrink:0; }
+  .sol-out { flex:0.85; background:rgba(16,185,129,0.07); border:1px solid rgba(16,185,129,0.2); border-radius:7px; padding:9px 14px; font-size:12px; font-weight:600; color:#6EE7B7; }
+
+  /* ---- SLIDE 6 — INVERSIÓN ---- */
+  .inv-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 20px; }
+  .inv-block { border-radius: 10px; padding: 20px 22px; }
+  .inv-tech { background: rgba(59,130,246,0.07); border: 1px solid rgba(59,130,246,0.22); }
+  .inv-service { background: rgba(249,115,22,0.07); border: 1px solid rgba(249,115,22,0.22); }
+  .inv-block-lbl { font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 14px; }
+  .inv-block-lbl-blue { color: #60A5FA; }
+  .inv-block-lbl-orange { color: #F97316; }
+  .inv-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); gap: 12px; }
+  .inv-row:last-of-type { border-bottom: none; }
+  .inv-item-name { font-size: 12.5px; color: #94A3B8; line-height: 1.4; flex: 1; }
+  .inv-item-note { font-size: 10px; color: #475569; margin-top: 2px; }
+  .inv-item-price { font-size: 13px; font-weight: 700; color: #F1F5F9; white-space: nowrap; text-align: right; }
+  .inv-item-price span { display: block; font-size: 10px; font-weight: 400; color: #475569; }
+  .inv-subtotal { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(249,115,22,0.3); }
+  .inv-subtotal-lbl { font-size: 11px; font-weight: 700; color: #64748B; letter-spacing: 1px; text-transform: uppercase; }
+  .inv-subtotal-val { font-size: 18px; font-weight: 900; color: #F97316; }
+  .inv-total-box {
+    margin-top: 20px; background: rgba(249,115,22,0.09); border: 1.5px solid rgba(249,115,22,0.4);
+    border-radius: 12px; padding: 18px 28px; display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  }
+  .inv-total-main { font-size: 13px; color: #64748B; line-height: 1.5; }
+  .inv-total-main strong { display: block; font-size: clamp(22px, 2.5vw, 32px); font-weight: 900; color: #F1F5F9; margin-bottom: 2px; }
+  .inv-total-sub { font-size: 11px; color: #475569; }
+  .inv-roi-pills { display: flex; gap: 12px; }
+  .inv-roi-pill { background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); border-radius: 8px; padding: 10px 14px; text-align: center; }
+  .inv-roi-pill strong { display: block; font-size: 17px; font-weight: 900; color: #10B981; }
+  .inv-roi-pill span { font-size: 10px; color: #475569; line-height: 1.4; }
+  .inv-badge { display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: 1.5px; padding: 2px 7px; border-radius: 3px; text-transform: uppercase; margin-left: 6px; vertical-align: middle; }
+  .badge-recurrent { background: rgba(59,130,246,0.15); color: #60A5FA; border: 1px solid rgba(59,130,246,0.3); }
+  .badge-once { background: rgba(249,115,22,0.12); color: #FDBA74; border: 1px solid rgba(249,115,22,0.3); }
+
+  /* ---- SLIDE 5 ---- */
+  .steps-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:24px; max-width:860px; }
+  .step-item { display:flex; gap:14px; align-items:flex-start; }
+  .step-num { width:32px; height:32px; flex-shrink:0; background:#F97316; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; color:white; }
+  .step-body .step-title { font-size:14px; font-weight:700; color:#F1F5F9; margin-bottom:4px; }
+  .step-body .step-desc { font-size:12px; color:#64748B; line-height:1.55; }
+  .decision-box {
+    margin-top:28px; background:rgba(249,115,22,0.08); border:2px solid rgba(249,115,22,0.35);
+    border-radius:12px; padding:20px 28px; display:inline-flex; align-items:center; gap:20px; max-width:680px;
+  }
+  .decision-q { font-size: clamp(14px,1.6vw,18px); font-weight:700; color:#F1F5F9; line-height:1.4; }
+  .decision-note { font-size:12px; color:#475569; margin-top:8px; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <button class="nav-dot active" onclick="goTo(1)">1</button>
+  <button class="nav-dot" onclick="goTo(2)">2</button>
+  <button class="nav-dot" onclick="goTo(3)">3</button>
+  <button class="nav-dot" onclick="goTo(4)">4</button>
+  <button class="nav-dot" onclick="goTo(5)">5</button>
+  <button class="nav-dot" onclick="goTo(6)">6</button>
+</nav>
+
+<!-- ========== SLIDE 1 ========== -->
+<div class="slide slide-1 active" id="slide-1">
+  <div class="deco deco-tr" style="background:#F97316;"></div>
+  <div class="deco deco-bl" style="background:#EF4444;"></div>
+  <div class="logo-strip">
+    <div class="logo-mark">I</div><div class="logo-name">IMPULSE</div>
+    <div class="logo-sep"></div><div class="client-tag">Adelanta Factoring</div>
+  </div>
+
+  <div class="tag">El mundo de hoy</div>
+  <h1>1,000 empresas prospectadas.<br><span>Menos del 1%</span> se convierte.</h1>
+  <p class="sub">Así se ve la operación comercial de Adelanta Factoring hoy — antes del Revenue System.</p>
+
+  <div class="metrics-row">
+    <div class="m-card">
+      <div class="m-label">Conversión outreach frío</div>
+      <div class="m-value">&lt;1%</div>
+      <div class="m-desc">De 1,000 empresas prospectadas, menos de 10 llegan a un primer desembolso</div>
+    </div>
+    <div class="m-card">
+      <div class="m-label">Fondo sin colocar / mes</div>
+      <div class="m-value">S/10M</div>
+      <div class="m-desc">Capital disponible que no se coloca cada mes por falta de prospección efectiva</div>
+    </div>
+    <div class="m-card">
+      <div class="m-label">Leads entregados sin trabajar</div>
+      <div class="m-value">70%</div>
+      <div class="m-desc">De las bases entregadas al equipo semanalmente, 7 de cada 10 quedan sin gestionar</div>
+    </div>
+    <div class="m-card">
+      <div class="m-label">Tiempo del equipo en prospección</div>
+      <div class="m-value">50%</div>
+      <div class="m-desc">El equipo divide su tiempo entre cartera y nuevas cuentas — sin sistema para ninguna</div>
+    </div>
+  </div>
+
+  <div class="quote-box">
+    <div class="q-text">"No tenemos ni el 1% de efectividad. De los mil leads que ha enviado Abel no hemos llegado ni a diez clientes."</div>
+    <div class="q-src">— María García-Godos, Socia / CEO · Discovery, 14 abril 2026</div>
+  </div>
+  <div class="slide-num">01 / 06</div>
+</div>
+
+<!-- ========== SLIDE 2 ========== -->
+<div class="slide slide-2" id="slide-2">
+  <div class="deco deco-tr" style="background:#EF4444;"></div>
+  <div class="logo-strip">
+    <div class="logo-mark">I</div><div class="logo-name">IMPULSE</div>
+    <div class="logo-sep"></div><div class="client-tag">Adelanta Factoring</div>
+  </div>
+
+  <div class="tag">La raíz del problema</div>
+  <h1>No es falta de oportunidades.<br>Es falta de <span>sistema.</span></h1>
+  <p class="sub">El equipo lo intenta. El problema es que prospecta, vende y administra cartera — todo al mismo tiempo, sin herramientas para ninguna de las tres.</p>
+
+  <div class="ba-grid">
+    <div class="ba-panel ba-before">
+      <div class="ba-lbl ba-lbl-red">Hoy — Sin sistema</div>
+      <div class="ba-item">Los pagadores estratégicos — la mayor fuente de cedentes — no están siendo trabajados de forma sistematizada. Leonardo los contacta por LinkedIn de forma manual.</div>
+      <div class="ba-item">Abel construye bases cada semana con Top Empresas + Validata + Python. El 70% de esa base queda sin gestionar porque los ejecutivos no confían en la data.</div>
+      <div class="ba-item">Los ejecutivos dividen su tiempo 50/50 entre cartera y prospección. Sin foco, sin resultados consistentes en ninguna de las dos.</div>
+      <div class="ba-item">FAPRO tiene datos de señales de clientes (frecuencia de facturación, registro de ventas/compras) — pero el equipo comercial no puede accederlos.</div>
+      <div class="ba-item">Sin métricas de embudo: no saben cuántas reuniones generan por fuente, ni la conversión por etapa, ni qué ejecutivo tiene mejor efectividad.</div>
+    </div>
+    <div class="ba-arrow-col"><div class="ba-arrow">→</div></div>
+    <div class="ba-panel ba-after">
+      <div class="ba-lbl ba-lbl-orange">La causa raíz</div>
+      <div class="cause-title">Tres mundos<br>completamente<br>desconectados</div>
+      <div style="display:flex; gap:10px; justify-content:center; margin:14px 0;">
+        <span style="background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);border-radius:6px;padding:6px 12px;font-size:12px;font-weight:700;color:#FCA5A5;">Prospección</span>
+        <span style="background:rgba(249,115,22,0.15);border:1px solid rgba(249,115,22,0.3);border-radius:6px;padding:6px 12px;font-size:12px;font-weight:700;color:#FDBA74;">Pipeline</span>
+        <span style="background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.3);border-radius:6px;padding:6px 12px;font-size:12px;font-weight:700;color:#6EE7B7;">Cartera</span>
+      </div>
+      <div class="cause-sub">Mientras no exista una fuente única de verdad que los conecte, cada equipo opera en el vacío y la oportunidad se pierde.</div>
+    </div>
+  </div>
+  <div class="slide-num">02 / 06</div>
+</div>
+
+<!-- ========== SLIDE 3 ========== -->
+<div class="slide slide-3" id="slide-3">
+  <div class="deco deco-tr" style="background:#10B981;"></div>
+  <div class="logo-strip">
+    <div class="logo-mark">I</div><div class="logo-name">IMPULSE</div>
+    <div class="logo-sep"></div><div class="client-tag">Adelanta Factoring</div>
+  </div>
+
+  <div class="tag">El mundo que queremos construir</div>
+  <h1>El Revenue System de<br><span>Adelanta Factoring.</span></h1>
+  <p class="sub">En 12 meses, este es el nuevo estado del negocio — medido en las 3 dimensiones que más importan.</p>
+
+  <div class="outcomes-grid">
+    <div class="o-card">
+      <div class="o-label">📈 Negocio</div>
+      <div class="o-title">Resultados financieros</div>
+      <div class="o-item">Conversión outreach: de &lt;1% → <strong style="color:#10B981">3–5%</strong> en 12 meses</div>
+      <div class="o-item">S/ 10M sin fondear → <strong style="color:#10B981">S/ 7M colocados</strong> mensualmente</div>
+      <div class="o-item">4 palancas activas generando pipeline simultaneamente</div>
+      <div class="o-item">100% del equipo con lista priorizada de cuentas cada lunes</div>
+    </div>
+    <div class="o-card">
+      <div class="o-label">🎯 Profesional</div>
+      <div class="o-title">Para el equipo</div>
+      <div class="o-item">Leonardo gestiona a su equipo con métricas reales, no con intuición</div>
+      <div class="o-item">Abel enfoca su data science donde tiene más impacto: las 4 palancas de crecimiento</div>
+      <div class="o-item">Los ejecutivos llegan los lunes sabiendo exactamente con quién hablar y por qué</div>
+      <div class="o-item">María y Roberto ven el pipeline completo en tiempo real — sin preguntar a nadie</div>
+    </div>
+    <div class="o-card">
+      <div class="o-label">⭐ Identidad</div>
+      <div class="o-title">Cómo quieren ser vistos</div>
+      <div class="o-item">La empresa de factoring con el proceso comercial más avanzado del mercado peruano</div>
+      <div class="o-item">El equipo que creció de forma ordenada antes de escalar — sin multiplicar headcount</div>
+      <div class="o-item">La primera fintech de factoring que usa IA para prospectar y gestionar cartera de forma autónoma</div>
+    </div>
+  </div>
+
+  <div class="roi-strip">
+    <div class="roi-pill"><div class="roi-num">+200%</div><div class="roi-lbl">ROI estimado<br>en 12 meses</div></div>
+    <div class="roi-pill"><div class="roi-num">3–5x</div><div class="roi-lbl">Incremento en<br>nuevos cedentes activos</div></div>
+    <div class="roi-pill"><div class="roi-num">1 solo</div><div class="roi-lbl">Sistema que conecta<br>prospección, pipeline y cartera</div></div>
+  </div>
+  <div class="slide-num">03 / 06</div>
+</div>
+
+<!-- ========== SLIDE 4 ========== -->
+<div class="slide slide-4" id="slide-4">
+  <div class="deco deco-tr" style="background:#3B82F6;"></div>
+  <div class="logo-strip">
+    <div class="logo-mark">I</div><div class="logo-name">IMPULSE</div>
+    <div class="logo-sep"></div><div class="client-tag">Adelanta Factoring</div>
+  </div>
+
+  <div class="tag">La solución — 3 módulos</div>
+  <h1>Un sistema que trabaja<br><span>antes, durante y después</span> de cada deal.</h1>
+
+  <div class="modules-row">
+    <div class="mod mod-1">
+      <div class="mod-num mod-num-1">Módulo 1 · GTM + Prospección</div>
+      <div class="mod-title">La máquina de nuevas cuentas</div>
+      <div class="mod-stack">Surfe + HubSpot + Claude + Agentes IA</div>
+      <div class="mod-item"><span class="mod-check">✦</span>Estrategia GTM: ICP + 4 palancas de crecimiento</div>
+      <div class="mod-item"><span class="mod-check">✦</span><strong>A)</strong> Pagadores estratégicos → referidos de proveedores</div>
+      <div class="mod-item"><span class="mod-check">✦</span><strong>B)</strong> Expansión de cuentas actuales</div>
+      <div class="mod-item"><span class="mod-check">✦</span><strong>C)</strong> Red de gerentes / referidos personales</div>
+      <div class="mod-item"><span class="mod-check">✦</span><strong>D)</strong> Outreach masivo + bases FAPRO/NAT</div>
+      <div class="mod-item"><span class="mod-check">✦</span>Surfe+Claude: enriquecimiento y mensajes a escala</div>
+      <div class="mod-item"><span class="mod-check">✦</span>Agentes de Prospección HubSpot: outreach autónomo</div>
+      <div class="mod-item"><span class="mod-check">✦</span>Cada lunes: lista priorizada para cada ejecutivo</div>
+    </div>
+    <div class="mod mod-2">
+      <div class="mod-num mod-num-2">Módulo 2 · Pipeline Comercial</div>
+      <div class="mod-title">De la reunión al desembolso</div>
+      <div class="mod-stack">HubSpot Sales Hub Pro + FAPRO Sync</div>
+      <div class="mod-item"><span class="mod-check-2">✦</span>Pipeline digital: Reunión → Due Diligence → Aprobación → Firma → Desembolso</div>
+      <div class="mod-item"><span class="mod-check-2">✦</span>Comités de riesgo (Sandro, María, Roberto) con aprobación en el deal</div>
+      <div class="mod-item"><span class="mod-check-2">✦</span>Datos FAPRO visibles en el deal — sin cambiar de sistema</div>
+      <div class="mod-item"><span class="mod-check-2">✦</span>Simulador de facturas y propuesta desde HubSpot</div>
+      <div class="mod-item"><span class="mod-check-2">✦</span>Tasa de conversión por ejecutivo: medida en tiempo real</div>
+      <div class="mod-item"><span class="mod-check-2">✦</span>Historial completo: correos, llamadas, WhatsApp, reuniones</div>
+    </div>
+    <div class="mod mod-3">
+      <div class="mod-num mod-num-3">Módulo 3 · Gestión de Cartera</div>
+      <div class="mod-title">Que nada se escape</div>
+      <div class="mod-stack">Workflows + Dashboards + Conversia IA (Fase 3)</div>
+      <div class="mod-item"><span class="mod-check-3">✦</span>Alerta automática si un cedente no opera en X días → task al ejecutivo</div>
+      <div class="mod-item"><span class="mod-check-3">✦</span>Señales FAPRO: frecuencia de facturación y volumen en el CRM</div>
+      <div class="mod-item"><span class="mod-check-3">✦</span>Workflow de expansión: línea subutilizada → propuesta automática</div>
+      <div class="mod-item"><span class="mod-check-3">✦</span>Dashboard gerencial: cartera por ejecutivo, salud, riesgo</div>
+      <div class="mod-item"><span class="mod-check-3">✦</span>Fase 3: Agente IA reactiva cedentes dormidos vía WhatsApp</div>
+    </div>
+  </div>
+
+  <div class="sol-map">
+    <div class="sol-row">
+      <div class="sol-pain">1,000 leads/sem sin sistema — 70% sin trabajar</div>
+      <div class="sol-arr">→</div><div class="sol-product">GTM + Surfe + HubSpot + Claude</div>
+      <div class="sol-arr2">→</div><div class="sol-out">4 palancas activas + lista lunes ejecutivos</div>
+    </div>
+    <div class="sol-row">
+      <div class="sol-pain">Pipeline invisible: sin etapas, sin métricas, sin historial</div>
+      <div class="sol-arr">→</div><div class="sol-product">Sales Hub Pro + FAPRO</div>
+      <div class="sol-arr2">→</div><div class="sol-out">Visibilidad total: reunión → desembolso</div>
+    </div>
+    <div class="sol-row">
+      <div class="sol-pain">Cedentes que se "duermen" sin que nadie lo note</div>
+      <div class="sol-arr">→</div><div class="sol-product">Workflows + Conversia IA</div>
+      <div class="sol-arr2">→</div><div class="sol-out">Cartera 100% monitoreada y reactivada</div>
+    </div>
+  </div>
+  <div class="slide-num">04 / 06</div>
+</div>
+
+<!-- ========== SLIDE 5 ========== -->
+<div class="slide slide-5" id="slide-5">
+  <div class="deco deco-tr" style="background:#F97316;"></div>
+  <div class="deco deco-bl" style="background:#F97316;"></div>
+  <div class="logo-strip">
+    <div class="logo-mark">I</div><div class="logo-name">IMPULSE</div>
+    <div class="logo-sep"></div><div class="client-tag">Adelanta Factoring</div>
+  </div>
+
+  <div class="tag">Próximos pasos</div>
+  <h1>Del diagnóstico a la<br><span>primera semana de resultados.</span></h1>
+  <p class="sub">Todo está diseñado. Lo que falta es tomar la decisión de arrancar.</p>
+
+  <div class="steps-grid">
+    <div class="step-item">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Esta reunión — Demo en vivo</div>
+        <div class="step-desc">Jueves 23 de abril · 4:30 PM · Ver el sistema funcionando con los datos y procesos reales de Adelanta Factoring</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Propuesta económica</div>
+        <div class="step-desc">Plan de inversión con dos opciones de configuración y ROI proyectado a 12 meses — presentado en reunión, no por correo</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Kick-off y definición GTM</div>
+        <div class="step-desc">Semana 1: taller de estrategia GTM + definición de las 4 palancas con Leonardo y Abel. Semana 2: HubSpot vivo.</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-title">Primera lista del lunes</div>
+        <div class="step-desc">En 30 días: cada ejecutivo llega el lunes con su lista de cuentas priorizadas por palanca — con contexto, sin fricción</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="decision-box">
+    <div style="font-size:32px;">→</div>
+    <div>
+      <div class="decision-q">¿Cuándo quieren que el equipo de Adelanta llegue el lunes sabiendo exactamente con quién hablar?</div>
+      <div class="decision-note">Cada semana sin sistema es otra semana con &lt;1% de conversión y S/ 10M sin fondear.</div>
+    </div>
+  </div>
+
+  <div style="margin-top:24px; display:flex; align-items:center; gap:14px;">
+    <div style="width:38px;height:38px;background:#F97316;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;color:white;">E</div>
+    <div>
+      <div style="font-size:13px;font-weight:700;color:#F1F5F9;">Eduardo Eneque — CEO · Impulse &amp; Conversia</div>
+      <div style="font-size:11px;color:#475569;">eduardo.eneque@impulse.lat · impulse.lat</div>
+    </div>
+  </div>
+  <div class="slide-num">05 / 06</div>
+</div>
+
+<!-- ========== SLIDE 6 — INVERSIÓN ========== -->
+<div class="slide slide-6" id="slide-6">
+  <div class="deco deco-tr" style="background:#3B82F6;"></div>
+  <div class="logo-strip">
+    <div class="logo-mark">I</div><div class="logo-name">IMPULSE</div>
+    <div class="logo-sep"></div><div class="client-tag">Adelanta Factoring</div>
+  </div>
+
+  <div class="tag">Inversión estimada — Año 1</div>
+  <h1>Lo que se necesita para<br><span>activar el Revenue System.</span></h1>
+
+  <div class="inv-layout">
+
+    <!-- TECNOLOGÍA -->
+    <div class="inv-block inv-tech">
+      <div class="inv-block-lbl inv-block-lbl-blue">🛠 Tecnología <span class="inv-badge badge-recurrent">Recurrente</span></div>
+
+      <div class="inv-row">
+        <div class="inv-item-name">
+          HubSpot Sales Hub Pro
+          <div class="inv-item-note">10 Sales Seats + 5 Core Seats (Pro) + Credits ×3</div>
+        </div>
+        <div class="inv-item-price">$1,152/mo<span>$13,824 / año</span></div>
+      </div>
+      <div class="inv-row">
+        <div class="inv-item-name">
+          Claude (IA)
+          <div class="inv-item-note">2 licencias $25 + 1 licencia $100</div>
+        </div>
+        <div class="inv-item-price">$150/mo<span>$1,800 / año</span></div>
+      </div>
+      <div class="inv-row">
+        <div class="inv-item-name">
+          Surfe
+          <div class="inv-item-note">1 licencia · enriquecimiento LinkedIn → HubSpot</div>
+        </div>
+        <div class="inv-item-price">$79/mo<span>$948 / año</span></div>
+      </div>
+      <div class="inv-row">
+        <div class="inv-item-name">
+          Apollo
+          <div class="inv-item-note">1 licencia · base de datos + contactos verificados</div>
+        </div>
+        <div class="inv-item-price">$79/mo<span>$948 / año</span></div>
+      </div>
+
+      <div class="inv-subtotal">
+        <div class="inv-subtotal-lbl">Total tecnología / año</div>
+        <div class="inv-subtotal-val">$17,520</div>
+      </div>
+    </div>
+
+    <!-- SERVICIO IMPULSE -->
+    <div class="inv-block inv-service">
+      <div class="inv-block-lbl inv-block-lbl-orange">⚡ Servicio Impulse</div>
+
+      <div class="inv-row">
+        <div class="inv-item-name">
+          Adopción e implementación
+          <div class="inv-item-note">3 meses · GTM + Pipeline + Cartera · no incluye integraciones</div>
+        </div>
+        <div class="inv-item-price">$9,000<span class="inv-badge badge-once" style="font-size:9px;">Pago único</span></div>
+      </div>
+      <div class="inv-row">
+        <div class="inv-item-name">
+          Integraciones (API HubSpot)
+          <div class="inv-item-note">20 hrs asistencia técnica al equipo TI de Adelanta</div>
+        </div>
+        <div class="inv-item-price">$2,000<span class="inv-badge badge-once" style="font-size:9px;">Pago único</span></div>
+      </div>
+      <div class="inv-row">
+        <div class="inv-item-name">
+          Acompañamiento estratégico
+          <div class="inv-item-note">6 meses · $1,500 / mes · post-implementación</div>
+        </div>
+        <div class="inv-item-price">$9,000<span>$1,500 × 6 meses</span></div>
+      </div>
+
+      <div style="height:1px;"></div>
+
+      <div class="inv-subtotal">
+        <div class="inv-subtotal-lbl">Total servicio Impulse</div>
+        <div class="inv-subtotal-val">$20,000</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TOTAL + ROI -->
+  <div class="inv-total-box">
+    <div class="inv-total-main">
+      <strong>$37,520</strong>
+      Inversión total estimada · Año 1
+      <div class="inv-total-sub">Año 2 en adelante: solo tecnología — $1,460/mes ($17,520/año)</div>
+    </div>
+    <div class="inv-roi-pills">
+      <div class="inv-roi-pill">
+        <strong>S/10M</strong>
+        <span>fondo sin colocar<br>cada mes hoy</span>
+      </div>
+      <div class="inv-roi-pill">
+        <strong>+200%</strong>
+        <span>ROI estimado<br>en 12 meses</span>
+      </div>
+      <div class="inv-roi-pill">
+        <strong>&lt;3 mo</strong>
+        <span>payback si<br>se coloca 1M más/mes</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-num">06 / 06</div>
+</div>
+
+<script>
+  let cur = 1; const tot = 6;
+  function goTo(n) {
+    document.getElementById('slide-'+cur).classList.remove('active');
+    document.querySelectorAll('.nav-dot')[cur-1].classList.remove('active');
+    cur = n;
+    document.getElementById('slide-'+cur).classList.add('active');
+    document.querySelectorAll('.nav-dot')[cur-1].classList.add('active');
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key==='ArrowRight'||e.key===' ') { if(cur<tot) goTo(cur+1); }
+    if (e.key==='ArrowLeft') { if(cur>1) goTo(cur-1); }
+  });
+  let sx=0;
+  document.addEventListener('touchstart', e => { sx=e.touches[0].clientX; });
+  document.addEventListener('touchend', e => {
+    const dx=e.changedTouches[0].clientX-sx;
+    if(Math.abs(dx)>50){ if(dx<0&&cur<tot) goTo(cur+1); if(dx>0&&cur>1) goTo(cur-1); }
+  });
+</script>
+</body>
+</html>
