@@ -1,0 +1,1822 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conversia Revenue Architects Program — Pitch Deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700;1,800&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    /* IMPULSE TOKENS */
+    --hero-bg: #501450;
+    --hero-grad-1: #501450;
+    --hero-grad-2: #7B2D7B;
+    --hero-grad-3: #9B4D9B;
+    --dark-bg: #0A3223;
+    --darker-bg: #062018;
+    --green-dark: #115540;
+    --cta: #78F05A;
+    --cta-bright: #92F570;
+    --accent: #DC3296;
+    --cyan: #00FF96;
+    --event: #FF5733;
+    --white: #FFFFFF;
+    --text-dark: #1A1A1A;
+    --text-muted: rgba(255,255,255,0.72);
+    --text-faded: rgba(255,255,255,0.45);
+    --border-soft: rgba(255,255,255,0.1);
+    --card-bg: rgba(255,255,255,0.05);
+    --card-border: rgba(255,255,255,0.12);
+    --card-hover: rgba(255,255,255,0.08);
+
+    /* EMIL EASING CURVES */
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+
+    --font: 'Urbanist', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #000;
+    font-family: var(--font);
+    color: var(--white);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* ===== DECK CONTAINER ===== */
+  .deck {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(2rem, 5vw, 5rem) clamp(2rem, 8vw, 8rem);
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 400ms var(--ease-out), transform 500ms var(--ease-out);
+    pointer-events: none;
+    overflow-y: auto;
+  }
+
+  .slide::-webkit-scrollbar { width: 0; }
+
+  .slide.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+
+  .slide.prev {
+    transform: translateX(-40px);
+  }
+
+  /* ===== SLIDE BACKGROUNDS ===== */
+  .bg-hero {
+    background: radial-gradient(ellipse at 30% 20%, var(--hero-grad-3) 0%, var(--hero-grad-1) 60%, #2A0A2A 100%);
+  }
+  .bg-dark {
+    background: linear-gradient(180deg, var(--darker-bg) 0%, var(--dark-bg) 100%);
+  }
+  .bg-green-dark {
+    background: linear-gradient(135deg, var(--green-dark) 0%, var(--darker-bg) 100%);
+  }
+  .bg-purple {
+    background: linear-gradient(135deg, var(--hero-grad-1) 0%, var(--hero-grad-2) 100%);
+  }
+  .bg-black {
+    background: #050505;
+  }
+  .bg-light {
+    background: #F5F5F5;
+    color: var(--text-dark);
+  }
+  .bg-light .eyebrow { color: var(--hero-bg); }
+  .bg-light .text-muted { color: #666; }
+
+  /* Subtle noise pattern overlay */
+  .slide::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 10% 20%, rgba(120,240,90,0.04) 0%, transparent 40%),
+      radial-gradient(circle at 90% 80%, rgba(220,50,150,0.04) 0%, transparent 40%);
+    pointer-events: none;
+  }
+
+  .slide > * { position: relative; z-index: 1; }
+
+  /* ===== TYPOGRAPHY ===== */
+  .eyebrow {
+    font-size: clamp(11px, 0.85vw, 13px);
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cta);
+    margin-bottom: clamp(1rem, 2vw, 1.5rem);
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  .slide.active .eyebrow {
+    animation: fadeUp 600ms var(--ease-out) 100ms forwards;
+  }
+
+  h1.display {
+    font-size: clamp(48px, 7vw, 104px);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    margin-bottom: clamp(1rem, 2vw, 1.5rem);
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  .slide.active h1.display {
+    animation: fadeUp 700ms var(--ease-out) 200ms forwards;
+  }
+
+  h1.display em, h1.display .accent-italic {
+    font-style: italic;
+    color: var(--cta);
+    font-weight: 800;
+  }
+
+  h2 {
+    font-size: clamp(28px, 3.6vw, 56px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: clamp(0.75rem, 1.5vw, 1.25rem);
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  .slide.active h2 {
+    animation: fadeUp 600ms var(--ease-out) 180ms forwards;
+  }
+
+  h3 {
+    font-size: clamp(18px, 1.6vw, 24px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .subtitle {
+    font-size: clamp(18px, 1.7vw, 26px);
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--text-muted);
+    max-width: 800px;
+    margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  .slide.active .subtitle {
+    animation: fadeUp 600ms var(--ease-out) 280ms forwards;
+  }
+
+  p { font-size: clamp(15px, 1.1vw, 17px); line-height: 1.6; }
+
+  .text-muted { color: var(--text-muted); }
+
+  /* ===== ENTRANCE ANIMATION ===== */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Stagger children */
+  .stagger > * {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  .slide.active .stagger > * {
+    animation: fadeUp 500ms var(--ease-out) forwards;
+  }
+  .slide.active .stagger > *:nth-child(1) { animation-delay: 300ms; }
+  .slide.active .stagger > *:nth-child(2) { animation-delay: 360ms; }
+  .slide.active .stagger > *:nth-child(3) { animation-delay: 420ms; }
+  .slide.active .stagger > *:nth-child(4) { animation-delay: 480ms; }
+  .slide.active .stagger > *:nth-child(5) { animation-delay: 540ms; }
+  .slide.active .stagger > *:nth-child(6) { animation-delay: 600ms; }
+  .slide.active .stagger > *:nth-child(7) { animation-delay: 660ms; }
+  .slide.active .stagger > *:nth-child(8) { animation-delay: 720ms; }
+
+  /* ===== NAV INDICATORS ===== */
+  .deck-nav {
+    position: fixed;
+    bottom: 24px;
+    right: 32px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--text-faded);
+  }
+
+  .nav-counter {
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .nav-counter .current { color: var(--cta); font-weight: 700; }
+
+  .nav-arrows {
+    display: flex;
+    gap: 4px;
+  }
+  .nav-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--card-border);
+    color: var(--white);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 160ms var(--ease-out), background 200ms ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .nav-btn:hover {
+      background: rgba(120,240,90,0.15);
+      border-color: var(--cta);
+    }
+  }
+  .nav-btn:active { transform: scale(0.92); }
+  .nav-btn svg { width: 14px; height: 14px; }
+
+  .deck-brand {
+    position: fixed;
+    top: 24px;
+    left: 32px;
+    z-index: 100;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-faded);
+  }
+  .deck-brand .sep { margin: 0 8px; color: var(--text-faded); }
+  .deck-brand .imp { color: var(--white); }
+  .deck-brand .conv { color: var(--accent); }
+
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: rgba(255,255,255,0.05);
+    z-index: 100;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--cta) 0%, var(--accent) 100%);
+    width: 0;
+    transition: width 500ms var(--ease-out);
+  }
+
+  /* ===== BUTTONS ===== */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: 28px;
+    font-family: var(--font);
+    font-size: 15px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: transform 160ms var(--ease-out), background-color 200ms ease, box-shadow 200ms ease;
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background: var(--cta);
+    color: #082A0A;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .btn-primary:hover {
+      background: var(--cta-bright);
+      box-shadow: 0 8px 28px rgba(120,240,90,0.4);
+    }
+  }
+  .btn-primary:active { transform: scale(0.97); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--cta);
+    border: 2px solid var(--cta);
+  }
+  .btn-secondary:active { transform: scale(0.97); }
+
+  /* ===== CARDS ===== */
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: clamp(1.25rem, 2vw, 2rem);
+    transition: background 250ms ease, border-color 250ms ease, transform 250ms var(--ease-out);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .card:hover {
+      background: var(--card-hover);
+      border-color: rgba(120,240,90,0.3);
+      transform: translateY(-3px);
+    }
+  }
+  .card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: rgba(120,240,90,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--cta);
+    margin-bottom: 1rem;
+    transition: background 250ms ease;
+  }
+  .card:hover .card-icon { background: rgba(120,240,90,0.25); }
+  .card-icon svg { width: 22px; height: 22px; }
+  .card-icon.magenta { background: rgba(220,50,150,0.15); color: var(--accent); }
+  .card:hover .card-icon.magenta { background: rgba(220,50,150,0.25); }
+  .card-body { font-size: clamp(13px, 1vw, 15px); line-height: 1.55; color: var(--text-muted); }
+
+  /* ===== GRIDS ===== */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.5rem, 2.5vw, 2.5rem); }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1.25rem, 2vw, 2rem); }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(1rem, 1.5vw, 1.5rem); }
+  .grid-2-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1rem, 1.5vw, 1.5rem); }
+
+  @media (max-width: 1100px) {
+    .grid-3, .grid-4, .grid-2-3 { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 700px) {
+    .grid-2, .grid-3, .grid-4, .grid-2-3 { grid-template-columns: 1fr; }
+  }
+
+  /* ===== BADGES ===== */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .badge-cta { background: rgba(120,240,90,0.15); color: var(--cta); }
+  .badge-magenta { background: rgba(220,50,150,0.15); color: var(--accent); }
+  .badge-white { background: rgba(255,255,255,0.12); color: var(--white); }
+  .badge-coexist { background: rgba(0,255,150,0.12); color: var(--cyan); }
+
+  /* ===== STATS ===== */
+  .stat-number {
+    font-size: clamp(64px, 9vw, 144px);
+    font-weight: 800;
+    line-height: 1;
+    color: var(--cta);
+    letter-spacing: -0.04em;
+  }
+  .stat-number-magenta { color: var(--accent); }
+  .stat-label {
+    font-size: clamp(15px, 1.1vw, 18px);
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+    max-width: 280px;
+  }
+
+  /* ===== TIER TABLE (slide niveles) ===== */
+  .tier-grid {
+    display: grid;
+    grid-template-columns: 200px repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.03);
+  }
+  .tier-grid > div {
+    padding: clamp(0.85rem, 1.4vw, 1.25rem);
+    border-bottom: 1px solid var(--border-soft);
+    font-size: clamp(13px, 1vw, 15px);
+  }
+  .tier-grid > div:nth-last-child(-n+4) { border-bottom: none; }
+  .tier-header {
+    background: rgba(255,255,255,0.04);
+    font-weight: 700;
+    font-size: clamp(14px, 1.1vw, 17px) !important;
+    letter-spacing: -0.01em;
+  }
+  .tier-header.tier-n1 { color: var(--white); }
+  .tier-header.tier-n2 { color: var(--cta); }
+  .tier-header.tier-n3 {
+    color: #082A0A;
+    background: var(--cta);
+    position: relative;
+  }
+  .tier-label {
+    background: rgba(255,255,255,0.04);
+    color: var(--text-faded);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 12px !important;
+  }
+  .tier-cell strong { color: var(--white); font-weight: 700; }
+
+  /* ===== SOURCE / REVENUE COLUMNS ===== */
+  .source-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 1.5rem;
+    position: relative;
+  }
+  .source-num {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--cta);
+    margin-bottom: 0.5rem;
+    line-height: 1;
+  }
+  .source-card.magenta .source-num { color: var(--accent); }
+
+  /* ===== EXAMPLE TABLE ===== */
+  .example-tbl {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: clamp(13px, 1vw, 15px);
+  }
+  .example-tbl td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--border-soft);
+    vertical-align: top;
+  }
+  .example-tbl td:last-child {
+    text-align: right;
+    font-weight: 700;
+    color: var(--white);
+    white-space: nowrap;
+  }
+  .example-tbl tr.highlight td {
+    background: rgba(120,240,90,0.08);
+    color: var(--cta);
+    font-size: clamp(15px, 1.2vw, 18px);
+  }
+  .example-tbl tr.highlight td:first-child { color: var(--white); font-weight: 700; }
+  .example-tbl tr.highlight td:last-child { color: var(--cta); }
+
+  /* ===== JOURNEY TIMELINE ===== */
+  .journey-line {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .journey-line::before {
+    content: '';
+    position: absolute;
+    top: 22px;
+    left: 5%;
+    right: 5%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--cta), var(--accent));
+    opacity: 0.4;
+  }
+  .journey-step {
+    position: relative;
+    z-index: 1;
+  }
+  .journey-dot {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--green-dark);
+    border: 2px solid var(--cta);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    color: var(--cta);
+    margin-bottom: 1rem;
+    font-size: 17px;
+  }
+  .journey-step h4 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .journey-step p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .journey-month {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--cta);
+    margin-bottom: 0.25rem;
+  }
+
+  /* ===== BREEZE TABLE ===== */
+  .breeze-tbl {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 2.5fr;
+    gap: 0;
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .breeze-tbl > div {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border-soft);
+    font-size: clamp(13px, 1vw, 15px);
+  }
+  .breeze-tbl > div:nth-last-child(-n+3) { border-bottom: none; }
+  .breeze-tbl .b-header {
+    background: rgba(255,255,255,0.04);
+    font-weight: 700;
+    font-size: 12px !important;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-faded);
+  }
+  .breeze-tbl .b-agent { font-weight: 700; color: var(--white); }
+
+  /* ===== CTA HERO BLOCK ===== */
+  .cta-block {
+    border-left: 4px solid var(--cta);
+    padding: 1.5rem 2rem;
+    background: rgba(120,240,90,0.05);
+    border-radius: 0 16px 16px 0;
+    margin: 1.5rem 0;
+  }
+  .cta-block.magenta { border-left-color: var(--accent); background: rgba(220,50,150,0.05); }
+
+  /* ===== DECORATIVE LINE ===== */
+  .accent-line {
+    width: 64px;
+    height: 4px;
+    background: var(--cta);
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ===== SLIDE 1 PORTADA ===== */
+  .portada-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+  .portada-top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .portada-logos {
+    display: flex; align-items: center; gap: 16px;
+    font-size: 13px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .portada-mid h1 {
+    font-size: clamp(56px, 9vw, 128px);
+    font-weight: 800;
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    color: var(--white);
+  }
+  .portada-mid h1 .accent { color: var(--cta); font-style: italic; }
+  .portada-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
+
+  /* ===== DIAGRAM (slide 6) ===== */
+  .diagram-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 700px;
+    margin: 1rem auto 0;
+    padding: 2rem 0;
+  }
+  .diagram-center {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(120,240,90,0.25), rgba(120,240,90,0.05));
+    border: 2px solid var(--cta);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    position: relative;
+    animation: pulseRing 3s ease-in-out infinite;
+  }
+  @keyframes pulseRing {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(120,240,90,0.4); }
+    50% { box-shadow: 0 0 0 30px rgba(120,240,90,0); }
+  }
+  .diagram-center .label { font-size: 11px; letter-spacing: 0.16em; color: var(--cta); text-transform: uppercase; font-weight: 700; }
+  .diagram-center .name { font-size: 24px; font-weight: 800; margin-top: 4px; }
+  .diagram-orbits {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  .orbit-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+  }
+  .orbit-card .ic { color: var(--cta); margin-bottom: 0.5rem; }
+  .orbit-card .ic.m { color: var(--accent); }
+  .orbit-card strong { display: block; font-size: 14px; margin-bottom: 0.25rem; }
+  .orbit-card span { font-size: 12px; color: var(--text-muted); }
+
+  /* ===== TAGLINE BLOCK (slide 5) ===== */
+  .tagline-block {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  .tagline {
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 800;
+    font-style: italic;
+    color: var(--cta);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .tagline-sub { color: var(--text-faded); font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 700; }
+
+  /* ===== VERTICAL CARDS ===== */
+  .vert-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: transform 250ms var(--ease-out), border-color 250ms ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .vert-card:hover { transform: translateY(-4px); border-color: var(--cta); }
+  }
+  .vert-card h3 { font-size: 18px; margin-bottom: 0.75rem; color: var(--cta); }
+  .vert-card.magenta h3 { color: var(--accent); }
+  .vert-card ul { list-style: none; padding: 0; }
+  .vert-card li {
+    font-size: 13px;
+    color: var(--text-muted);
+    padding: 6px 0;
+    padding-left: 18px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .vert-card li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 14px;
+    width: 8px;
+    height: 1px;
+    background: var(--cta);
+  }
+  .vert-card.magenta li::before { background: var(--accent); }
+
+  /* ===== SHIFT SLIDE ===== */
+  .shift-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 1.5rem;
+  }
+  .shift-col {
+    padding: 2rem;
+    border-radius: 16px;
+    border: 1px solid var(--card-border);
+    text-align: center;
+  }
+  .shift-col.old {
+    background: rgba(255,255,255,0.02);
+    opacity: 0.6;
+  }
+  .shift-col.old .label { color: var(--text-faded); }
+  .shift-col.old .big { color: var(--white); text-decoration: line-through; text-decoration-color: rgba(255,87,51,0.5); text-decoration-thickness: 2px; }
+  .shift-col.new {
+    background: rgba(120,240,90,0.06);
+    border-color: rgba(120,240,90,0.4);
+  }
+  .shift-col.new .label { color: var(--cta); }
+  .shift-col.new .big { color: var(--cta); }
+  .shift-col .label { font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 0.5rem; }
+  .shift-col .big { font-size: clamp(28px, 3.5vw, 48px); font-weight: 800; letter-spacing: -0.02em; line-height: 1; margin-bottom: 1rem; }
+  .shift-col .sub { color: var(--text-muted); font-size: 14px; line-height: 1.5; }
+
+  /* ===== TRACKS ===== */
+  .tracks-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; }
+  .track-card {
+    border-radius: 18px;
+    padding: 2rem;
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
+    position: relative;
+  }
+  .track-card.featured {
+    background: linear-gradient(135deg, rgba(120,240,90,0.12) 0%, rgba(220,50,150,0.06) 100%);
+    border-color: var(--cta);
+  }
+  .track-card .label {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text-faded); margin-bottom: 0.5rem;
+  }
+  .track-card.featured .label { color: var(--cta); }
+  .track-card h3 { font-size: clamp(22px, 2vw, 30px); margin-bottom: 1rem; }
+  .track-card .row { font-size: 13px; color: var(--text-muted); margin-bottom: 0.5rem; padding-left: 14px; position: relative; }
+  .track-card .row::before { content: '→'; position: absolute; left: 0; color: var(--cta); }
+
+  /* ===== KEYBOARD HINTS ===== */
+  .keyhint {
+    position: fixed;
+    bottom: 24px;
+    left: 32px;
+    z-index: 100;
+    font-size: 10px;
+    color: var(--text-faded);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .keyhint kbd {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border-soft);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: var(--font);
+    color: var(--text-muted);
+    margin: 0 2px;
+  }
+
+  /* ===== OVERVIEW ===== */
+  .overview {
+    position: fixed;
+    inset: 0;
+    background: rgba(5,5,5,0.96);
+    backdrop-filter: blur(20px);
+    z-index: 200;
+    display: none;
+    padding: 4rem;
+    overflow-y: auto;
+  }
+  .overview.show { display: block; }
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+  .ov-thumb {
+    aspect-ratio: 16/9;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 0.75rem;
+    cursor: pointer;
+    transition: transform 200ms var(--ease-out), border-color 200ms ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .ov-thumb:hover { border-color: var(--cta); transform: translateY(-2px); }
+  .ov-thumb .num { font-size: 10px; color: var(--text-faded); font-weight: 700; }
+  .ov-thumb .ttl { font-size: 12px; font-weight: 700; line-height: 1.3; }
+
+  /* ===== SLIDE 18 LAST ===== */
+  .last-tagline {
+    font-size: clamp(40px, 6vw, 80px);
+    font-weight: 800;
+    font-style: italic;
+    color: var(--cta);
+    text-align: center;
+    margin-bottom: 2rem;
+    letter-spacing: -0.02em;
+  }
+  .last-info { text-align: center; }
+  .last-info .name { font-size: 24px; font-weight: 700; margin-bottom: 0.25rem; }
+  .last-info .role { font-size: 14px; color: var(--text-muted); margin-bottom: 0.5rem; }
+  .last-info .mail { font-size: 14px; color: var(--cta); }
+
+  /* ===== KEY DIFFERENCE ===== */
+  .keydiff-pillar {
+    text-align: center;
+    padding: 2rem 1rem;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--card-border);
+    transition: all 250ms var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .keydiff-pillar:hover { background: rgba(120,240,90,0.06); border-color: rgba(120,240,90,0.3); transform: translateY(-4px); }
+  }
+  .keydiff-pillar .ic { color: var(--cta); margin-bottom: 1rem; }
+  .keydiff-pillar h3 { font-size: 20px; margin-bottom: 0.5rem; }
+  .keydiff-pillar p { font-size: 14px; color: var(--text-muted); line-height: 1.5; }
+
+  /* ===== PROGRAM CONTAINER (slide overview) ===== */
+  .program-overview {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  .program-pillar {
+    padding: 1.5rem;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    text-align: center;
+  }
+  .program-pillar .ic { color: var(--cta); margin-bottom: 0.75rem; }
+  .program-pillar h4 { font-size: 14px; font-weight: 700; margin-bottom: 0.5rem; }
+  .program-pillar span { font-size: 12px; color: var(--text-muted); }
+
+  /* ===== WORKSPACE FEATURES (slide 6 alt) ===== */
+  .ws-features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .ws-feat {
+    padding: 1.25rem;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+  }
+  .ws-feat .lbl { font-size: 11px; color: var(--cta); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; margin-bottom: 0.5rem; }
+  .ws-feat strong { display: block; font-size: 15px; margin-bottom: 0.25rem; }
+  .ws-feat p { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+
+  /* ===== RESPONSIVE ADJUSTMENTS ===== */
+  @media (max-width: 900px) {
+    .tier-grid { grid-template-columns: 1fr; }
+    .tier-grid > div { border-right: none; }
+    .breeze-tbl { grid-template-columns: 1fr; }
+    .journey-line { grid-template-columns: 1fr 1fr; }
+    .journey-line::before { display: none; }
+    .program-overview { grid-template-columns: 1fr 1fr; }
+    .tracks-grid { grid-template-columns: 1fr; }
+    .ws-features { grid-template-columns: 1fr; }
+  }
+
+  /* ===== REDUCED MOTION ===== */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* ===== SLIDE TITLE for non-hero slides ===== */
+  .slide-content { max-width: 1280px; width: 100%; margin: 0 auto; }
+</style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<div class="deck-brand">
+  <span class="imp">IMPULSE</span><span class="sep">·</span><span class="conv">CONVERSIA</span>
+</div>
+
+<div class="deck" id="deck">
+
+<!-- SLIDE 1 — PORTADA -->
+<section class="slide bg-hero active" data-slide="1">
+  <div class="portada-wrapper">
+    <div class="portada-top">
+      <div class="portada-logos">
+        <span>IMPULSE</span><span style="color:var(--text-faded)">×</span><span style="color:var(--accent)">CONVERSIA</span>
+      </div>
+      <div class="badge badge-cta">Programa Oficial · 2026</div>
+    </div>
+    <div class="portada-mid">
+      <h1>
+        Conversia<br>
+        Revenue<br>
+        <span class="accent">Architects.</span>
+      </h1>
+      <p class="subtitle" style="margin-top:2rem;max-width:720px">
+        El programa que convierte a tu agencia en el arquitecto del Data &amp; AI Revenue System de tus clientes.
+      </p>
+    </div>
+    <div class="portada-bottom">
+      <div style="font-size:13px;color:var(--text-faded);letter-spacing:0.1em;">
+        Documento Oficial · v1.0 · Mayo 2026
+      </div>
+      <div style="font-size:13px;color:var(--text-faded);">
+        HubSpot Diamond Partner
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 2 — EL SHIFT -->
+<section class="slide bg-dark" data-slide="2">
+  <div class="slide-content">
+    <div class="eyebrow">El contexto · Partner Summit HubSpot 2026</div>
+    <h2>El shift que ya está pasando<br>en el ecosistema HubSpot.</h2>
+    <p class="subtitle">
+      HubSpot está pidiendo a sus partners vender programas de adopción de IA con outcomes medibles. No implementaciones one-off.
+    </p>
+    <div class="shift-grid">
+      <div class="shift-col old">
+        <div class="label">Modelo Anterior</div>
+        <div class="big">LAER</div>
+        <div class="sub">Land · Adopt · Expand · Renew<br><span style="color:var(--text-faded);font-size:12px;margin-top:8px;display:block">Optimizado para usage</span></div>
+      </div>
+      <div class="shift-col new">
+        <div class="label">Modelo 2026</div>
+        <div class="big">DARE</div>
+        <div class="sub">Design · Activate · Realize · Evolve<br><span style="color:var(--cta);font-size:12px;margin-top:8px;display:block;font-weight:700">Optimizado para outcomes</span></div>
+      </div>
+    </div>
+    <p style="margin-top:2rem;color:var(--text-muted);font-size:14px;font-style:italic;">
+      Fuente: HubSpot Partner Summit Sydney 2026 (Sarah McDevitt) + LatAm Partner Summit (Rachel Muradyan).
+    </p>
+  </div>
+</section>
+
+<!-- SLIDE 3 — TRES PREGUNTAS -->
+<section class="slide bg-green-dark" data-slide="3">
+  <div class="slide-content">
+    <div class="eyebrow">El momento del partner</div>
+    <h2>Tres preguntas que escuchamos<br>en cada conversación con agencias.</h2>
+    <div class="grid-3 stagger" style="margin-top:2rem;">
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <h3>¿Cómo vendemos IA sin canibalizar nuestros servicios actuales?</h3>
+      </div>
+      <div class="card">
+        <div class="card-icon magenta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <h3>¿Cómo nos diferenciamos en un mercado saturado de implementadores?</h3>
+      </div>
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <h3>¿Cómo capturamos MRR atribuible además del revenue de servicios?</h3>
+      </div>
+    </div>
+    <div class="cta-block" style="margin-top:3rem;">
+      Conversia Revenue Architects está diseñado para responder estas tres preguntas. Cada componente del programa apunta a una.
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 4 — LA OPORTUNIDAD -->
+<section class="slide bg-black" data-slide="4">
+  <div class="slide-content" style="text-align:center;display:flex;flex-direction:column;align-items:center;">
+    <div class="eyebrow">La oportunidad</div>
+    <div style="font-size:clamp(140px, 18vw, 280px);font-weight:800;letter-spacing:-0.05em;line-height:1;background:linear-gradient(135deg, var(--cta) 0%, var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:1rem 0;">
+      $3—$7
+    </div>
+    <h2 style="font-size:clamp(28px,3vw,42px);max-width:900px;text-align:center;">
+      Por cada dólar de Conversia que vendes,<br>puedes facturar al cliente <em style="font-style:italic;color:var(--cta);">3 a 7 dólares</em> en servicios alrededor.
+    </h2>
+    <p class="subtitle" style="text-align:center;max-width:720px;margin:1.5rem auto;">
+      La comisión Conversia es revenue atribuible recurrente.<br>Los servicios alrededor son donde realmente escalas tu negocio.
+    </p>
+    <div style="color:var(--text-faded);font-size:13px;letter-spacing:0.1em;text-transform:uppercase;font-weight:600;">
+      Y te damos el blueprint completo de cómo lo construyó Impulse.
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 5 — DATA & AI REVENUE SYSTEM -->
+<section class="slide bg-green-dark" data-slide="5">
+  <div class="slide-content">
+    <div class="tagline-block">
+      <div class="tagline">First Data,<br>then AI Agents.</div>
+      <div class="tagline-sub">Tagline interno · Conversia 2026</div>
+    </div>
+    <h2 style="text-align:center;margin-bottom:2rem;">
+      Conversia es un <span style="color:var(--cta);font-style:italic;">Data &amp; AI Revenue System.</span><br>
+      <span style="font-size:0.6em;color:var(--text-muted);font-weight:400;font-style:italic;">No un chatbot. No solo agentes.</span>
+    </h2>
+    <div class="grid-3 stagger">
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>
+        </div>
+        <h3>Data Platform</h3>
+        <p class="card-body">Unifica y organiza información dispersa entre canales, CRM y sistemas core del cliente.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </div>
+        <h3>AI &amp; Intelligence</h3>
+        <p class="card-body">Transforma datos en scores, segmentos y decisiones accionables en tiempo real.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon magenta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        </div>
+        <h3>Workflows &amp; Workspace</h3>
+        <p class="card-body">Agentes AI, Conversia Workspace e inbox colaborativo ejecutando acciones en cada canal.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 6 — CÓMO FUNCIONA + CONVERSIA WORKSPACE -->
+<section class="slide bg-dark" data-slide="6">
+  <div class="slide-content">
+    <div class="eyebrow">Cómo funciona en práctica</div>
+    <h2>Plataforma nativa a HubSpot,<br>operación humana &amp; agéntica en un mismo workspace.</h2>
+    <div class="grid-2" style="margin-top:2rem;align-items:start;">
+      <div>
+        <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:1.5rem;">
+          <div class="badge badge-magenta" style="margin-bottom:1rem;">Conversia Workspace</div>
+          <h3 style="margin-bottom:1rem;font-size:22px;">Inbox colaborativo AI → Humano</h3>
+          <p style="color:var(--text-muted);font-size:14px;line-height:1.6;margin-bottom:1.5rem;">
+            El agente escala conversaciones al equipo con contexto completo. Incluye <strong style="color:var(--white)">Deal Management</strong> para ver el estado del lead en el CRM desde la misma interfaz, y <strong style="color:var(--white)">Productivity Dashboard</strong> para que supervisores monitoreen métricas en tiempo real.
+          </p>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.5rem;font-size:11px;">
+            <div style="padding:8px 10px;background:rgba(120,240,90,0.1);border-radius:8px;color:var(--cta);font-weight:700;text-align:center;">Inbox AI→Humano</div>
+            <div style="padding:8px 10px;background:rgba(220,50,150,0.1);border-radius:8px;color:var(--accent);font-weight:700;text-align:center;">Deal Management</div>
+            <div style="padding:8px 10px;background:rgba(0,255,150,0.1);border-radius:8px;color:var(--cyan);font-weight:700;text-align:center;">Productivity Dashboard</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-size:18px;margin-bottom:1rem;">Lo demás del stack</h3>
+        <div class="ws-features">
+          <div class="ws-feat">
+            <div class="lbl">Integración</div>
+            <strong>HubSpot Nativo</strong>
+            <p>1 portal por BU, propiedades bidireccionales, deals, workflows.</p>
+          </div>
+          <div class="ws-feat">
+            <div class="lbl">Canales</div>
+            <strong>WhatsApp · Web · CTW</strong>
+            <p>Ilimitados sin costo por conexión. Widgets y números WhatsApp.</p>
+          </div>
+          <div class="ws-feat">
+            <div class="lbl">Unidad de cobro</div>
+            <strong>Conversaciones Orquestadas</strong>
+            <p>Pay-as-you-Grow. Desde $1,000/mes/BU en el programa de partners.</p>
+          </div>
+        </div>
+        <div class="cta-block" style="margin-top:1.5rem;font-size:14px;">
+          <strong style="color:var(--cta);">Casos de uso amplios:</strong> nutrición, calificación, agendamiento, onboarding, retención, cobranzas, tutoría, copilotos internos.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 7 — CAPACIDADES ENTERPRISE -->
+<section class="slide bg-green-dark" data-slide="7">
+  <div class="slide-content">
+    <div class="eyebrow">Capacidades enterprise diferenciadoras</div>
+    <h2>Conversia está construida<br>para producción enterprise.</h2>
+    <div class="grid-3 stagger" style="margin-top:1.5rem;gap:1rem;">
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <h3>Agent Tracer</h3>
+        <p class="card-body">Auditoría completa en tiempo real de cada decisión IA — razonamiento, contexto, ejecución de tools. No es caja negra.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <h3>Signals — intención en tiempo real</h3>
+        <p class="card-body">Detecta señales de intención durante la conversación y las registra como eventos estructurados que alimentan el scoring del lead.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+        </div>
+        <h3>Base de conocimientos estructurada</h3>
+        <p class="card-body">Por dominio, sección y atributos. <strong style="color:var(--white)">No es RAG</strong>: el agente accede a información organizada, no a embeddings genéricos.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon magenta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <h3>Plataforma de Feedback Centralizado</h3>
+        <p class="card-body">El equipo deja feedback sobre conversaciones del agente directamente en la plataforma. Cada observación genera un ticket que resuelve automáticamente un Agente AI de Soporte. Trazabilidad completa.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon magenta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <h3>Agente QA Semanal</h3>
+        <p class="card-body">Un agente AI analiza automáticamente las conversaciones de la semana, identifica patrones de error y genera recomendaciones de corrección. El humano decide cuáles aplica.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <h3>Alertas Inteligentes basadas en Logs</h3>
+        <p class="card-body">Configura alertas sobre umbrales de error, tipos de fallo y frecuencia. El sistema notifica proactivamente antes de que el problema escale.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 8 — CASOS DE USO POR VERTICAL -->
+<section class="slide bg-dark" data-slide="8">
+  <div class="slide-content">
+    <div class="eyebrow">Verticales objetivo</div>
+    <h2>Para organizaciones que orquestan<br>journeys conversacionales en alto volumen.</h2>
+    <div class="grid-4 stagger" style="margin-top:2rem;">
+      <div class="vert-card">
+        <h3>Educación</h3>
+        <ul>
+          <li>Nutrición</li>
+          <li>Admisión</li>
+          <li>Onboarding</li>
+          <li>Reinscripción</li>
+          <li>Tutoría</li>
+          <li>Cobranzas estudiantiles</li>
+        </ul>
+      </div>
+      <div class="vert-card magenta">
+        <h3>Salud</h3>
+        <ul>
+          <li>Calificación</li>
+          <li>Agendamiento</li>
+          <li>Validación de coberturas</li>
+          <li>Experiencia del paciente</li>
+        </ul>
+      </div>
+      <div class="vert-card">
+        <h3>Financiero</h3>
+        <ul>
+          <li>Calificación con scoring</li>
+          <li>Onboarding</li>
+          <li>Cobranzas</li>
+          <li>Renegociación</li>
+        </ul>
+      </div>
+      <div class="vert-card magenta">
+        <h3>Retail</h3>
+        <ul>
+          <li>Cualificación de leads</li>
+          <li>Agendamiento</li>
+          <li>Up-sell</li>
+          <li>Cross-sell</li>
+        </ul>
+      </div>
+    </div>
+    <p style="margin-top:2rem;color:var(--text-muted);font-size:14px;text-align:center;">
+      Telco, automotriz y servicios profesionales también dentro del ICP.
+    </p>
+  </div>
+</section>
+
+<!-- SLIDE 9 — EL PROGRAMA OVERVIEW -->
+<section class="slide bg-purple" data-slide="9">
+  <div class="slide-content">
+    <div class="eyebrow">El programa</div>
+    <h1 class="display" style="font-size:clamp(48px, 7vw, 96px);">
+      Un programa de canal,<br>
+      <span class="accent-italic">no de afiliados.</span>
+    </h1>
+    <p class="subtitle">
+      Conversia Revenue Architects está diseñado para que el partner construya un negocio completo alrededor de Conversia.
+    </p>
+    <div class="program-overview stagger">
+      <div class="program-pillar">
+        <div class="ic">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <h4>2 Tracks</h4>
+        <span>Revenue Architects + Referral Network</span>
+      </div>
+      <div class="program-pillar">
+        <div class="ic">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="14 7 21 7 21 14"/></svg>
+        </div>
+        <h4>3 Niveles</h4>
+        <span>Adopter · Accelerator · Orchestrator</span>
+      </div>
+      <div class="program-pillar">
+        <div class="ic">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <h4>4 Revenue Streams</h4>
+        <span>MRR + Servicios + Managed Delivery + Portal HubSpot</span>
+      </div>
+      <div class="program-pillar">
+        <div class="ic">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <h4>1 Tesis</h4>
+        <span>El partner construye IP propia sobre Conversia</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 10 — DOS TRACKS -->
+<section class="slide bg-dark" data-slide="10">
+  <div class="slide-content">
+    <div class="eyebrow">Arquitectura del programa</div>
+    <h2>Dos tracks, una arquitectura clara.</h2>
+    <div class="tracks-grid stagger" style="margin-top:2rem;">
+      <div class="track-card featured">
+        <div class="label">Track 1 · El motor del programa</div>
+        <h3 style="color:var(--cta);">Conversia Revenue Architects</h3>
+        <p style="color:var(--text-muted);font-size:14px;margin-bottom:1rem;">Solutions Partners HubSpot con capacidad de delivery — o disposición a construirla.</p>
+        <div class="row">Tres niveles: Adopter → Accelerator → Orchestrator</div>
+        <div class="row">Comisión recurrente sobre Conversia (20% / 25% / 30%)</div>
+        <div class="row">Acceso a Managed Delivery, APIs/MCPs, Conversia for Partner Use</div>
+        <div class="row">Programa de Inmersión, presales gratuito, sales enablement</div>
+      </div>
+      <div class="track-card">
+        <div class="label">Track 2 · Red de referencias</div>
+        <h3>Referral Network</h3>
+        <p style="color:var(--text-muted);font-size:14px;margin-bottom:1rem;">Influencers, consultores, advisors, BPOs que refieren sin implementar.</p>
+        <div class="row">10% MRR durante el primer año</div>
+        <div class="row">Sin compromiso de volumen</div>
+        <div class="row">Deal registration vía formulario · pago trimestral</div>
+      </div>
+    </div>
+    <p style="margin-top:2rem;color:var(--text-muted);font-style:italic;text-align:center;font-size:14px;">
+      Si tienes equipo de delivery — o quieres construirlo — eres Track 1.
+    </p>
+  </div>
+</section>
+
+<!-- SLIDE 11 — TRES NIVELES -->
+<section class="slide bg-green-dark" data-slide="11">
+  <div class="slide-content">
+    <div class="eyebrow">Los tres niveles del Track 1</div>
+    <h2>Subes rápido si trabajas el canal.<br>Las puertas se desbloquean por MRR gestionado.</h2>
+    <div class="tier-grid" style="margin-top:2rem;">
+      <div class="tier-header tier-label">&nbsp;</div>
+      <div class="tier-header tier-n1">Adopter</div>
+      <div class="tier-header tier-n2">Accelerator</div>
+      <div class="tier-header tier-n3">Orchestrator</div>
+
+      <div class="tier-label">MRR gestionado</div>
+      <div class="tier-cell">$0 – $5K</div>
+      <div class="tier-cell">$5,001 – $30K</div>
+      <div class="tier-cell">$30,001+</div>
+
+      <div class="tier-label">ARR equivalente</div>
+      <div class="tier-cell">Hasta $60K</div>
+      <div class="tier-cell">$60K – $360K</div>
+      <div class="tier-cell">$360K+</div>
+
+      <div class="tier-label">Comisión MRR</div>
+      <div class="tier-cell"><strong>20%</strong> recurring</div>
+      <div class="tier-cell"><strong>25%</strong> recurring</div>
+      <div class="tier-cell"><strong>30%</strong> recurring</div>
+
+      <div class="tier-label">Duración</div>
+      <div class="tier-cell">12 meses</div>
+      <div class="tier-cell">24 meses</div>
+      <div class="tier-cell" style="color:var(--cta);"><strong>Lifetime</strong></div>
+
+      <div class="tier-label">Managed Delivery</div>
+      <div class="tier-cell" style="grid-column: span 3; text-align:center;">10% / 15% / 20% según valor mensual del servicio</div>
+    </div>
+    <p style="margin-top:1.5rem;color:var(--text-muted);font-size:13px;text-align:center;">
+      Piso del programa: commit spend mínimo del cliente <strong style="color:var(--white)">$1,000/mes/BU</strong>. Contrato mínimo 12 meses. Cada deal trae <strong style="color:var(--white)">$12K ARR</strong> como base.
+    </p>
+  </div>
+</section>
+
+<!-- SLIDE 12 — CUATRO FUENTES DE REVENUE -->
+<section class="slide bg-purple" data-slide="12">
+  <div class="slide-content">
+    <div class="eyebrow">Lo que diferencia este programa</div>
+    <h2>El partner gana en cuatro lugares.<br><span style="color:var(--cta);font-style:italic;">No en uno.</span></h2>
+    <div class="grid-4 stagger" style="margin-top:2rem;">
+      <div class="source-card">
+        <div class="source-num">01</div>
+        <h3 style="font-size:16px;margin-bottom:0.5rem;">Comisión MRR Conversia</h3>
+        <p style="color:var(--text-muted);font-size:13px;line-height:1.5;">20% / 25% / 30% recurrente sobre lo que el cliente factura cada mes, según nivel.</p>
+      </div>
+      <div class="source-card magenta">
+        <div class="source-num">02</div>
+        <h3 style="font-size:16px;margin-bottom:0.5rem;">Servicios facturables al cliente</h3>
+        <p style="color:var(--text-muted);font-size:13px;line-height:1.5;">100% del margen cuando el partner ejecuta. Discovery, diseño, operación, tools, change management.</p>
+      </div>
+      <div class="source-card">
+        <div class="source-num">03</div>
+        <h3 style="font-size:16px;margin-bottom:0.5rem;">Comisión Managed Delivery</h3>
+        <p style="color:var(--text-muted);font-size:13px;line-height:1.5;">10% / 15% / 20% sobre el servicio cuando Conversia opera por el partner.</p>
+      </div>
+      <div class="source-card magenta">
+        <div class="source-num">04</div>
+        <h3 style="font-size:16px;margin-bottom:0.5rem;">Gestión del portal HubSpot</h3>
+        <p style="color:var(--text-muted);font-size:13px;line-height:1.5;">MRR de management + puntos de tier HubSpot + comisión HubSpot. Blueprint Impulse.</p>
+      </div>
+    </div>
+    <div class="cta-block" style="margin-top:2.5rem;">
+      <strong style="color:var(--cta);">Esto es lo que diferencia este programa de cualquier otro del ecosistema HubSpot.</strong> No es una fuente de revenue: son cuatro, todas escalables por cliente.
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 13 — EJEMPLO CONCRETO -->
+<section class="slide bg-dark" data-slide="13">
+  <div class="slide-content">
+    <div class="eyebrow">Ejemplo concreto · Accelerator con 1 cliente</div>
+    <h2>Cuánto gana un partner Accelerator<br>con un solo cliente promedio.</h2>
+    <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:2rem;margin-top:1.5rem;">
+      <table class="example-tbl">
+        <tr>
+          <td>Conversia MRR (contrato 12 meses)</td>
+          <td>$1,000 / mes  ·  $12,000 ARR</td>
+        </tr>
+        <tr>
+          <td>Servicio Diseño y Despliegue de 1 Agente</td>
+          <td>$10,000 one-time</td>
+        </tr>
+        <tr>
+          <td>Operación Continua plan Growth (anual)</td>
+          <td>$1,500 / mes  ·  $18,000 ARR</td>
+        </tr>
+        <tr>
+          <td style="color:var(--text-muted);font-style:italic;">Comisión partner 20% sobre MRR Conversia (12 meses)</td>
+          <td style="color:var(--text-muted);">$2,400</td>
+        </tr>
+        <tr style="background:rgba(120,240,90,0.04);">
+          <td>Si el partner ejecuta los servicios directamente</td>
+          <td style="color:var(--cta);">$30,400 año 1</td>
+        </tr>
+        <tr>
+          <td>Si Conversia hace Managed Delivery (partner 10%)</td>
+          <td>$5,200 año 1</td>
+        </tr>
+        <tr class="highlight">
+          <td>Total Partner ejecuta servicios — 1 cliente año 1</td>
+          <td>$30,400</td>
+        </tr>
+      </table>
+    </div>
+    <p style="margin-top:1.5rem;color:var(--text-muted);text-align:center;font-style:italic;font-size:14px;">
+      Esto con un cliente promedio. Imagina con cinco.
+    </p>
+  </div>
+</section>
+
+<!-- SLIDE 14 — CATÁLOGO DE SERVICIOS -->
+<section class="slide bg-green-dark" data-slide="14">
+  <div class="slide-content">
+    <div class="eyebrow">Donde el partner escala</div>
+    <h2>Catálogo de servicios<br>que el partner construye alrededor.</h2>
+    <p class="subtitle">
+      Empaquetados y validados por Impulse en producción enterprise. Replicables desde el primer cliente.
+    </p>
+    <div class="grid-4 stagger" style="margin-top:1rem;gap:1rem;">
+      <div class="card">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+        <div style="color:var(--cta);font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem;">Desde $5,000</div>
+        <h3>AI Readiness Assessment</h3>
+        <p class="card-body" style="margin-top:0.5rem;">Diagnóstico organizacional, mapeo de procesos, hoja de ruta IA. La puerta de entrada más cualificada.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon magenta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6H9z"/></svg></div>
+        <div style="color:var(--accent);font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem;">Desde $10,000</div>
+        <h3>Diseño y Despliegue de 1 Agente</h3>
+        <p class="card-body" style="margin-top:0.5rem;">Proyecto de 12 semanas para llevar un agente a producción. Discovery, integración, go-live, optimización.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+        <div style="color:var(--cta);font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem;">Desde $1,500 / mes</div>
+        <h3>Operación Continua</h3>
+        <p class="card-body" style="margin-top:0.5rem;">Run + Improve mensual. QA conversacional, tuning, optimización continua de KPIs. Essential, Growth, Scale.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon magenta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+        <div style="color:var(--accent);font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem;">Desde $5,000 / tool</div>
+        <h3>Tools Custom</h3>
+        <p class="card-body" style="margin-top:0.5rem;">Integraciones a CRM, ERP, pasarelas, LMS, HIS. Tools operativas o analíticas. Reutilizables por el partner.</p>
+      </div>
+    </div>
+    <div class="cta-block magenta" style="margin-top:2rem;">
+      Cada servicio puede ser ejecutado por el partner directamente (100% margen propio) o por Conversia bajo Managed Delivery (comisión 10/15/20% al partner).
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 15 — CONVERSIA FOR PARTNER USE -->
+<section class="slide bg-purple" data-slide="15">
+  <div class="slide-content">
+    <div class="eyebrow">Beneficio gating por nivel</div>
+    <h2>Conversia gratis para tu agencia.<br><span style="color:var(--cta);font-style:italic;">Demos en vivo a tus prospects.</span></h2>
+    <p class="subtitle">
+      Vives la plataforma antes de venderla. La convicción se siente al pitchear.
+    </p>
+    <div class="grid-3 stagger" style="margin-top:1.5rem;">
+      <div class="card">
+        <div class="badge badge-white" style="margin-bottom:1rem;">Adopter</div>
+        <div style="font-size:48px;font-weight:800;color:var(--cta);line-height:1;">250</div>
+        <div style="font-size:13px;color:var(--text-muted);margin-bottom:1rem;">CO / mes incluidas</div>
+        <div style="font-size:14px;color:var(--white);margin-bottom:0.25rem;">2 usuarios</div>
+        <div style="font-size:12px;color:var(--text-faded);">40% descuento permanente</div>
+      </div>
+      <div class="card">
+        <div class="badge badge-cta" style="margin-bottom:1rem;">Accelerator</div>
+        <div style="font-size:48px;font-weight:800;color:var(--cta);line-height:1;">500</div>
+        <div style="font-size:13px;color:var(--text-muted);margin-bottom:1rem;">CO / mes incluidas</div>
+        <div style="font-size:14px;color:var(--white);margin-bottom:0.25rem;">3 usuarios</div>
+        <div style="font-size:12px;color:var(--text-faded);">40% descuento permanente</div>
+      </div>
+      <div class="card" style="background:linear-gradient(135deg,rgba(120,240,90,0.15),rgba(220,50,150,0.08));border-color:var(--cta);">
+        <div class="badge badge-magenta" style="margin-bottom:1rem;">Orchestrator</div>
+        <div style="font-size:48px;font-weight:800;color:var(--cta);line-height:1;">1,000</div>
+        <div style="font-size:13px;color:var(--text-muted);margin-bottom:1rem;">CO / mes incluidas</div>
+        <div style="font-size:14px;color:var(--white);margin-bottom:0.25rem;">5 usuarios</div>
+        <div style="font-size:12px;color:var(--text-faded);">40% descuento permanente</div>
+      </div>
+    </div>
+    <div class="cta-block" style="margin-top:2rem;">
+      Conversia se vuelve parte de tu stack operativo: califica tu inbound, agenda tus demos, hace follow-up a tus oportunidades. Y el 40% de descuento es <strong style="color:var(--cta);">lifetime mientras estés en el programa.</strong>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 16 — APIs MCPs FRAMEWORKS -->
+<section class="slide bg-black" data-slide="16">
+  <div class="slide-content">
+    <div class="eyebrow">El diferenciador que nadie más ofrece</div>
+    <h2 style="font-size:clamp(36px,4.5vw,64px);">Tu propio motor de IP.<br>
+      <span style="background:linear-gradient(90deg,var(--cta) 0%, var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:italic;">APIs, MCPs, Frameworks Claude.</span>
+    </h2>
+    <p class="subtitle">
+      Te abrimos acceso completo a las herramientas con las que Conversia opera internamente.
+    </p>
+    <div class="grid-2" style="margin-top:2rem;align-items:start;">
+      <div>
+        <div style="background:rgba(120,240,90,0.05);border:1px solid rgba(120,240,90,0.3);border-radius:14px;padding:2rem;">
+          <h3 style="color:var(--cta);margin-bottom:1rem;">Operás Conversia desde Claude.<br>Sin entrar a la plataforma.</h3>
+          <ul style="list-style:none;padding:0;">
+            <li style="padding:8px 0;padding-left:24px;position:relative;color:var(--text-muted);font-size:14px;">
+              <span style="position:absolute;left:0;color:var(--cta);font-weight:700;">→</span>Crear y debugear agentes desde una conversación con Claude/ChatGPT
+            </li>
+            <li style="padding:8px 0;padding-left:24px;position:relative;color:var(--text-muted);font-size:14px;">
+              <span style="position:absolute;left:0;color:var(--cta);font-weight:700;">→</span>Resolver tickets sin abrir el inbox
+            </li>
+            <li style="padding:8px 0;padding-left:24px;position:relative;color:var(--text-muted);font-size:14px;">
+              <span style="position:absolute;left:0;color:var(--cta);font-weight:700;">→</span>QA semanal de conversaciones desde tu agente AI
+            </li>
+            <li style="padding:8px 0;padding-left:24px;position:relative;color:var(--text-muted);font-size:14px;">
+              <span style="position:absolute;left:0;color:var(--cta);font-weight:700;">→</span>Análisis de performance &amp; reporting automatizado
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-size:22px;margin-bottom:1rem;">Esto te convierte<br>en <span style="color:var(--cta);font-style:italic;">builder de IP propia</span> desde día uno.</h3>
+        <p style="color:var(--text-muted);font-size:15px;line-height:1.6;margin-bottom:1.25rem;">
+          Construyes tus propios frameworks verticales, plantillas certificadas, agentes especializados, asistentes internos de tu equipo. Tu IP, tus playbooks, tu propiedad intelectual.
+        </p>
+        <div class="cta-block magenta">
+          Ningún otro vendor del ecosistema HubSpot ofrece esto.<br>
+          <strong style="color:var(--accent);">Es el diferenciador del programa.</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 17 — CONVERSIA + BREEZE COEXISTEN -->
+<section class="slide bg-dark" data-slide="17">
+  <div class="slide-content">
+    <div class="eyebrow">Posicionamiento competitivo</div>
+    <h2>Conversia y HubSpot Breeze<br><span style="color:var(--cyan);font-style:italic;">co-existen.</span></h2>
+    <p class="subtitle">
+      No vendes Conversia <em>en vez de</em> Breeze. Vendes el programa completo de adopción de IA, donde cada uno cubre capas distintas.
+    </p>
+    <div class="breeze-tbl stagger" style="margin-top:1.5rem;">
+      <div class="b-header">Breeze Agent</div>
+      <div class="b-header">Relación</div>
+      <div class="b-header">Mensaje al partner</div>
+
+      <div class="b-agent">Customer Agent</div>
+      <div><span class="badge badge-coexist">Co-existen</span></div>
+      <div style="color:var(--text-muted);font-size:13px;">Customer Agent para soporte interno general. Conversia para el journey comercial completo en WhatsApp — done-for-you, tono LatAm, multi-BU, custom instructions.</div>
+
+      <div class="b-agent">Prospecting Agent</div>
+      <div><span class="badge badge-cta">Complementario</span></div>
+      <div style="color:var(--text-muted);font-size:13px;">Prospecting Agent recomienda leads dentro de HubSpot. Conversia los nutre, califica y agenda con WhatsApp conversacional.</div>
+
+      <div class="b-agent">Data Agent</div>
+      <div><span class="badge badge-cta">Complementario</span></div>
+      <div style="color:var(--text-muted);font-size:13px;">Data Agent limpia el CRM en background. Conversia mantiene el CRM actualizado en tiempo real vía conversación.</div>
+
+      <div class="b-agent">Asistentes Breeze</div>
+      <div><span class="badge badge-cta">Complementarios</span></div>
+      <div style="color:var(--text-muted);font-size:13px;">Productividad interna para usuarios HubSpot. Conversia opera hacia afuera con clientes finales. Funciones distintas.</div>
+    </div>
+    <div class="cta-block magenta" style="margin-top:1.5rem;">
+      <strong style="color:var(--accent);">Conversia tiene una integración nativa</strong> que hace que el cliente saque mejor provecho de HubSpot. No competimos con HubSpot — lo amplificamos. Es un argumento que vale a HubSpot mismo.
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 18 — JOURNEY DEL PARTNER -->
+<section class="slide bg-green-dark" data-slide="18">
+  <div class="slide-content">
+    <div class="eyebrow">Para el partner sin músculo operacional</div>
+    <h2>Empiezas cobrando hoy.<br>Construyes tu equipo de delivery en el camino.</h2>
+    <p class="subtitle">
+      No te quedas fuera por no tener equipo de implementación. El programa está diseñado para que aprendas el oficio mientras ya ganas revenue.
+    </p>
+    <div class="journey-line stagger">
+      <div class="journey-step">
+        <div class="journey-dot">0</div>
+        <div class="journey-month">Mes 1—3</div>
+        <h4>Entrada</h4>
+        <p>Firma + Programa de Inmersión + Managed Delivery del primer cliente. Cobras comisión sin riesgo operacional.</p>
+      </div>
+      <div class="journey-step">
+        <div class="journey-dot">1</div>
+        <div class="journey-month">Mes 3—9</div>
+        <h4>Aprendizaje</h4>
+        <p>Shadowing en discovery, diseño y operación. Transferencia activa de know-how. Empiezas a co-ejecutar piezas.</p>
+      </div>
+      <div class="journey-step">
+        <div class="journey-dot">2</div>
+        <div class="journey-month">Mes 9—18</div>
+        <h4>Co-delivery</h4>
+        <p>Tomas piezas crecientes del delivery. Tu margen directo crece, baja tu dependencia de Managed Delivery.</p>
+      </div>
+      <div class="journey-step">
+        <div class="journey-dot">3</div>
+        <div class="journey-month">Mes 18+</div>
+        <h4>Autonomía</h4>
+        <p>Operas completos los engagements. Conversia mantiene plataforma + soporte L2/L3. Eres AI-enabled agency genuina.</p>
+      </div>
+    </div>
+    <div class="cta-block" style="margin-top:2rem;">
+      <strong style="color:var(--cta);">Nuestra promesa:</strong> en 12 a 18 meses construyes tu propio centro de delivery con la metodología, frameworks y herramientas Conversia — y pasas de ganar comisión sobre el servicio a facturarlo entero al cliente.
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 19 — CÓMO ARRANCAMOS -->
+<section class="slide bg-dark" data-slide="19">
+  <div class="slide-content">
+    <div class="eyebrow">Cómo arrancamos</div>
+    <h2>El partnership está listo<br>para activarse en <span style="color:var(--cta);font-style:italic;">dos semanas.</span></h2>
+    <p class="subtitle">Cuatro pasos concretos. Sin fricción, sin papeleos eternos, sin esperas.</p>
+    <div class="journey-line stagger" style="margin-top:1.5rem;">
+      <div class="journey-step">
+        <div class="journey-dot">1</div>
+        <div class="journey-month">Día 1</div>
+        <h4>Firma del Acuerdo</h4>
+        <p>Documento Conversia Revenue Architects de 2 páginas. Términos claros, sin letra chica. Mismo día.</p>
+      </div>
+      <div class="journey-step">
+        <div class="journey-dot">2</div>
+        <div class="journey-month">Semana 1—2</div>
+        <h4>Activación</h4>
+        <p>Programa de Inmersión Conversia, acceso al Partner Portal y setup de Conversia for Partner Use con tu agencia.</p>
+      </div>
+      <div class="journey-step">
+        <div class="journey-dot">3</div>
+        <div class="journey-month">Primera oportunidad</div>
+        <h4>Presales conjunto</h4>
+        <p>Conversia hace discovery contigo, monta la demo personalizada y te acompaña al cierre del primer deal cualificado.</p>
+      </div>
+      <div class="journey-step">
+        <div class="journey-dot">4</div>
+        <div class="journey-month">Mes 1</div>
+        <h4>Lead-sharing inicial</h4>
+        <p>Revisamos juntos cuentas del CRM Conversia/Impulse en tu mercado. Construimos GTM conjunto.</p>
+      </div>
+    </div>
+    <div class="cta-block" style="margin-top:2rem;">
+      <strong style="color:var(--cta);">Sin compromisos de volumen mínimo.</strong> El partner que entra empieza como Adopter. Sube de nivel por mérito propio. La economía se activa desde el primer cliente.
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 20 — CIERRE -->
+<section class="slide bg-hero" data-slide="20">
+  <div class="portada-wrapper">
+    <div class="portada-top">
+      <div class="portada-logos">
+        <span>IMPULSE</span><span style="color:var(--text-faded)">×</span><span style="color:var(--accent)">CONVERSIA</span>
+      </div>
+      <div class="badge badge-cta">HubSpot Diamond Partner</div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;">
+      <div class="last-tagline" style="text-align:left;margin-bottom:3rem;">First Data,<br>then AI Agents.</div>
+      <h1 style="font-size:clamp(40px,5.5vw,80px);font-weight:800;line-height:1;letter-spacing:-0.025em;margin-bottom:2rem;max-width:1000px;">
+        ¿Listo para arrancar<br>
+        <span style="color:var(--cta);font-style:italic;">con Conversia en tu portfolio?</span>
+      </h1>
+      <div style="display:flex;align-items:center;gap:1.5rem;margin-top:1rem;flex-wrap:wrap;">
+        <button class="btn btn-primary" style="font-size:16px;padding:16px 32px;">
+          Avancemos al Acuerdo
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+        <div style="color:var(--text-muted);font-size:14px;">
+          <div style="color:var(--white);font-weight:700;font-size:16px;margin-bottom:2px;">Eduardo Eneque</div>
+          <div>CEO Impulse &amp; Conversia · eduardo.eneque@impulse.lat</div>
+        </div>
+      </div>
+    </div>
+    <div class="portada-bottom">
+      <div style="font-size:13px;color:var(--text-faded);letter-spacing:0.1em;">
+        Conversia Revenue Architects Program · 2026
+      </div>
+      <div style="font-size:13px;color:var(--text-faded);">
+        impulse.lat · conversia.impulse.lat
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<div class="deck-nav">
+  <div class="nav-counter">
+    <span class="current" id="current">01</span> <span style="opacity:0.4">/</span> <span id="total">18</span>
+  </div>
+  <div class="nav-arrows">
+    <button class="nav-btn" id="prevBtn" aria-label="Anterior">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button class="nav-btn" id="nextBtn" aria-label="Siguiente">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+</div>
+
+<div class="keyhint">
+  <kbd>←</kbd> <kbd>→</kbd> navega &nbsp;·&nbsp; <kbd>esc</kbd> overview
+</div>
+
+<div class="overview" id="overview">
+  <div style="max-width:1400px;margin:0 auto;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;">
+      <h3 style="font-size:24px;color:var(--white);">Todos los slides</h3>
+      <button class="nav-btn" onclick="document.getElementById('overview').classList.remove('show')" aria-label="Cerrar overview">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="overview-grid" id="overviewGrid"></div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  let current = 0;
+
+  const titles = [
+    'Portada',
+    'El shift HubSpot 2026',
+    'Tres preguntas',
+    'La oportunidad — $3 a $7',
+    'Data & AI Revenue System',
+    'Conversia Workspace',
+    'Capacidades enterprise',
+    'Verticales',
+    'Programa overview',
+    'Dos tracks',
+    'Tres niveles',
+    'Cuatro fuentes de revenue',
+    'Ejemplo Accelerator',
+    'Catálogo de servicios',
+    'Conversia for Partner Use',
+    'APIs · MCPs · Frameworks',
+    'Conversia + Breeze co-existen',
+    'Journey del partner',
+    'Cómo arrancamos',
+    'Cierre — ¿Listo?'
+  ];
+
+  document.getElementById('total').textContent = String(total).padStart(2, '0');
+
+  function showSlide(idx) {
+    if (idx < 0 || idx >= total) return;
+    slides.forEach((s, i) => {
+      s.classList.remove('active', 'prev');
+      if (i < idx) s.classList.add('prev');
+    });
+    slides[idx].classList.add('active');
+    current = idx;
+    document.getElementById('current').textContent = String(idx + 1).padStart(2, '0');
+    const pct = ((idx + 1) / total) * 100;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  function next() { if (current < total - 1) showSlide(current + 1); }
+  function prev() { if (current > 0) showSlide(current - 1); }
+
+  document.getElementById('nextBtn').addEventListener('click', next);
+  document.getElementById('prevBtn').addEventListener('click', prev);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
+    if (e.key === 'ArrowLeft') prev();
+    if (e.key === 'Escape') {
+      document.getElementById('overview').classList.toggle('show');
+    }
+    if (e.key === 'Home') showSlide(0);
+    if (e.key === 'End') showSlide(total - 1);
+  });
+
+  // Click navigation on edges
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('.nav-btn, .btn, .card, .overview, .deck-brand, .keyhint')) return;
+    if (document.getElementById('overview').classList.contains('show')) return;
+    const x = e.clientX;
+    const w = window.innerWidth;
+    if (x > w * 0.7) next();
+    else if (x < w * 0.3) prev();
+  });
+
+  // Build overview
+  const grid = document.getElementById('overviewGrid');
+  titles.forEach((t, i) => {
+    const div = document.createElement('div');
+    div.className = 'ov-thumb';
+    div.innerHTML = `<div class="num">SLIDE ${String(i+1).padStart(2,'0')}</div><div class="ttl">${t}</div>`;
+    div.addEventListener('click', () => {
+      showSlide(i);
+      document.getElementById('overview').classList.remove('show');
+    });
+    grid.appendChild(div);
+  });
+
+  // Initial
+  showSlide(0);
+
+  // Mouse wheel — opt-in
+  let wheelTimeout;
+  let wheelLocked = false;
+  document.addEventListener('wheel', (e) => {
+    if (wheelLocked) return;
+    if (Math.abs(e.deltaY) < 30) return;
+    wheelLocked = true;
+    if (e.deltaY > 0) next(); else prev();
+    clearTimeout(wheelTimeout);
+    wheelTimeout = setTimeout(() => { wheelLocked = false; }, 800);
+  }, { passive: true });
+
+  // Touch support
+  let touchStartX = null;
+  document.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+  }, { passive: true });
+  document.addEventListener('touchend', (e) => {
+    if (touchStartX === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (dx < -60) next();
+    else if (dx > 60) prev();
+    touchStartX = null;
+  }, { passive: true });
+})();
+</script>
+</body>
+</html>
